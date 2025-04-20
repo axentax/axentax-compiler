@@ -1,6 +1,6 @@
 {
   "name": "axentax-compiler",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Compile Axentax syntax in JavaScript and generate MIDI output for guitar phrasing.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,7 @@
     "type": "git",
     "url": "https://github.com/axentax/axentax-compiler"
   },
+  "homepage": "https://axentax.github.io/",
   "bugs": {
     "url": "https://github.com/axentax/axentax-compiler/issues"
   },
