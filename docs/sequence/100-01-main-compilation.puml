@@ -1,0 +1,85 @@
+@startuml main-compilation
+title メインコンパイル処理シーケンス
+
+actor User as U
+participant "Conductor" as C
+participant "SettingResolver" as SR
+participant "ModSyntax" as MS
+participant "BlockCompiler" as BC
+participant "CompileStyle" as CS
+participant "MidiBuilder" as MB
+
+U -> C: convertToObj(syntax, settings...)
+activate C
+
+C -> C: convert(syntax, allowAnnotations, chordDic, mapSeed, isValidOnly)
+activate C
+
+note right of C: Conductオブジェクトの初期化\n- 3つのdualチャンネル用mixesList\n- 設定、リージョン、スタイル情報
+
+C -> C: core(conduct)
+activate C
+
+note right of C: 1. コメント除去と前処理
+C -> C: removeUnnecessaryInitials(conduct)
+
+note right of C: 2. ユーザー設定の解析・適用
+C -> SR: resolve(conduct)
+activate SR
+SR -> SR: 設定値の解析と適用
+SR --> C: 設定解決結果
+deactivate SR
+
+C -> C: removeBeforeStart(conduct)
+
+note right of C: 3. 構文解析（文字単位でのパース）
+C -> MS: as(conduct)
+activate MS
+MS -> MS: 記譜法テキストの文字単位解析
+MS --> C: シンボルリスト
+deactivate MS
+
+note right of C: 4. ブロック構造への変換
+C -> BC: compile(conduct, symbolsDualLists)
+activate BC
+BC -> BC: ブロックオブジェクトの初期化
+BC -> BC: プレフィックススタイルの解決
+BC -> BC: スタイルの初期化
+BC -> BC: ノートの初期化
+BC --> C: ブロック変換結果
+deactivate BC
+
+note right of C: 5. スタイル処理（エフェクト、タイミング調整）
+C -> CS: compile(conduct)
+activate CS
+CS -> CS: BPM解析・時間計算
+CS -> CS: クリック音処理
+CS -> CS: 各dual毎のスタイル処理\n- レガート、スタッカート、スライド等
+CS --> C: スタイル処理結果
+deactivate CS
+
+C --> C: コンパイル完了
+deactivate C
+
+note right of C: メモリ最適化と不要参照削除
+C -> C: 循環参照の削除\n- prevTabObj, nextTabObj等
+
+alt バリデーションのみの場合
+    C --> U: バリデーション結果（id: 0）
+else スタイルコンパイル有効の場合
+    note right of C: MIDI生成（オプション）
+    C -> MB: build(bmrList, bpmList, clickList)
+    activate MB
+    MB -> MB: クリックトラック構築
+    MB -> MB: ギタートラック構築
+    MB -> MB: BPM設定
+    MB --> C: MIDIオブジェクト
+    deactivate MB
+    
+    C --> U: 完全なコンパイル結果（id: 1, midi含む）
+end
+
+deactivate C
+deactivate C
+
+@enduml 

@@ -1,0 +1,2992 @@
+{
+  "hasError": false,
+  "error": null,
+  "expectation": {
+    "mixesList": [
+      {
+        "flatTOList": [
+          {
+            "noteStr": "#approach",
+            "tabObjId": -0.001,
+            "regionIndex": 0,
+            "regionNoteIndex": -0.001,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              2,
+              2,
+              2
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              70,
+              75,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                480,
+                473,
+                466
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                504,
+                504,
+                504
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 4
+          },
+          {
+            "noteStr": "#approach",
+            "tabObjId": -0.002,
+            "regionIndex": 0,
+            "regionNoteIndex": -0.002,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              3,
+              3,
+              3
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              58.5,
+              58.5,
+              58.5
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                504,
+                504,
+                504
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                528,
+                528,
+                528
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 4
+          },
+          {
+            "noteStr": "#approach",
+            "tabObjId": -0.003,
+            "regionIndex": 0,
+            "regionNoteIndex": -0.003,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              4,
+              4,
+              4
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              52,
+              52,
+              52
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                528,
+                528,
+                528
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                552,
+                552,
+                552
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 4
+          },
+          {
+            "noteStr": "2|2|2>>5|5|5|||:to(continue)",
+            "syntaxLocation": {
+              "row": "",
+              "line": 8,
+              "linePos": 6,
+              "endLine": 8,
+              "endPos": 34
+            },
+            "tabObjId": 0,
+            "regionIndex": 0,
+            "regionNoteIndex": 0,
+            "note": "5|5|5|||",
+            "tab": [
+              null,
+              null,
+              null,
+              5,
+              5,
+              5
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              5,
+              5,
+              5
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              66,
+              66,
+              66
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                552,
+                545,
+                538
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                951,
+                951,
+                720
+              ],
+              "startTick": 480,
+              "stopTick": 960
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              5,
+              5,
+              5
+            ],
+            "slideLandingTab": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              12
+            ],
+            "locationIndexes": [
+              1,
+              2
+            ],
+            "untilNext": [
+              1,
+              4
+            ],
+            "slideTrueType": 2
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.001,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.001,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              6
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              65
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                720
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                760
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.002,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.002,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              7
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              55
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                760
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                800
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.003,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.003,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              8
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              45
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                800
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                840
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.004,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.004,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              9
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              35
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                840
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                880
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.005,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.005,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              10
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              30
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                880
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                920
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 0.006,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.006,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              11
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              30
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                920
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                960
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#approach",
+            "tabObjId": 0.999,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.999,
+            "note": "",
+            "tab": [
+              14,
+              null,
+              null,
+              null,
+              null,
+              14
+            ],
+            "velocity": [
+              70,
+              null,
+              null,
+              null,
+              null,
+              60
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                960,
+                null,
+                null,
+                null,
+                null,
+                960
+              ],
+              "fretStopTicks": [
+                984,
+                null,
+                null,
+                null,
+                null,
+                984
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 4
+          },
+          {
+            "noteStr": "#approach",
+            "tabObjId": 0.998,
+            "regionIndex": 0,
+            "regionNoteIndex": 0.998,
+            "note": "",
+            "tab": [
+              13,
+              null,
+              null,
+              null,
+              null,
+              13
+            ],
+            "velocity": [
+              58.5,
+              null,
+              null,
+              null,
+              null,
+              54
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                984,
+                null,
+                null,
+                null,
+                null,
+                984
+              ],
+              "fretStopTicks": [
+                1008,
+                null,
+                null,
+                null,
+                null,
+                1008
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 4
+          },
+          {
+            "noteStr": "14|||||14>>12|||||12",
+            "syntaxLocation": {
+              "row": "",
+              "line": 8,
+              "linePos": 35,
+              "endLine": 8,
+              "endPos": 55
+            },
+            "tabObjId": 1,
+            "regionIndex": 0,
+            "regionNoteIndex": 1,
+            "note": "12|||||12",
+            "tab": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              12
+            ],
+            "trueTab": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              12
+            ],
+            "velocity": [
+              66,
+              null,
+              null,
+              null,
+              null,
+              66
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                1008,
+                null,
+                null,
+                null,
+                null,
+                1008
+              ],
+              "fretStopTicks": [
+                1440,
+                null,
+                null,
+                null,
+                null,
+                1440
+              ],
+              "startTick": 960,
+              "stopTick": 1440
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              12
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              3
+            ],
+            "untilNext": [
+              1,
+              4
+            ],
+            "slideTrueType": 2
+          },
+          {
+            "noteStr": "|||2||^:to",
+            "syntaxLocation": {
+              "row": "",
+              "line": 11,
+              "linePos": 3,
+              "endLine": 11,
+              "endPos": 13
+            },
+            "tabObjId": 2,
+            "regionIndex": 1,
+            "regionNoteIndex": 0,
+            "note": "|||2||",
+            "tab": [
+              null,
+              null,
+              2,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              null,
+              2,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              70,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                null,
+                1440,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1560,
+                null,
+                null,
+                null
+              ],
+              "startTick": 1440,
+              "stopTick": 1680
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              2,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [
+              null,
+              null,
+              null,
+              15,
+              15,
+              null
+            ],
+            "locationIndexes": [
+              5,
+              6
+            ],
+            "untilNext": [
+              1,
+              8
+            ],
+            "slideTrueType": 1
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.001,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.001,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              3,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              60,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1560,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1568,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.002,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.002,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              4,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              50,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1568,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1576,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.003,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.003,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              5,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              40,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1576,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1584,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.004,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.004,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              6,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1584,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1593,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.005,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.005,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              7,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1593,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1601,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.006,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.006,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              8,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1601,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1609,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.007,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.007,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              9,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1609,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1618,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.008,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.008,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              10,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1618,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1626,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.009,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.009,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              11,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1626,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1634,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.01,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.01,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              12,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1634,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1643,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.011,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.011,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              13,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1643,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1651,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "#slide",
+            "tabObjId": 2.012,
+            "regionIndex": 1,
+            "regionNoteIndex": 0.012,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              14,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              30,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1651,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1659,
+                null,
+                null,
+                null
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideTrueType": 3
+          },
+          {
+            "noteStr": "|15|15|||^",
+            "syntaxLocation": {
+              "row": "",
+              "line": 11,
+              "linePos": 14,
+              "endLine": 11,
+              "endPos": 24
+            },
+            "tabObjId": 3,
+            "regionIndex": 1,
+            "regionNoteIndex": 1,
+            "note": "|15|15|||",
+            "tab": [
+              null,
+              null,
+              null,
+              15,
+              15,
+              null
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              15,
+              15,
+              null
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              70,
+              75,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                1680,
+                1660,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                1805,
+                1805,
+                null
+              ],
+              "startTick": 1680,
+              "stopTick": 1920
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              15,
+              15,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              7
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "/||||8",
+            "syntaxLocation": {
+              "row": "",
+              "line": 12,
+              "linePos": 3,
+              "endLine": 12,
+              "endPos": 9
+            },
+            "tabObjId": 4,
+            "regionIndex": 1,
+            "regionNoteIndex": 2,
+            "note": "||||8",
+            "tab": [
+              null,
+              8,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              8,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                1920,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                2400,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 1920,
+              "stopTick": 2400
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              8,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              8
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "#strum",
+            "tabObjId": 4.1,
+            "regionIndex": 1,
+            "regionNoteIndex": 2.1,
+            "note": "",
+            "tab": [
+              null,
+              null,
+              0,
+              0,
+              0,
+              0
+            ],
+            "velocity": [
+              null,
+              null,
+              59,
+              61,
+              63,
+              65
+            ],
+            "continueX": false,
+            "bar": {
+              "fretStartTicks": [
+                null,
+                null,
+                1891,
+                1863,
+                1834,
+                1805
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                1892,
+                1864,
+                1835,
+                1806
+              ]
+            },
+            "bpm": -1,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "noteStr": "2/1-r-1-2-4:1/8",
+            "extendInfo": {
+              "bullet": {
+                "row": "1",
+                "index": 0
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 8,
+              "endLine": 15,
+              "endPos": 9
+            },
+            "tabObjId": 5,
+            "regionIndex": 2,
+            "regionNoteIndex": 0,
+            "note": "||||1",
+            "tab": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                2400,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                2640,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 2400,
+              "stopTick": 2640
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10,
+              11
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "2/1-r-1-2-4:1/8",
+            "extendInfo": {
+              "bullet": {
+                "row": "r",
+                "index": 1
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 10,
+              "endLine": 15,
+              "endPos": 11
+            },
+            "tabObjId": 6,
+            "regionIndex": 2,
+            "regionNoteIndex": 1,
+            "note": "||||r",
+            "tab": [
+              null,
+              -1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              -1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 2640,
+              "stopTick": 2880
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10,
+              11
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "2/1-r-1-2-4:1/8",
+            "extendInfo": {
+              "bullet": {
+                "row": "1",
+                "index": 2
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 12,
+              "endLine": 15,
+              "endPos": 13
+            },
+            "tabObjId": 7,
+            "regionIndex": 2,
+            "regionNoteIndex": 2,
+            "note": "||||1",
+            "tab": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                2880,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                3120,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 2880,
+              "stopTick": 3120
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              1,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10,
+              11
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "2/1-r-1-2-4:1/8",
+            "extendInfo": {
+              "bullet": {
+                "row": "2",
+                "index": 3
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 14,
+              "endLine": 15,
+              "endPos": 15
+            },
+            "tabObjId": 8,
+            "regionIndex": 2,
+            "regionNoteIndex": 3,
+            "note": "||||2",
+            "tab": [
+              null,
+              2,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              2,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                3120,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                3360,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 3120,
+              "stopTick": 3360
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              2,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10,
+              11
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "2/1-r-1-2-4:1/8",
+            "extendInfo": {
+              "bullet": {
+                "row": "4",
+                "index": 4
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 16,
+              "endLine": 15,
+              "endPos": 17
+            },
+            "tabObjId": 9,
+            "regionIndex": 2,
+            "regionNoteIndex": 4,
+            "note": "||||4",
+            "tab": [
+              null,
+              4,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              4,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 240,
+              "fretStartTicks": [
+                null,
+                3360,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                3565,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 3360,
+              "stopTick": 3600
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              4,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10,
+              11
+            ],
+            "untilNext": [
+              1,
+              8
+            ]
+          },
+          {
+            "noteStr": "C:step(f1234):1/4",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 0
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 29,
+              "endLine": 15,
+              "endPos": 30
+            },
+            "tabObjId": 10,
+            "regionIndex": 2,
+            "regionNoteIndex": 5,
+            "note": "C",
+            "tab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "trueTab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "velocity": [
+              70,
+              70,
+              70,
+              70,
+              75,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                3600,
+                3593,
+                3586,
+                3579,
+                3572,
+                3565
+              ],
+              "fretStopTicks": [
+                4080,
+                4560,
+                5040,
+                5520,
+                5965,
+                5965
+              ],
+              "startTick": 3600,
+              "stopTick": 4080
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              12,
+              13,
+              14
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "C:step(f1234):1/4",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 1
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 30,
+              "endLine": 15,
+              "endPos": 31
+            },
+            "tabObjId": 11,
+            "regionIndex": 2,
+            "regionNoteIndex": 6,
+            "note": "C",
+            "tab": [
+              8,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "velocity": [
+              70,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": true,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                4080,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                5965,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 4080,
+              "stopTick": 4560
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              12,
+              13,
+              14
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "C:step(f1234):1/4",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 2
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 31,
+              "endLine": 15,
+              "endPos": 32
+            },
+            "tabObjId": 12,
+            "regionIndex": 2,
+            "regionNoteIndex": 7,
+            "note": "C",
+            "tab": [
+              null,
+              8,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": true,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                4560,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                5965,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 4560,
+              "stopTick": 5040
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              12,
+              13,
+              14
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "C:step(f1234):1/4",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 3
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 32,
+              "endLine": 15,
+              "endPos": 33
+            },
+            "tabObjId": 13,
+            "regionIndex": 2,
+            "regionNoteIndex": 8,
+            "note": "C",
+            "tab": [
+              null,
+              null,
+              9,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "velocity": [
+              null,
+              null,
+              70,
+              null,
+              null,
+              null
+            ],
+            "continueX": true,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                5040,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                5965,
+                null,
+                null,
+                null
+              ],
+              "startTick": 5040,
+              "stopTick": 5520
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              12,
+              13,
+              14
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "C:step(f1234):1/4",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 4
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 15,
+              "linePos": 33,
+              "endLine": 15,
+              "endPos": 34
+            },
+            "tabObjId": 14,
+            "regionIndex": 2,
+            "regionNoteIndex": 9,
+            "note": "C",
+            "tab": [
+              null,
+              null,
+              null,
+              10,
+              null,
+              null
+            ],
+            "trueTab": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              70,
+              null,
+              null
+            ],
+            "continueX": true,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                5520,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                5965,
+                null,
+                null
+              ],
+              "startTick": 5520,
+              "stopTick": 6000
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              8,
+              8,
+              9,
+              10,
+              10,
+              8
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              12,
+              13,
+              14
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "%1:degree(E minor)",
+            "syntaxLocation": {
+              "row": "",
+              "line": 16,
+              "linePos": 10,
+              "endLine": 16,
+              "endPos": 28
+            },
+            "tabObjId": 15,
+            "regionIndex": 3,
+            "regionNoteIndex": 0,
+            "note": "Em",
+            "tab": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "trueTab": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "velocity": [
+              70,
+              70,
+              70,
+              70,
+              75,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                6000,
+                5993,
+                5986,
+                5979,
+                5972,
+                5965
+              ],
+              "fretStopTicks": [
+                6480,
+                6480,
+                6480,
+                6480,
+                6480,
+                6480
+              ],
+              "startTick": 6000,
+              "stopTick": 6480
+            },
+            "bpm": 160,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              17,
+              18
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "0|||:m",
+            "syntaxLocation": {
+              "row": "",
+              "line": 17,
+              "linePos": 6,
+              "endLine": 17,
+              "endPos": 12
+            },
+            "tabObjId": 16,
+            "regionIndex": 4,
+            "regionNoteIndex": 0,
+            "note": "0|||",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                6480
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                6960
+              ],
+              "startTick": 6480,
+              "stopTick": 6960
+            },
+            "bpm": 160,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              20,
+              21
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "0|||:m",
+            "syntaxLocation": {
+              "row": "",
+              "line": 17,
+              "linePos": 13,
+              "endLine": 17,
+              "endPos": 19
+            },
+            "tabObjId": 17,
+            "regionIndex": 4,
+            "regionNoteIndex": 1,
+            "note": "0|||",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                6960
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                7440
+              ],
+              "startTick": 6960,
+              "stopTick": 7440
+            },
+            "bpm": 160,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              22,
+              23
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "0|||:m",
+            "syntaxLocation": {
+              "row": "",
+              "line": 17,
+              "linePos": 20,
+              "endLine": 17,
+              "endPos": 26
+            },
+            "tabObjId": 18,
+            "regionIndex": 4,
+            "regionNoteIndex": 2,
+            "note": "0|||",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                7440
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                7920
+              ],
+              "startTick": 7440,
+              "stopTick": 7920
+            },
+            "bpm": 160,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              24,
+              25
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "0|||:m",
+            "syntaxLocation": {
+              "row": "",
+              "line": 17,
+              "linePos": 27,
+              "endLine": 17,
+              "endPos": 33
+            },
+            "tabObjId": 19,
+            "regionIndex": 4,
+            "regionNoteIndex": 3,
+            "note": "0|||",
+            "tab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "trueTab": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "velocity": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                7920
+              ],
+              "fretStopTicks": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                8400
+              ],
+              "startTick": 7920,
+              "stopTick": 8400
+            },
+            "bpm": 160,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              26,
+              27
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "flatTOList": []
+      },
+      {
+        "flatTOList": []
+      }
+    ]
+  }
+}

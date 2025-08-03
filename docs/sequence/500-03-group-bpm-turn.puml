@@ -1,0 +1,203 @@
+@startuml group-bpm-turn
+title GroupId BPM・Turn グループ処理シーケンス
+
+participant "ModStyle" as MS
+participant "LayerCompiler" as LC
+participant "StyleBPM" as SB
+participant "StyleTurn" as ST
+participant "TabObj" as TO
+participant "Conduct" as C
+
+note over MS: BPM・Turnグループの初期化
+
+MS -> MS: distributeStyleWithinHierarchy(conduct)
+activate MS
+
+note right of MS: スタイル分散でのグループ設定
+
+loop 各Region内のTabObj
+    MS -> TO: tabObjのスタイル確認
+    activate TO
+    
+    alt BPMスタイルが存在する場合
+        TO -> SB: BPMスタイルの取得
+        activate SB
+        
+        note right of SB: BPMグループの初期設定
+        alt BPMが単独の場合
+            SB -> SB: group = -1
+            note right of SB: 単体BPM（グループ化なし）
+        else BPMがグループ対象の場合
+            SB -> SB: group = groupId++
+            SB -> SB: groupEndTick = 0 (初期値)
+            note right of SB: グループBPM（後で解決）
+        end
+        
+        SB --> TO: BPMグループ設定完了
+        deactivate SB
+    end
+    
+    alt Turnスタイルが存在する場合
+        TO -> ST: Turnスタイルの取得
+        activate ST
+        
+        note right of ST: Turnグループの初期設定
+        alt Turnが単独の場合
+            ST -> ST: group = -1
+            note right of ST: 単体Turn（グループ化なし）
+        else Turnがグループ対象の場合
+            ST -> ST: group = groupId++
+            alt 最終Turn指定の場合
+                ST -> ST: groupFinal = true
+                note right of ST: グループ終了マーク
+            end
+        end
+        
+        ST --> TO: Turnグループ設定完了
+        deactivate ST
+    end
+    
+    deactivate TO
+end
+
+MS --> MS: グループ初期化完了
+deactivate MS
+
+note over LC: グループ解決処理
+
+LC -> LC: resolveStyleGroup(conduct)
+activate LC
+
+note right of LC: BPMグループの解決
+
+loop 各BPMグループ
+    LC -> LC: findGroupMembers(groupId)
+    activate LC
+    
+    note right of LC: 同一グループのBPMスタイル収集
+    loop 全TabObj
+        LC -> TO: bpm.group確認
+        activate TO
+        
+        alt bpm.group === targetGroupId
+            TO --> LC: グループメンバー
+            LC -> LC: グループリストに追加
+        end
+        
+        deactivate TO
+    end
+    
+    LC --> LC: グループメンバー収集完了
+    deactivate LC
+    
+    note right of LC: グループ範囲の計算
+    LC -> LC: calculateGroupRange(groupMembers)
+    activate LC
+    
+    LC -> LC: グループ開始tick = 最初のBPMタブのstartTick
+    LC -> LC: グループ終了tick = 最後のBPMタブのstopTick
+    
+    note right of LC: BPM変化の時間補間
+    LC -> LC: interpolateBPMChanges(startTick, endTick)
+    
+    LC --> LC: グループ範囲算出完了
+    deactivate LC
+    
+    note right of LC: groupEndTickの設定
+    loop グループ内の各BPMスタイル
+        LC -> SB: bpm.groupEndTick = 計算されたendTick
+        note right of SB: グループ終了時刻を設定
+    end
+end
+
+note right of LC: Turnグループの解決
+
+loop 各Turnグループ
+    LC -> LC: findTurnGroupMembers(groupId)
+    activate LC
+    
+    note right of LC: 同一グループのTurnスタイル収集
+    loop 全TabObj
+        LC -> TO: turn.group確認
+        activate TO
+        
+        alt turn.group === targetGroupId
+            TO --> LC: グループメンバー
+            LC -> LC: グループリストに追加
+            
+            alt turn.groupFinal === true
+                LC -> LC: グループ終了位置を記録
+                note right of LC: groupFinalマークでグループ範囲確定
+            end
+        end
+        
+        deactivate TO
+    end
+    
+    LC --> LC: Turnグループメンバー収集完了
+    deactivate LC
+    
+    note right of LC: Turn装飾音範囲の計算
+    LC -> LC: calculateTurnRange(groupMembers)
+    activate LC
+    
+    LC -> LC: 装飾音開始tick = 最初のTurnタブのstartTick
+    LC -> LC: 装飾音終了tick = groupFinal位置のstopTick
+    
+    note right of LC: 装飾音パターンの構築
+    LC -> LC: buildOrnamentPattern(turnRange)
+    
+    LC --> LC: Turn範囲算出完了
+    deactivate LC
+    
+    note right of LC: Turnスタイルの更新
+    loop グループ内の各Turnスタイル
+        LC -> ST: 装飾音範囲情報の設定
+        LC -> ST: グループ処理完了マーク
+        note right of ST: 装飾音の開始〜終了範囲設定
+    end
+end
+
+LC --> C: 全グループ解決完了
+deactivate LC
+
+note over MS, LC: BPM・Turnグループの特徴
+
+note right of SB
+    **BPMグループ特徴**
+    
+    - テンポ変化の連続性制御
+    - 開始〜終了tickでの補間
+    - groupEndTickによる範囲制限
+    - 複数BPM間のスムーズ変化
+end note
+
+note left of ST
+    **Turnグループ特徴**
+    
+    - 装飾音の連続適用
+    - groupFinalによる終了制御
+    - 装飾音パターンの統一
+    - 複数ノート間での装飾効果
+end note
+
+note over LC
+    **グループ解決の流れ**
+    
+    1. グループメンバーの収集
+    2. 時間範囲の算出
+    3. 効果範囲の決定
+    4. 各スタイルへの範囲設定
+    5. 処理完了マークの設定
+end note
+
+note right of MS
+    **グループ番号管理**
+    
+    - group: -1 → 単体処理
+    - group: 0以上 → グループ処理
+    - groupId++でユニーク番号生成
+    - 処理後は-2に変更（処理済み）
+end note
+
+@enduml

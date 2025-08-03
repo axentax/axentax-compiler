@@ -1,0 +1,31 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { }
+
+@@ {
+  ..||3~~
+} >> {
+  ..|||||2~~
+}
+
+@@ { @click r:1/1 } >> {
+  r:1/16
+  Em:d:1/16
+  |||||0~~
+}
+@@ { r r r r r r:1/1 2| } >> {
+  ||||12|
+}
+
+@@  {
+  @click
+  |||12|12|~:bd(0..2/32 2, 4..6 0)
+  ..|:bd(0../16 vib 0.2) ..|:1/8
+  ''|||12|12|12:bd() ..r|~~~:bd(../16 -2)
+  @/click
+}

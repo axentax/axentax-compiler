@@ -1,0 +1,58 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  F#m/C#
+} >> {
+  @compose
+}
+
+@@ 160 {
+
+  {
+    C
+    Dm
+    Em:turn
+    Fmaj7
+  }
+  :turn
+  :step((654))
+
+  // stepが入ると turn のgroupが壊れる
+
+}
+
+
+@@ {
+  C7
+  Dm7:turn(
+    a:123
+    b:456
+  )
+}
+
+
+@@ {
+  @click
+  C~~~
+  @/click
+}
+
+@@ {
+  |||2 |||3
+  @offset
+  ||||5~~~~~:bd(
+    0..4/16 1
+    4.. -2
+  )
+} >> {
+  ||2 ||3
+  @offset  
+} >> {
+  ||||2 ||||3
+  @offset
+}

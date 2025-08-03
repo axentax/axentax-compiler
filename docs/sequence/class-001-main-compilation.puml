@@ -1,0 +1,195 @@
+@startuml main-compilation-classes
+title メインコンパイル処理クラス図
+
+!define FONT_SIZE 12
+skinparam defaultFontSize FONT_SIZE
+
+package "メインコンパイル処理" {
+    
+    class Conductor {
+        +{static} convert(syntax: string, allowAnnotations: AllowAnnotation[], chordDic: ChordDicMap, mapSeed: MapSeed, isValidOnly: boolean): IResult<Conduct, ErrorBase>
+        +{static} convertToObj(hasStyleCompile: boolean, hasMidiBuild: boolean, syntax: string, allowAnnotation: AllowAnnotation[], chordDic: ChordDicMap, mapSeed: MapSeed): ConvertToObj
+        -{static} core(conduct: Conduct): IResult<Conduct, ErrorBase>
+        -{static} toMidi(conduct: Conduct): IResult<Midi, ErrorBase>
+    }
+
+    class SettingResolver {
+        +{static} resolve(conduct: Conduct): SimpleResult<void>
+        -{static} parseUserSettings(syntax: string): Settings
+        -{static} applyDefaultSettings(settings: Settings): void
+    }
+
+    class ModSyntax {
+        +{static} as(conduct: Conduct): IResult<CompileSymbols[][], ErrorBase>
+        -{static} parseCharacter(char: string, position: number): Symbol
+        -{static} createSymbolsList(symbols: Symbol[]): CompileSymbols[][]
+    }
+
+    class BlockCompiler {
+        +{static} compile(conduct: Conduct, symbolsDualLists: CompileSymbols[][]): IResult<void, ErrorBase>
+        -{static} initializeBlocks(conduct: Conduct): void
+        -{static} resolvePrefixStyles(conduct: Conduct): void
+        -{static} initializeStyles(conduct: Conduct): void
+        -{static} initializeNotes(conduct: Conduct): void
+    }
+
+    class CompileStyle {
+        +{static} compile(conduct: Conduct): IResult<void, ErrorBase>
+        -{static} resolveBPM(conduct: Conduct): IResult<void, ErrorBase>
+        -{static} mathBPMTime(conduct: Conduct): void
+        -{static} resolveClicks(conduct: Conduct): void
+        -{static} processDualChannels(conduct: Conduct): IResult<void, ErrorBase>
+    }
+
+    class MidiBuilder {
+        +{static} build(bmrList: BuildMidiRequest[], bpmList: BPMPos[], clickList: ClickPoint[]): ArrayBuffer
+        -{static} buildClickTrack(clickList: ClickPoint[]): Track
+        -{static} buildMainChannel(bmrList: BuildMidiRequest[]): Track
+        -{static} buildBendChannel(bmrList: BuildMidiRequest[]): Track
+        -{static} applyBPMSettings(track: Track, bpmList: BPMPos[]): void
+    }
+}
+
+package "データ構造" {
+    
+    interface ConvertToObj {
+        +id: number
+        +error: ErrorObject | null
+        +response: Conduct | null
+        +midi?: ArrayBuffer
+        +compileMsec?: number
+    }
+
+    class Conduct {
+        +syntax: string
+        +allowAnnotations: AllowAnnotation[]
+        +chordDic: ChordDicMap
+        +mapSeed: MapSeed
+        +settings: Settings
+        +mixesList: Mixes[]
+        +regionLength: number
+        +bpmPosList: BPMPos[]
+        +clickPointList: ClickPoint[]
+        +flash: Flash
+        +styleObjectBank: StyleObjectBank
+        +notStyleCompile: boolean
+        +notMidiBuild: boolean
+        +warnings: Warning[]
+        +extensionInfo: ExtensionInfo
+        +locationInfoList: LocationInfo[]
+        +braceLocationInfoList: BraceLocationInfo[]
+    }
+
+    class Mixes {
+        +dualId: number
+        +regionList: Region[]
+        +flatTOList: TabObj[]
+        +bendBank: BendBank
+        +marks: Marks
+        +view: ViewInfo
+    }
+
+    class TabObj {
+        +note: string
+        +tab: NumberOrUfd[]
+        +velocity: NumberOrUfd[]
+        +expression: NumberOrUfd[]
+        +styles: Styles
+        +bar: Tick
+        +bpm: number
+        +slideInfo?: SlideInfo[]
+        +bendInfo?: BendInfo[]
+    }
+
+    interface Settings {
+        +bpm: BPMSettings
+        +staccato: StaccatoSettings
+        +slide: SlideSettings
+        +legato: LegatoSettings
+        +stroke: StrokeSettings
+        +bend: BendSettings
+    }
+
+    interface CompileSymbols {
+        +type: SymbolType
+        +value: string
+        +line: number
+        +linePos: number
+        +token: string
+    }
+}
+
+package "ユーティリティ" {
+    
+    class XUtils {
+        +{static} toDecimal(value: number): Decimal
+        +{static} normalizeNote(note: string): string
+        +{static} isValidFret(fret: number): boolean
+        +{static} deepCopy<T>(obj: T): T
+    }
+
+    class XTickUtils {
+        +{static} calcTickTime(tick: number, bpm: number): number
+        +{static} getBPMAtTick(tick: number, bpmList: BPMPos[]): number
+        +{static} tickToTime(tick: number, bpmList: BPMPos[]): number
+    }
+
+    abstract class ErrorBase {
+        +code: number
+        +message: string
+        +details?: object
+    }
+
+    class Success<T> {
+        +res: T
+        +constructor(result: T)
+        +fail(): boolean
+    }
+
+    class IResult<T, E extends ErrorBase> {
+        +Success<T> | E
+    }
+
+    class SimpleResult {
+        +IResult<null, ErrorBase>
+    }
+}
+
+' 関係性の定義
+Conductor ..> SettingResolver : uses
+Conductor ..> ModSyntax : uses
+Conductor ..> BlockCompiler : uses
+Conductor ..> CompileStyle : uses
+Conductor ..> MidiBuilder : uses
+Conductor ..> XUtils : uses
+
+Conductor --> ConvertToObj : returns
+Conductor --> Conduct : creates/processes
+
+SettingResolver --> Settings : configures
+ModSyntax --> CompileSymbols : produces
+BlockCompiler --> TabObj : creates
+CompileStyle --> TabObj : modifies
+
+Conduct *-- Mixes : contains 3
+Conduct *-- Settings : contains
+Mixes *-- TabObj : contains many
+Mixes *-- Region : contains many
+
+TabObj --> XTickUtils : uses for timing
+TabObj --> XUtils : uses for calculations
+
+CompileStyle ..> XTickUtils : uses
+MidiBuilder ..> XTickUtils : uses
+
+' エラーハンドリング
+SettingResolver --> SimpleResult : returns
+ModSyntax --> IResult : returns
+BlockCompiler --> IResult : returns
+CompileStyle --> IResult : returns
+
+note top of Conductor : エントリーポイント\n静的メソッドによるAPI提供
+note top of Conduct : 中央データストア\n全てのコンパイル結果を保持
+note top of Mixes : チャンネル別データ\n3つのdualチャンネル対応
+
+@enduml

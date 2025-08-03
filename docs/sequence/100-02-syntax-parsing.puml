@@ -1,0 +1,63 @@
+@startuml syntax-parsing
+title 構文解析処理シーケンス
+
+participant "ModSyntax" as MS
+participant "Conduct" as C
+participant "CompileSymbols" as CS
+participant "SymbolParser" as SP
+
+note over MS: 記譜法テキストの文字単位解析
+
+MS -> MS: as(conduct)
+activate MS
+
+note right of MS: 記譜法テキストの前処理\n- コメント除去済み\n- 設定解析済み
+
+MS -> MS: 文字単位でのパース開始
+activate MS
+
+loop 記譜法テキストの各文字
+    MS -> SP: parseCharacter(char, position)
+    activate SP
+    
+    alt コード記号の場合 (C, Dm, Em7等)
+        SP -> SP: parseChord(token)
+        SP --> MS: ChordSymbol
+    else タブ譜の場合 (|||2, ||||12等)
+        SP -> SP: parseTab(token)
+        SP --> MS: TabSymbol
+    else 休符の場合 (r)
+        SP -> SP: parseRest(token)
+        SP --> MS: RestSymbol
+    else スタイル記号の場合 (:leg, :slide等)
+        SP -> SP: parseStyle(token)
+        SP --> MS: StyleSymbol
+    else リージョン記号の場合 (@@)
+        SP -> SP: parseRegion(token)
+        SP --> MS: RegionSymbol
+    else その他の記号
+        SP -> SP: parseOther(token)
+        SP --> MS: OtherSymbol
+    end
+    
+    deactivate SP
+    
+    MS -> MS: シンボルの位置情報記録\n- line, linePos, token
+end
+
+note right of MS: シンボルリストの構築\n- dualチャンネル別に分類\n- 位置情報付き
+
+MS -> CS: createSymbolsList(parsedSymbols)
+activate CS
+CS -> CS: シンボルの分類と整理
+CS -> CS: dualチャンネル別のリスト作成
+CS --> MS: CompileSymbols[][]
+deactivate CS
+
+MS --> C: パース結果（シンボルリスト）
+deactivate MS
+deactivate MS
+
+note over C: 次の段階：ブロック構造への変換
+
+@enduml 

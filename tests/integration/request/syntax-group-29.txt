@@ -1,0 +1,37 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { /||5|5|6|8~~~:step(432f):stroke(1/4) }
+>> { 3|3|6|8|~~~:step(rrrf):stroke(1/4) }
+
+@@ {
+  Em~
+}
+
+@@ {
+  Em~
+} >> {
+  /4/4-5n-7-5-4:1/16
+  @offset
+  12|||||12~
+}
+
+@@ {
+  Cm7~
+} >> {
+  4/4-5-7-5-4:1/16
+  @offset
+  12|||||12~
+}
+
+@@ {
+  Em~
+} >> {
+  4/4-5-7-5-4:1/16
+  @offset
+  12|||||12~
+}

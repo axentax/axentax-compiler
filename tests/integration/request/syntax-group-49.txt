@@ -1,0 +1,43 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ A|E|A|D|G|B|E {
+  // C:m
+  4/2-4-5:1/16 Cm^
+  12|0|2|2|0|0|0:step(f(16m)723456):1/8
+}
+
+@@ {
+  // 2|0|2|2|0|0:step(123456):1/8
+  D
+}
+
+@@ {
+  D
+} >> 5/5 {
+  // 12|:to 0|
+  // @offset // Auftakt対策
+  // 2|||||2!300>>5|||||5
+  5/5-4-2:m:1/16
+}
+
+@@ {
+  E~~~:stroke(1/4)
+}
+
+
+
+@@ 1/4 {
+
+  ||||15|12~~~:bd(
+    0..4/8 cho 1
+  )
+
+  // groupサンプル
+  // { C { D E:bd(1..2/4 vib) }:map(1):bd( 0..4/8 cho 2 ) }:bd( 0..4/8 cho 1 )
+
+}

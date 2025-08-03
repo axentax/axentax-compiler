@@ -1,0 +1,35 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { |||||12 } >> { Em:step(f) }
+
+
+@@ { @click |||||10~~~ }
+@@ {
+  |||5^ |||7^ @offset |||||12
+  @/click
+} >> {
+  2|||^ 3|||^ @offset ||||12
+}
+
+@@ {
+  // @click
+  '''C13:13/16
+  4/2-4-5:1/16
+  12|0|2|2|0|0:step((16)2345.6):1/8
+} >> 1/4 {
+    @offset
+  |||2|2|2~~~~~
+}
+
+@@ A|E|A|D|G|B|E {
+  // C:m
+  4/2-4-5:1/16 Cm^
+  12|0|2|2|0|0|0:step(f6723456):1/8
+} >> A|E|A|D|G|B|E {
+  ||||||5
+}

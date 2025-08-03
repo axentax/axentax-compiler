@@ -1,0 +1,31 @@
+export * from "./conductor/interface/style";
+export * as XUtils from "./conductor/utils/x-utils";
+export { Conductor } from "./conductor/conductor";
+export { CSymbolType } from "./conductor/interface/compile";
+export { ScaleNameKeys } from "./conductor/diatonic-and-scale/mod-scale";
+export { SysSettings } from "./conductor/x-var";
+export { Base12Sym } from "./conductor/utils.vers";
+export { bdView } from "./conductor/compile-style/resolve-bendX";
+export { toView } from "./conductor/compile-style/resolve-slide";
+export { inView } from "./conductor/compile-style/resolve-approach";
+
+export type { Conduct, LocationInfo, BraceLocationInfo } from "./conductor/interface/conduct";
+export type { ConvertToObj } from "./conductor/conductor";
+export type { Region } from "./conductor/interface/region";
+export type { StepInfo } from "./conductor/compile-view/view-model-builder"; 
+export type * from "./conductor/interface/bpm";
+export type * from "./conductor/interface/style";
+export type * from "./conductor/interface/tab";
+export type * from "./conductor/interface/utils.interface";
+export type * from "./conductor/interface/bend";
+
+export type *  from "./conductor/interface/flash";
+export type * from "./conductor/interface/settings";
+export type * from "./conductor/interface/conduct";
+export type * from "./conductor/interface/bpm";
+
+export * from "./conductor/interface/utils.response.interface";
+export * from "./conductor/utils/x-midi-note-utils";
+export * as XTickUtils from "./conductor/utils/x-tick-utils";
+
+export * as XCommonUtils from "./conductor/utils/x-utils";

@@ -1,0 +1,33 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ 250 4/4 {
+
+  C
+  Dm
+  Em
+  Fmaj7
+  G7:step(f123)
+} >> 3/4 {
+  |3:map(0..7)
+} >> {
+  |5:map(0..7)
+}
+
+@@ { Em~ D7~:map(0 step 2 * 3) }
+
+@@ { Fm7b5~~ Em:step(D^d^d^) }
+
+@@ { 6|5|4|3|2|1:step(123456) }:%(F# harmonic minor)
+
+@@ {
+  {
+    {
+      { C D E }:map(1)
+    }:map(2)
+  }:map(3)
+}

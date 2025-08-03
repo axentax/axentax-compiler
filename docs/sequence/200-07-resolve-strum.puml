@@ -1,0 +1,81 @@
+@startuml resolve-strum
+title ストラム処理シーケンス (resolve-strum.ts)
+
+participant "ResolveStrum" as RS
+participant "Conduct" as C
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "StrumInfo" as SI
+participant "XUtils" as XU
+
+RS -> RS: resolve(conduct, mixes)
+activate RS
+
+note right of RS: flatTOListの各TabObjを処理
+
+loop flatTOListの各TabObj
+    RS -> TO: ストラムスタイルの確認
+    activate TO
+    
+    alt ストラムスタイルが存在する場合
+        RS -> RS: core(conduct, flatTOList, marks, to, ti, strum)
+        activate RS
+        
+        note right of RS: 1. コード情報の取得
+        RS -> TO: コード情報の確認
+        alt コード情報が存在する場合
+            RS -> TO: chordType, chordKey, chordFingering取得
+            
+            note right of RS: 2. ストラム情報の作成
+            RS -> SI: createStrumInfo(chordFingering, strum)
+            activate SI
+            
+            note right of SI: フィンガリング分析
+            SI -> SI: 使用フレットの確認
+            SI -> SI: ストローク方向の決定
+            SI -> SI: ノート数とタイミングの計算
+            
+            SI --> RS: StrumInfo
+            deactivate SI
+            
+            note right of RS: 3. ストラムノートの作成
+            RS -> RS: createStrumNotes(conduct, to, strumInfo)
+            activate RS
+            
+            note right of RS: 各フレットごとのノート作成
+            loop フィンガリングの各フレット
+                RS -> RS: 新しいTabObjの作成
+                RS -> RS: タイミングとピッチの設定
+                RS -> RS: ベロシティとエクスプレッションの調整
+                note right of RS: ストラム特有の音量カーブ適用
+            end
+            
+            RS --> RS: ストラムノートリスト
+            deactivate RS
+            
+            note right of RS: 4. 原ノートの調整
+            RS -> TO: 原ノートの音量調整
+            RS -> TO: ストラムフラグの設定
+            
+            note right of RS: 5. ストラムノートの挿入
+            RS -> M: flatTOList.splice(ti + 1, 0, ...strumTabObjList)
+            
+        else コード情報が存在しない場合
+            note right of RS: エラー処理: ストラム指定されているが\nコード情報が不足
+            RS -> TO: エラーフラグの設定
+        end
+        
+        RS --> RS: ストラム処理完了
+        deactivate RS
+    end
+    
+    TO --> RS: TabObj処理完了
+    deactivate TO
+end
+
+RS --> C: 全ストラム処理完了
+deactivate RS
+
+note over C: ストラム処理の特徴\n- コード奏法の自動展開\n- ストローク方向による自然なタイミング\n- フィンガリングに基づく音の分離\n- 音量カーブによるリアルな表現
+
+@enduml

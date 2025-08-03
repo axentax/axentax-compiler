@@ -1,0 +1,21 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { C:step(d d d) } //>> { { C r F r Em r}:1/8 }
+
+@@ { 4/3-4-5 }
+
+@@ { |||||12~~~:bd(0..16/16 2) r~~~  } >> { 0|~~~ Em:step((16)234) }:v40
+@@ { 0|~~~ Em:step((16)432) }:v40 >> { |||||12~~~:bd(0..16/16 2) }
+
+@@ {
+  ||||15|~~~:bd(
+    0..1/4 2
+    1..7 1 vib
+    12.. -2
+  )
+}

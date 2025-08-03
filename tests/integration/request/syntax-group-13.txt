@@ -1,0 +1,25 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  {
+    {
+      { C D E }:map(1)
+    }:map(2)
+  }:map(3)
+}
+
+
+@@ 100 1/8 {
+  { C }:map(0, 3)
+}
+
+@@ { r }
+
+@@ { Em7 @offset 0|0| r r } >> { r 12|12| 0| } >> { r r ||||12|12 }
+
+@@ { Em~~~~~ } >> { ||||2:map(0..9) }

@@ -1,0 +1,107 @@
+@startuml esinst-step-processing
+title ESInst ステップ処理シーケンス
+
+participant "ModStyleValidation" as MSV
+participant "ParsedStep" as PS
+participant "SteppedProcessor" as SP
+participant "CompileSymbols" as CS
+participant "Styles" as ST
+participant "ESInst" as ESI
+
+note over MSV: ステップ記号の解析とESInst変換
+
+MSV -> MSV: parseStepSymbols(stepSymbol)
+activate MSV
+
+note right of MSV: ステップ記号文字列の解析\n例: "n123", "m45", "D6", "u12"
+
+MSV -> MSV: 楽器記号の抽出
+activate MSV
+
+alt 楽器記号が見つかった場合
+    MSV -> MSV: mapStepSymbolToInstrument(symbol)
+    activate MSV
+    
+    note right of MSV: ステップ記号 → ESInstマッピング
+    alt symbol === 'n'
+        MSV -> ESI: ESInst.normal
+    else symbol === 'm'
+        MSV -> ESI: ESInst.mute
+    else symbol === 'M'
+        MSV -> ESI: ESInst.muteContinue
+    else symbol === 'D'
+        MSV -> ESI: ESInst.brushing_D
+    else symbol === 'd'
+        MSV -> ESI: ESInst.brushing_d
+    else symbol === 'U'
+        MSV -> ESI: ESInst.brushing_U
+    else symbol === 'u'
+        MSV -> ESI: ESInst.brushing_u
+    else symbol === 'N'
+        MSV -> ESI: ESInst.normalUnContinueForStep
+    end
+    
+    MSV -> PS: parsedStep.inst = mappedESInst
+    MSV --> MSV: 楽器マッピング完了
+    deactivate MSV
+else 楽器記号が未指定
+    MSV -> PS: parsedStep.inst = undefined
+    note right of PS: 後でデフォルト値設定
+end
+
+MSV -> PS: 弦番号とその他の情報設定
+MSV --> MSV: ステップ解析完了
+deactivate MSV
+deactivate MSV
+
+note over SP: ステップ処理でのESInst適用
+
+SP -> SP: processStep(sym, parsedStep)
+activate SP
+
+note right of SP: 各ステップでのESInst決定と適用
+
+loop parsedStepリストの各要素
+    SP -> PS: currentParsedStep.instの確認
+    activate PS
+    
+    alt parsedStep.inst !== undefined
+        PS --> SP: ユーザー指定のESInst
+        SP -> ST: currentStyle.inst = parsedStep.inst
+        note right of ST: ステップで明示指定された楽器音色
+    else parsedStep.inst === undefined
+        PS --> SP: undefined
+        
+        alt sym.decidedProp.styles.inst !== undefined
+            SP -> CS: 親スタイルのESInst取得
+            activate CS
+            CS --> SP: 継承ESInst
+            deactivate CS
+            SP -> ST: currentStyle.inst = 継承ESInst
+            note right of ST: 親から継承した楽器音色
+        else 両方ともundefined
+            SP -> ST: currentStyle.inst = ESInst.normal
+            note right of ST: デフォルトの通常音色
+        end
+    end
+    
+    deactivate PS
+    
+    note right of SP: ステップでのContinue論理制御
+    alt stepIndex !== 0 && (inst === ESInst.normal || inst === ESInst.muteContinue)
+        SP -> ST: currentStyle.continue = true
+        note right of ST: 前の音を継続\n(normalとmuteContinueのみ)
+    else stepIndex === 0 || その他の楽器音色
+        SP -> ST: currentStyle.continue = false
+        note right of ST: 音を分離
+    end
+    
+    SP -> SP: TabObj作成とスタイル適用
+end
+
+SP --> SP: ステップ処理完了
+deactivate SP
+
+note over MSV, SP: ステップ処理でのESInst特徴\n- 記号文字から直接ESInstにマッピング\n- フォールバック: ステップ指定 → 親継承 → デフォルト(normal)\n- normal/muteContinueのみがstep間で継続\n- normalUnContinueForStepは継続しない特殊音色
+
+@enduml

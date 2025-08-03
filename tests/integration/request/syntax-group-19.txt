@@ -1,0 +1,31 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  {
+    {
+      C:step(fff)
+    }:step(123456)
+  }
+}
+
+
+
+@@ 100 4/4 {
+ { C 2|||||2 rn |2|2| rn |5|5| rn |7|7~~ |2|2| }:1/4
+ { C Dm Em 0|2|2 ||2||7 ..5| C }
+}
+
+@@ { r }
+
+@@ 160 {
+  {
+    { 4| 2|:leg /|||4| |||6|:leg }:1/16:map(1 step 22 * 8)
+  }
+}
+
+@@ { { /||||2| }:map(0..2) }

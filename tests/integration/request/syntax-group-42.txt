@@ -1,0 +1,29 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { |||||4:bd(0..16/16 2) }
+
+@@ { Em:step(f123456):bd() ..|~~~~~~~:bd(0../16 vib 2):v1 }
+@@ { Em~:step((16)432):bd(2../16 -2, reset) }
+
+@@ {
+  ||||15|~~~:bd(
+    0..1/24 2
+    1..7 1 vib
+    12.. -2
+  )
+}
+
+@@ 160 {
+  @click
+  Em:2/1
+  @/click
+} >> {
+  { 5/12-14-15 }:1/8
+  @offset
+  |||||12~~~~~:bd(0..2/12 2, 4.. 1 vib):to(low) ..|:1/8
+}

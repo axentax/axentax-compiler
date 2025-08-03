@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="/assets/js/libfluidsynth-2.3.0.js?20240303_3"></script>
+  <script type="text/javascript" src="/assets/js/js-synthesizer.js?20240303_3"></script>
+  <link rel="preload" as="script" href="/assets/js/js-synthesizer.worklet.js?20240303_5" />
+</head>
+
+<style>
+  body { background: #000; color: #999; font-size: 140% }
+</style>
+
+<body>
+  <h3>Demo</h3>
+  <div id="progress2" style="width:300px; display: inline-block;">
+    0:00 / 0:00
+  </div>
+  <p>
+    <button type="button" onclick="playMusic()" id="myInput">Play</button> Status: <span id="PlayingStatus">Stopped</span>
+  </p>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+
+      console.log("key", event.keyCode)
+
+      // キーコード32はスペースキーを示します
+      if (event.keyCode === 32 || event.keyCode === 69) {
+        // デフォルトのスペースキーの動作（ページスクロールなど）を防ぐ
+        event.preventDefault();
+
+        // ショートカットキーを割り当てたい要素をフォーカスする
+        // document.getElementById('myInput').focus();
+
+        playMusic()
+      }
+    });
+  </script>
+
+  <div>
+    <input style="width:555px;" id="progress" type="range" step="1" value=0
+      ontouchstart="this.onmousedown=null;this.onmouseup=null;this.onmousemove=null; progress_onmousedown()"
+      ontouchend="progress_onmouseup()" ontouchmove="progress_onmousemove()" onmouseup="progress_onmouseup()"
+      onmousemove="progress_onmousemove()">
+  </div>
+
+  <script async="async" src="/assets/js/sample.js?3" type="text/javascript"></script>
+
+  <div id="noteRows" style="
+    width: 620px;
+    height: 100%;
+    min-height:40px;
+    color:#575757;
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    /* background: #181818; */
+    padding: 10px;
+  "></div>
+  <script>
+    const noteRows = {noteRows};
+  </script>
+
+  <!--
+    Bend
+  -->
+  <div style="width: 600; height: 200">
+    <canvas id="myLineChart"></canvas>
+  </div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script>
+  var ctx = document.getElementById("myLineChart");
+
+  var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {label},
+      datasets: [
+        {
+          data: {bendArr},
+          borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        },
+      ],
+    }
+    });
+  </script>
+
+
+
+</body>
+
+</html>

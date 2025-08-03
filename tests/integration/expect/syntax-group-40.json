@@ -1,0 +1,548 @@
+{
+  "hasError": false,
+  "error": null,
+  "expectation": {
+    "mixesList": [
+      {
+        "flatTOList": [
+          {
+            "noteStr": "|||||24",
+            "syntaxLocation": {
+              "row": "",
+              "line": 8,
+              "linePos": 6,
+              "endLine": 8,
+              "endPos": 13
+            },
+            "tabObjId": 0,
+            "regionIndex": 0,
+            "regionNoteIndex": 0,
+            "note": "|||||24",
+            "tab": [
+              24,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              24,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              70,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                480,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                960,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 480,
+              "stopTick": 960
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 0,
+            "activeBows": [
+              24,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              1
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "1/12-13",
+            "extendInfo": {
+              "bullet": {
+                "row": "12",
+                "index": 0
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 10,
+              "linePos": 22,
+              "endLine": 10,
+              "endPos": 24
+            },
+            "tabObjId": 1,
+            "regionIndex": 1,
+            "regionNoteIndex": 0,
+            "note": "||||||12",
+            "tab": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              70,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                960,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                1440,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 960,
+              "stopTick": 1440
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              12,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              7
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "1/12-13",
+            "extendInfo": {
+              "bullet": {
+                "row": "13",
+                "index": 1
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 10,
+              "linePos": 25,
+              "endLine": 10,
+              "endPos": 27
+            },
+            "tabObjId": 2,
+            "regionIndex": 1,
+            "regionNoteIndex": 1,
+            "note": "||||||13",
+            "tab": [
+              13,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              13,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              70,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                1440,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                1920,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 1440,
+              "stopTick": 1920
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              13,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              7
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "flatTOList": [
+          {
+            "noteStr": "Em:step(f)",
+            "extendInfo": {
+              "stepInfoId": {
+                "id": 0,
+                "orderCount": 0
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 8,
+              "linePos": 29,
+              "endLine": 8,
+              "endPos": 30
+            },
+            "tabObjId": 0,
+            "regionIndex": 0,
+            "regionNoteIndex": 0,
+            "note": "Em",
+            "tab": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "trueTab": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "velocity": [
+              70,
+              70,
+              70,
+              70,
+              75,
+              82
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                480,
+                473,
+                466,
+                459,
+                452,
+                445
+              ],
+              "fretStopTicks": [
+                960,
+                960,
+                960,
+                960,
+                960,
+                960
+              ],
+              "startTick": 480,
+              "stopTick": 960
+            },
+            "bpm": 120,
+            "isArpeggio": true,
+            "isBullet": 0,
+            "activeBows": [
+              0,
+              0,
+              0,
+              2,
+              2,
+              0
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              3,
+              4
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "2/12-13",
+            "extendInfo": {
+              "bullet": {
+                "row": "12",
+                "index": 0
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 10,
+              "linePos": 51,
+              "endLine": 10,
+              "endPos": 53
+            },
+            "tabObjId": 1,
+            "regionIndex": 1,
+            "regionNoteIndex": 0,
+            "note": "|||||12",
+            "tab": [
+              null,
+              12,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              12,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                960,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                1440,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 960,
+              "stopTick": 1440
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              12,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          },
+          {
+            "noteStr": "2/12-13",
+            "extendInfo": {
+              "bullet": {
+                "row": "13",
+                "index": 1
+              }
+            },
+            "syntaxLocation": {
+              "row": "",
+              "line": 10,
+              "linePos": 54,
+              "endLine": 10,
+              "endPos": 56
+            },
+            "tabObjId": 2,
+            "regionIndex": 1,
+            "regionNoteIndex": 1,
+            "note": "|||||13",
+            "tab": [
+              null,
+              13,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "trueTab": [
+              null,
+              13,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "velocity": [
+              null,
+              70,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "continueX": false,
+            "bar": {
+              "tick": 480,
+              "fretStartTicks": [
+                null,
+                1440,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "fretStopTicks": [
+                null,
+                1920,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "startTick": 1440,
+              "stopTick": 1920
+            },
+            "bpm": 120,
+            "isArpeggio": false,
+            "isBullet": 1,
+            "activeBows": [
+              null,
+              13,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "slideLandingTab": [],
+            "locationIndexes": [
+              10
+            ],
+            "untilNext": [
+              1,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "flatTOList": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ 160 {
+  ||||10>>||||19~:to(low)
+  ||||10>>||||20~:to(low)
+  ||||10>>||||22~:to(low)
+  ||||10>>||||20~~~~~:bd(
+    1..2/8 cho 0.5
+    2..3 cho 0
+    3..4 cho 0.4
+    4..5 cho 0
+    5..6 cho 0.5
+    6..7 cho 0
+    7..8 cho 0.45
+    9..10 cho 0
+    11..12 cho 0.45
+    12.. cho 0
+  ):to(low.5)
+  2|2|0|~~~:stroke(1/4)
+}
+
+@@ 160 {
+  ||||2!500>>||||17~~~~~~~:bd(
+    1..2/16 cho 0.7
+    2..3 cho 0
+    3..4 cho 1
+    4..5 cho 0
+    5..6 cho 1
+    6..7 cho 0
+    7..8 cho 1
+    8.. cho 0
+  )
+}
+
+@@ {
+  // ||||12|!240>>||||15|
+  { |||3~~~~~~ }:bd(
+    1..8/16 cho 2
+    8..10 vib 0.5
+    10..14 vib 0.5
+    // 12..14 vib 0.5
+    14..16 vib 0.5
+  )
+
+  0| ..|:bd(0..1/4 vib 1) // エラーが出ないか確認(Cannot write negative variable-length integer)
+}
+
+@@ { Em } >> { Em7 }:v20
+@@ { Em }:v20 >> { Em7 }

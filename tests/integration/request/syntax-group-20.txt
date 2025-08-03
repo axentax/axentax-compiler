@@ -1,0 +1,17 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { C:to 10|r|r|r|r|10 Em:to 12|||||12  }
+
+
+@@ { r }
+
+@@ { Em7 @offset 0|0| r r } >> { r 12|12| 0| } >> { r r ||||12|12 }
+
+@@ { Em~~~~~ } >> { ||||2:map(0..9) }
+
+@@ { Am~~~~~ } >> { 0|:map(1..5) }

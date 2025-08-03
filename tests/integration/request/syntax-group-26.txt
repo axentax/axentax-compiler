@@ -1,0 +1,45 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { r }
+
+@@ 160 {
+  {
+    1/12 1/15-12:leg 2/15 2/12:leg 
+    /3/14~~~:bd(..4/16 vib, .. -2) 3/12 3/14-12:leg 4/14 4/12:leg
+    1/12:1/4:bd(vib)
+    ||2~~~ |4:leg |8:leg r
+    |2~~~ |4:leg |8:leg r
+  }:1/16:map(0, 7)
+}
+
+@@ 160 {
+  |2||||:map(1,2)
+}:degree(E minor 7th):scale(E dorian) // ダイアトニックではなく、スケール必要
+
+@@ 140 {
+  {
+    |0||2|| |||5:leg |||4~~~:leg:to& ||5||~~~~~~~:bd(.. 2)
+    0|||2|| |||5:leg |||4~~~:leg |||5~:leg |||5|~~~~~~~:bd(vib)
+    Em:stroke(1/4):step(f...2534) 2/5-7-8-r 1/5-7-8-r-7-8
+    2/5 4/2 3/7-8-9-10-11-12 Am7:step(ffduffdu)
+  }:1/16:map(0 step 9 * 2)
+}
+
+@@ 160 {
+  {
+    |||5|5|5
+    |||5|2|5
+    |||5|3|5
+    |||5|5|5
+  }:step(fD^u^d^)
+  |||5|5|5:step(fD^u^d^f.......)
+}:1/8:v70 >> {
+  |||||12:to& ..|||||7:bd(vib)
+  |||||12:to ..|||||5:bd(vib)
+  |||||12:to(hi) /..||||8|~~:bd(vib)
+}

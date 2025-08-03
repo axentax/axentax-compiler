@@ -1,0 +1,118 @@
+@startuml resolve-approach
+title アプローチ処理シーケンス (resolve-approach.ts)
+
+participant "ResolveApproach" as RA
+participant "Conduct" as C
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "SlideInfo" as SI
+participant "SlideableRange" as SR
+participant "Marks" as MK
+
+RA -> RA: resolve(conduct, mixes)
+activate RA
+
+note right of RA: flatTOListの各TabObjを処理
+
+loop flatTOListの各TabObj
+    RA -> TO: アプローチスタイルの確認
+    activate TO
+    
+    alt アプローチスタイルが存在し、slideTrueType !== 2の場合
+        RA -> RA: core(conduct, flatTOList, marks, to, ti, slide)
+        activate RA
+        
+        note right of RA: 1. 開始点と着地点の取得
+        RA -> TO: 開始弦の取得\n- cSlide.bowWithFret（アプローチ指定弦）
+        RA -> TO: 着地弦の取得\n- to.tab（目標音の弦）
+        
+        note right of RA: 2. スライド情報の作成
+        RA -> SI: createSlideInfo(startBows, landingBows)
+        activate SI
+        
+        note right of SI: アプローチ用スライド情報作成
+        SI -> SI: 開始点と着地点が両方存在する弦を対象
+        SI -> SI: 移動量と方向の計算\n- slideWidth = landingFret - startFret\n- direction = slideWidth > 0 ? 1 : -1
+        SI -> SI: 開放弦フラグの設定
+        
+        SI --> RA: SlideInfo[]
+        deactivate SI
+        
+        alt スライド対象弦が存在しない場合
+            RA -> TO: slideTrueType = 2
+            RA --> RA: 処理完了
+        else スライド対象弦が存在する場合
+            note right of RA: 3. 最大スライド幅の計算
+            RA -> SI: 最大スライド幅の取得
+            RA -> RA: maxWidth = Math.max(...slideInfos.map(m => m.slideWidth))
+            
+            note right of RA: 4. スライド可能領域の計算
+            RA -> SR: setStartTickWithCalcEditableArea(to, slideTickInfo, slideInfos, [0, 1])
+            activate SR
+            
+            note right of SR: 開始可能・停止可能ティックの計算
+            SR -> SR: startableTick = 各弦の開始点で最も遅いティック
+            SR -> SR: stopableTick = 各弦の停止点で最も早いティック
+            SR -> SR: ユーザー設定開始点の調整（アプローチは[0, 1]固定）
+            
+            SR --> RA: スライド可能領域
+            deactivate SR
+            
+            note right of RA: 5. ベースティックの計算
+            RA -> RA: getBaseTick(conduct, slideTickInfo, cSlide.percentOfSpeed || 0)
+            activate RA
+            
+            note right of RA: スピード設定に基づくベースティック計算
+            RA -> RA: baseTick = スピード設定による基本ティック
+            RA -> RA: maxSplitTick = 最大分割ティック
+            RA -> RA: splitTick = baseTick / maxWidth（最大値制限あり）
+            
+            RA --> RA: ベースティック情報
+            deactivate RA
+            
+            note right of RA: 6. アプローチノートの作成
+            RA -> RA: createSlideNote(conduct, to, slideTickInfo, slideInfos, splitTick, maxWidth)
+            activate RA
+            
+            note right of RA: アプローチノートの作成処理
+            RA -> RA: 音量設定の初期化
+            RA -> RA: アプローチ分のレイヤー作成
+            
+            loop スライド幅分
+                RA -> RA: 新しいTabObjの作成
+                RA -> RA: フレット位置とティックの設定
+                RA -> RA: 音量の減衰処理
+                RA -> RA: アプローチ専用設定\n- noteStr = '#approach'\n- slideTrueType = 4
+            end
+            
+            RA --> RA: アプローチノートリストと着地音量
+            deactivate RA
+            
+            note right of RA: 7. アプローチノートの挿入
+            RA -> M: flatTOList.splice(ti, 0, ...slideTabObjList)
+            RA -> MK: fullNoteIndexWithTick.splice(ti, 0, ...Array(slideTabObjList.length).fill(-1))
+            
+            note right of RA: 8. 着地点ノートの調整
+            RA -> TO: 着地点ノートの音量設定\n- to.velocity = landingVelocity
+            RA -> TO: slideTrueType = 2
+            
+            note right of RA: 9. 着地点ノートのティック調整
+            loop スライド対象弦
+                RA -> TO: 着地点ノートの開始ティック調整\n- to.bar.fretStartTicks[bowIndex] += splitTick * maxWidth
+            end
+        end
+        
+        RA --> RA: アプローチ処理完了
+        deactivate RA
+    end
+    
+    TO --> RA: TabObj処理完了
+    deactivate TO
+end
+
+RA --> C: 全アプローチ処理完了
+deactivate RA
+
+note over C: アプローチ処理の特徴\n- 目標音への滑らかな接近を実現\n- アプローチノートによる自然な音程変化\n- スピード設定による演奏速度の制御\n- 着地点ノートとの音量バランス調整
+
+@enduml 

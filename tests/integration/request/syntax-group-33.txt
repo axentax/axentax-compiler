@@ -1,0 +1,12 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {}
+@@ {}
+@@ {}
+@@ {}
+@@ {}

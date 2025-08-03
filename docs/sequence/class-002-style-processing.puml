@@ -1,0 +1,213 @@
+@startuml style-processing-classes
+title スタイル処理クラス図
+
+!define FONT_SIZE 12
+skinparam defaultFontSize FONT_SIZE
+
+package "スタイル処理コントローラー" {
+    
+    class CompileStyle {
+        +{static} compile(conduct: Conduct): IResult<void, ErrorBase>
+        -{static} resolveBPM(conduct: Conduct): IResult<void, ErrorBase>
+        -{static} mathBPMTime(conduct: Conduct): void
+        -{static} resolveClicks(conduct: Conduct): void
+        -{static} processDualChannels(conduct: Conduct): IResult<void, ErrorBase>
+    }
+}
+
+package "BPMとタイミング処理" {
+    
+    class ResolveBPM {
+        +{static} resolve(conduct: Conduct): IResult<void, ErrorBase>
+        +{static} mathBPMTime(conduct: Conduct): void
+        -{static} parseBPMChanges(conduct: Conduct): BPMPos[]
+        -{static} calculateTimings(conduct: Conduct): void
+    }
+
+    class ResolveClicks {
+        +{static} resolve(conduct: Conduct): void
+        -{static} generateClickPoints(conduct: Conduct): ClickPoint[]
+        -{static} applyClickSettings(conduct: Conduct): void
+    }
+}
+
+package "音の表現処理" {
+    
+    class ResolveSlide {
+        +{static} resolve(conduct: Conduct, mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(conduct: Conduct, flatTOList: TabObj[], marks: Marks, to: TabObj, ti: number, slide: StyleSlide): void
+        -{static} createSlideInfo(startBows: number[], landingBows: number[], slide: StyleSlide): SlideInfo[]
+        -{static} createSlideInfoForRelease(startBows: number[], landingBows: number[], slide: StyleSlide): SlideInfo[]
+        -{static} buildSplitWidth(conduct: Conduct, to: TabObj, slide: StyleSlide, slideTickInfo: SlideTickInfo, slideInfos: SlideInfo[]): number[]
+        -{static} createSlideNote(conduct: Conduct, to: TabObj, slideTickInfo: SlideTickInfo, slideInfos: SlideInfo[], splittedWidth: number[]): TabObj[]
+    }
+
+    class ResolveApproach {
+        +{static} resolve(conduct: Conduct, mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(conduct: Conduct, flatTOList: TabObj[], marks: Marks, to: TabObj, ti: number, approach: StyleApproach): void
+        -{static} createApproachInfo(to: TabObj, approach: StyleApproach): ApproachInfo[]
+        -{static} createApproachNote(conduct: Conduct, to: TabObj, approachInfo: ApproachInfo[]): TabObj
+    }
+
+    class ResolveBendX {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, bendX: StyleBendX): void
+        -{static} resolveBendXChoking(mixes: Mixes, to: TabObj, ti: number, bendX: StyleBendX): void
+        -{static} resolveBendXVibrate(mixes: Mixes, to: TabObj, ti: number, bendX: StyleBendX): void
+        -{static} createBendCurve(startTick: number, stopTick: number, pitch: number, bendType: BendType): BendInfo[]
+    }
+
+    class ResolveLegato {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, legato: StyleLegato): void
+        -{static} analyzeShiftWidth(startTabObj: TabObj, legatoTabObj: TabObj): ShiftAnalyzeResult
+        -{static} applyLegatoEffect(startTabObj: TabObj, legatoTabObj: TabObj, shiftResult: ShiftAnalyzeResult): void
+        -{static} createVelocityLegato(startTabObj: TabObj, legatoTabObj: TabObj): void
+        -{static} createBendLegato(startTabObj: TabObj, legatoTabObj: TabObj, shiftResult: ShiftAnalyzeResult): void
+    }
+
+    class ResolveStroke {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, stroke: StyleStroke): void
+        -{static} determineStrokeValue(to: TabObj, stroke: StyleStroke): number
+        -{static} applyStrokeAdjustment(mixes: Mixes, to: TabObj, strokeValue: number): void
+        -{static} shiftOrRemoveAllPriorTargetIncludedInTick(mixes: Mixes, to: TabObj, strokeValue: number): void
+    }
+
+    class ResolveStrum {
+        +{static} resolve(conduct: Conduct, mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(conduct: Conduct, flatTOList: TabObj[], marks: Marks, to: TabObj, ti: number, strum: StyleStrum): void
+        -{static} createStrumInfo(chordFingering: number[], strum: StyleStrum): StrumInfo
+        -{static} createStrumNotes(conduct: Conduct, to: TabObj, strumInfo: StrumInfo): TabObj[]
+    }
+
+    class ResolveStaccato {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, staccato: StyleStaccato): void
+        -{static} calcStaccatoStopTick(startTick: number, originalStopTick: number, ratio: number): number
+    }
+
+    class ResolveDelay {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, delay: StyleDelay): void
+        -{static} applyDelayOffset(to: TabObj, delayOffset: number): void
+    }
+
+    class ResolveMuteNoise {
+        +{static} resolve(mixes: Mixes): IResult<void, ErrorBase>
+        -{static} core(mixes: Mixes, to: TabObj, ti: number, muteNoise: MuteNoiseStyle): void
+        -{static} createMuteNoiseEffect(to: TabObj, muteNoise: MuteNoiseStyle): void
+    }
+}
+
+package "スタイル情報" {
+    
+    interface SlideInfo {
+        +bowIndex: number
+        +startFret: number
+        +landingFret: number
+        +slideWidth: number
+        +direction: -1 | 0 | 1
+        +isOpenBowByStart: boolean
+        +isOpenBowByLanding: boolean
+    }
+
+    interface ApproachInfo {
+        +bowIndex: number
+        +approachFret: number
+        +landingFret: number
+        +slideInfo: SlideInfo
+    }
+
+    interface BendInfo {
+        +bowIndex: number
+        +startTick: number
+        +stopTick: number
+        +pitch: number
+        +bendType: BendType
+        +curve: BendCurve[]
+    }
+
+    interface StrumInfo {
+        +direction: StrokeDirection
+        +noteCount: number
+        +timing: number[]
+        +fingering: number[]
+    }
+
+    interface ShiftAnalyzeResult {
+        +isShiftPossible: boolean
+        +shiftWidth: number
+        +targetBows: number[]
+        +shiftDirection: -1 | 0 | 1
+    }
+
+    enum BendType {
+        CHOKING
+        VIBRATE
+        SLIDE_BEND
+    }
+
+    enum StrokeDirection {
+        UP
+        DOWN
+        AUTO
+    }
+}
+
+package "ユーティリティクラス" {
+    
+    class SlideableRange {
+        +{static} setStartTickWithCalcEditableArea(to: TabObj, slideTickInfo: SlideTickInfo, slideInfos: SlideInfo[], startUntil: number): void
+        -{static} calcStartableTick(slideInfos: SlideInfo[]): number
+        -{static} calcStopableTick(slideInfos: SlideInfo[]): number
+    }
+
+    class XUtilsObject {
+        +{static} deepCopy<T>(obj: T): T
+        +{static} removeCircularReferences(obj: any): void
+        +{static} mergeObjects(target: any, source: any): any
+    }
+
+    class UtilsCurves {
+        +{static} createBendCurve(startValue: number, endValue: number, steps: number, curveType: CurveType): number[]
+        +{static} applySmoothingCurve(values: number[], smoothness: number): number[]
+    }
+}
+
+' 関係性の定義
+CompileStyle ..> ResolveBPM : uses
+CompileStyle ..> ResolveClicks : uses
+CompileStyle ..> ResolveSlide : uses
+CompileStyle ..> ResolveApproach : uses
+CompileStyle ..> ResolveBendX : uses
+CompileStyle ..> ResolveLegato : uses
+CompileStyle ..> ResolveStroke : uses
+CompileStyle ..> ResolveStrum : uses
+CompileStyle ..> ResolveStaccato : uses
+CompileStyle ..> ResolveDelay : uses
+CompileStyle ..> ResolveMuteNoise : uses
+
+ResolveSlide --> SlideInfo : creates
+ResolveSlide ..> SlideableRange : uses
+ResolveApproach --> ApproachInfo : creates
+ResolveBendX --> BendInfo : creates
+ResolveBendX --> BendType : uses
+ResolveLegato --> ShiftAnalyzeResult : creates
+ResolveStroke --> StrokeDirection : uses
+ResolveStrum --> StrumInfo : creates
+
+ResolveSlide ..> XUtilsObject : uses
+ResolveBendX ..> UtilsCurves : uses
+ResolveLegato ..> XUtilsObject : uses
+
+' 処理順序の表示
+note top of CompileStyle : スタイル処理の順序:\n1. BPM解析\n2. クリック音処理\n3. 各dual毎の処理:\n   Legato → Staccato → Delay → Strum\n   → Stroke → Slide → Approach\n   → MuteNoise → BendX
+
+note top of ResolveSlide : 音程の滑らかな変化\n中間ノート作成\n音量減衰処理
+
+note top of ResolveLegato : 音の連結表現\nベロシティ調整\nベンド適用
+
+note top of ResolveBendX : チョーキング・ビブラート\nリアルタイム音程変化
+
+@enduml

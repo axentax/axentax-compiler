@@ -1,0 +1,10 @@
+{
+  "hasError": true,
+  "error": {
+    "message": "Unknown annotation token '@compose'.",
+    "line": 11,
+    "linePos": 3,
+    "token": "@compose"
+  },
+  "expectation": null
+}

@@ -1,0 +1,160 @@
+@startuml resolve-slide
+title スライド処理シーケンス (resolve-slide.ts)
+
+participant "ResolveSlide" as RS
+participant "Conduct" as C
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "SlideInfo" as SI
+participant "SlideableRange" as SR
+participant "Marks" as MK
+
+RS -> RS: resolve(conduct, mixes)
+activate RS
+
+note right of RS: flatTOListの各TabObjを処理
+
+loop flatTOListの各TabObj
+    RS -> TO: スライドスタイルの確認
+    activate TO
+    
+    alt スライドスタイルが存在する場合
+        RS -> RS: core(conduct, flatTOList, marks, to, ti, slide)
+        activate RS
+        
+        note right of RS: 1. 開始点と着地点の取得
+        RS -> TO: 開始弦の取得\n- strum適用済み: to.tab\n- 未適用: to.activeBows
+        RS -> TO: 着地弦の取得\n- slideLandingTab存在: to.slideLandingTab\n- 未存在: []
+        
+        note right of RS: 2. スライド情報の作成
+        alt スライドタイプが'to'の場合
+            RS -> SI: createSlideInfo(startBows, landingBows, slide)
+            activate SI
+            
+            note right of SI: 開始点と着地点のペア作成
+            SI -> SI: 開始点と着地点が両方存在する弦を対象
+            SI -> SI: 移動量と方向の計算\n- slideWidth = landingFret - startFret\n- direction = slideWidth > 0 ? 1 : -1
+            SI -> SI: 開放弦フラグの設定\n- isOpenBowByStart = startFret === 0\n- isOpenBowByLanding = landingFret === 0
+            
+            SI --> RS: SlideInfo[]
+            deactivate SI
+        else スライドタイプが'release'の場合
+            RS -> SI: createSlideInfoForRelease(startBows, landingBows, slide)
+            activate SI
+            
+            note right of SI: リリース用スライド情報作成
+            SI -> SI: 開始点が開放弦の場合は対象外
+            SI -> SI: 着地点推測（未来弦一致、弦不一致、全不一致）
+            SI -> SI: 着地点は0以下にしない制限
+            
+            SI --> RS: SlideInfo[]
+            deactivate SI
+        end
+        
+        alt スライド対象弦が存在しない場合
+            RS -> TO: slideTrueType = 1
+            RS --> RS: 処理完了
+        else スライド対象弦が存在する場合
+            note right of RS: 3. 最大スライド幅の計算
+            RS -> SI: 最大スライド幅の取得
+            RS -> RS: maxWidth = Math.max(...slideInfos.map(m => m.slideWidth))
+            
+            alt スライド幅が1より大きい場合（中間ノート作成が必要）
+                note right of RS: 4. スライド可能領域の計算
+                RS -> SR: setStartTickWithCalcEditableArea(to, slideTickInfo, slideInfos, slide.startUntil)
+                activate SR
+                
+                note right of SR: 開始可能・停止可能ティックの計算
+                SR -> SR: startableTick = 各弦の開始点で最も遅いティック
+                SR -> SR: stopableTick = 各弦の停止点で最も早いティック
+                SR -> SR: ユーザー設定開始点の調整\n- 開始可能範囲より後方の場合: ユーザー開始点\n- 前方の場合: 開始可能点
+                
+                SR --> RS: スライド可能領域
+                deactivate SR
+                
+                note right of RS: 5. スライド幅の分割
+                RS -> RS: buildSplitWidth(conduct, to, slide, slideTickInfo, slideInfos)
+                activate RS
+                
+                note right of RS: スライド幅配列の作成
+                RS -> RS: splitSlideWidth(startTick, stopTick, maxWidth - 1, slide)
+                activate RS
+                
+                note right of RS: スピードレベルに基づく分配
+                RS -> RS: inSpeedLevelによる分配値の調整
+                alt inSpeed === 'fast'の場合
+                    RS -> RS: 高速スタート（前のフレットに時間を分配）
+                else inSpeed === 'slow'の場合
+                    RS -> RS: 低速スタート（配列をリバース）
+                else inSpeed === 'mid'の場合
+                    RS -> RS: 均等分配
+                end
+                
+                RS --> RS: 分割されたスライド幅配列
+                deactivate RS
+                
+                alt 自動開始点調整が必要な場合
+                    RS -> RS: 演奏タイミングでのBPM取得
+                    RS -> RS: 最大スライド滞在時間の計算
+                    RS -> RS: 閾値との比較と調整
+                    note right of RS: stroke timing調整処理\n- 不整合タイミングの検出と修正\n- ピッキング方向との整合性確保
+                end
+                
+                RS --> RS: 最終的なスライド幅配列
+                deactivate RS
+                
+                note right of RS: 6. 開始点ノートのティック縮尺
+                RS -> TO: 開始点ノートの停止ティックを調整
+                loop スライド対象弦
+                    RS -> TO: refActiveBows[bowIndex].bar.fretStopTicks[bowIndex] = slideTickInfo.startTick
+                end
+                
+                note right of RS: 7. 中間ノートの作成
+                RS -> RS: createSlideNote(conduct, to, slideTickInfo, slideInfos, splittedWidth)
+                activate RS
+                
+                note right of RS: 中間ノートの作成処理
+                RS -> RS: 音量設定の初期化（開始ノートから複製）
+                RS -> RS: 減衰速度の計算
+                RS -> RS: スライド分のレイヤー作成
+                
+                loop 分割されたスライド幅配列
+                    RS -> RS: 音量の減衰処理
+                    RS -> RS: 新しいTabObjの作成
+                    RS -> RS: フレット位置とティックの設定
+                    RS -> RS: 音量の適用
+                end
+                
+                RS --> RS: 中間ノートリスト
+                deactivate RS
+                
+                note right of RS: 8. 中間ノートの挿入
+                RS -> M: flatTOList.splice(ti + 1, 0, ...slideTabObjList)
+                RS -> MK: fullNoteIndexWithTick.splice(ti + 1, 0, ...Array(slideTabObjList.length).fill(-1))
+            end
+            
+            note right of RS: 9. 着地点の音量調整（continue対応）
+            alt 次のノートが存在し、continueが有効で、次のノートが休符でない場合
+                RS -> TO: 次のノートの音量調整
+                loop スライド対象弦
+                    RS -> TO: nextTabObj.velocity[bowIndex] = 最大値(着地音量, 現在音量 - 減衰量) - 減衰速度
+                end
+            end
+            
+            RS -> TO: slideTrueType = 1
+        end
+        
+        RS --> RS: スライド処理完了
+        deactivate RS
+    end
+    
+    TO --> RS: TabObj処理完了
+    deactivate TO
+end
+
+RS --> C: 全スライド処理完了
+deactivate RS
+
+note over C: スライド処理の特徴\n- 音程の滑らかな変化を実現\n- 中間ノートによる自然なスライド表現\n- 音量減衰によるリアルな演奏効果\n- continue対応による音の連結
+
+@enduml 

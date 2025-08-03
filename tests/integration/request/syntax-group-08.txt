@@ -1,0 +1,30 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ 1/8 { { 4/0-2 }:map(0,1) }:map(0,5)
+@@ 1/8 { { ||0 ||2 }:map(0,1):map(0,5) }
+@@ 1/8 { { ||0 ||2 }:map(0,1) }:map(0,5)
+
+
+@@ 1/4 {
+  {
+    {
+      C:step((16)3(26)543):map(0,3):1/8
+      Em:map(0 step 3 * 4)
+    }
+  }:map(4,-2):bpm(100..300)
+
+  {
+    {
+      C:step((16)3(26)543):map(0,3):1/8
+      Em:map(0 step 3 * 4)
+    }
+  }:map(4,-2):bpm(300..40)
+
+}
+
+@@ {  }

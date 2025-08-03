@@ -1,0 +1,206 @@
+@startuml esinst-real-usage
+title ESInst 実際の使用パターン クラス図
+
+!define FONT_SIZE 12
+skinparam defaultFontSize FONT_SIZE
+
+package "ESInst定義" {
+    
+    enum ESInst {
+        +normal : string = "normal"
+        +mute : string = "mute"
+        +muteContinue : string = "muteContinue"
+        +rest : string = "rest"
+        +restNoise : string = "restNoise"
+        +brushing_d : string = "brushing_d"
+        +brushing_D : string = "brushing_D"
+        +brushing_u : string = "brushing_u"
+        +brushing_U : string = "brushing_U"
+        +strum : string = "strum"
+        +normalUnContinueForStep : string = "normalUnContinueForStep"
+    }
+
+    note top of ESInst : 楽器音色列挙型\n11種類の演奏技法を表現\n実装全体で一貫して使用
+
+    interface Styles {
+        +inst?: ESInst
+        +continue?: true
+        +strum?: StyleStrum
+        +approach?: StyleApproach
+        +slide?: StyleSlide
+        +legato?: StyleLegato
+        +staccato?: StyleStaccato
+        +stroke?: StyleStroke
+        +bendX?: StyleBendX[]
+        +delay?: StyleDelay
+        +velocity?: number
+        +velocityPerBows?: NumberOrUfd[]
+    }
+
+    interface ParsedStep {
+        +stepSym: string[]
+        +stringIndexes: number[] | undefined
+        +inst: ESInst
+        +suffix: string
+        +line: number
+        +startPos: number
+        +endPos: number
+    }
+}
+
+package "コア処理での使用" {
+    
+    class ModNotes {
+        +{static} initializeNote(sym: CompileSymbols): TabObj
+        -{static} determineContinueLogic(sym: CompileSymbols, hasNextContinueX: boolean): boolean
+        -{static} assignRestInstrument(sym: CompileSymbols): void
+        -{static} detectRestNotes(sym: CompileSymbols): boolean
+    }
+
+    class SteppedProcessor {
+        +{static} processStep(sym: CompileSymbols, parsedStep: ParsedStep): Styles
+        -{static} assignStepInstrument(parsedStep: ParsedStep, currentStyle: Styles): void
+        -{static} determineContinueForStep(inst: ESInst, stepIndex: number): boolean
+    }
+
+    class ResolveStrum {
+        +{static} resolve(conduct: Conduct, mixes: Mixes): SimpleResult<void>
+        -{static} assignStrumInstrument(strumTabObj: TabObj): void
+    }
+
+    class ModStyleValidation {
+        +{static} parseStepSymbols(stepSymbol: string): ParsedStep
+        -{static} mapStepSymbolToInstrument(symbol: string): ESInst
+    }
+}
+
+package "MIDI生成での使用" {
+    
+    class ModGuitarTimGM6mb {
+        +{static} build(bmrList: BuildMidiRequest[], bpmList: BPMPos[], clickList: ClickPoint[]): ArrayBuffer
+        +{static} resolveInstToTrackId(inst: ESInst, hasBend: boolean): TrackConfig
+        -{static} getVelocityAdjustment(inst: ESInst): number
+        -{static} getDurationOverride(inst: ESInst): number | undefined
+        -{static} determineMidiTrack(inst: ESInst, hasBend: boolean): number
+    }
+
+    interface TrackConfig {
+        +midiInst: number
+        +vel: number
+        +duration?: number
+    }
+
+    class BuildMidiRequest {
+        +tabObj: TabObj
+        +tick: number
+        +bowIndex: number
+        +fret: number
+        +velocity: number
+        +expression: number
+        +getInstrument(): ESInst
+    }
+}
+
+package "実際の使用パターン" {
+    
+    note as ContinueLogicPattern
+        **Continue論理マッピング**
+        ```
+        const continueX = {
+          [ESInst.normal]: styles.continue ? true : false,
+          [ESInst.mute]: false,
+          [ESInst.muteContinue]: true,
+          [ESInst.rest]: false,
+          [ESInst.restNoise]: false,
+          [ESInst.brushing_d]: false,
+          [ESInst.brushing_D]: false,
+          [ESInst.brushing_u]: false,
+          [ESInst.brushing_U]: false,
+          [ESInst.strum]: false,
+          [ESInst.normalUnContinueForStep]: false
+        }[inst]
+        ```
+    end note
+
+    note as MidiTrackMapping
+        **MIDIトラック・音量マッピング**
+        ```
+        return {
+          [ESInst.normal]: { midiInst, vel: 0 },
+          [ESInst.mute]: { midiInst, vel: -0.3 },
+          [ESInst.muteContinue]: { midiInst, vel: -0.3 },
+          [ESInst.rest]: { midiInst, vel: 0 },
+          [ESInst.restNoise]: { midiInst, vel: 0.28, duration: 1 },
+          [ESInst.brushing_d]: { midiInst, vel: -0.40, duration: 1 },
+          [ESInst.brushing_D]: { midiInst, vel: -0.25, duration: 1 },
+          [ESInst.brushing_u]: { midiInst, vel: -0.40, duration: 1 },
+          [ESInst.brushing_U]: { midiInst, vel: -0.25, duration: 1 },
+          [ESInst.strum]: { midiInst, vel: -0.25, duration: 1 },
+          [ESInst.normalUnContinueForStep]: { midiInst, vel: 0 }
+        }[inst]
+        ```
+    end note
+
+    note as StepSymbolMapping
+        **ステップ記号マッピング**
+        ```
+        parsedStep.inst = {
+          'n': ESInst.normal,
+          'm': ESInst.mute,
+          'M': ESInst.muteContinue,
+          'D': ESInst.brushing_D,
+          'd': ESInst.brushing_d,
+          'U': ESInst.brushing_U,
+          'u': ESInst.brushing_u,
+          'N': ESInst.normalUnContinueForStep
+        }[symbol]
+        ```
+    end note
+
+    note as RestDetection
+        **休符検出パターン**
+        ```
+        if (sym.decidedProp.styles.inst === ESInst.rest || 
+            sym.decidedProp.styles.inst === ESInst.restNoise) {
+          tabObj.isRest = true;
+        }
+        
+        if (sym.token === 'r') {
+          if (sym.decidedProp.styles.inst !== ESInst.restNoise) {
+            sym.decidedProp.styles.inst = ESInst.rest;
+          }
+        }
+        ```
+    end note
+}
+
+' 関係性の定義
+Styles --> ESInst : contains optional
+ParsedStep --> ESInst : contains required
+
+ModNotes ..> ESInst : uses for continue logic
+ModNotes ..> Styles : processes
+SteppedProcessor ..> ESInst : assigns and checks
+SteppedProcessor ..> ParsedStep : processes
+ResolveStrum ..> ESInst : assigns normal
+ModStyleValidation ..> ESInst : maps symbols to
+
+ModGuitarTimGM6mb ..> ESInst : maps to MIDI config
+ModGuitarTimGM6mb --> TrackConfig : returns
+BuildMidiRequest --> ESInst : contains via TabObj
+
+' パターンとの関係
+ModNotes ..> ContinueLogicPattern : implements
+ModGuitarTimGM6mb ..> MidiTrackMapping : implements
+ModStyleValidation ..> StepSymbolMapping : implements
+ModNotes ..> RestDetection : implements
+
+note top of ModNotes : **ノート初期化処理**\n- Continue論理の決定\n- 休符楽器の割り当て\n- 休符ノートの検出
+
+note top of ModGuitarTimGM6mb : **MIDI生成処理**\n- 楽器音色→MIDIトラック\n- 音量調整値の決定\n- 継続音の制御
+
+note top of SteppedProcessor : **ステップ処理**\n- ステップ用楽器割り当て\n- Continue論理制御\n- デフォルト値設定
+
+note bottom of ContinueLogicPattern : **実装パターンの特徴**\n- オブジェクトリテラル式でマッピング\n- ESInst.normal がデフォルト\n- muteContinue のみ true\n- 型安全性確保
+
+@enduml

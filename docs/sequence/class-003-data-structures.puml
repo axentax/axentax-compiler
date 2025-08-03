@@ -1,0 +1,332 @@
+@startuml data-structures-classes
+title データ構造クラス図
+
+!define FONT_SIZE 12
+skinparam defaultFontSize FONT_SIZE
+
+package "コア データ構造" {
+    
+    class Conduct {
+        +syntax: string
+        +allowAnnotations: AllowAnnotation[]
+        +chordDic: ChordDicMap
+        +mapSeed: MapSeed
+        +settings: Settings
+        +mixesList: Mixes[]
+        +regionLength: number
+        +bpmPosList: BPMPos[]
+        +clickPointList: ClickPoint[]
+        +flash: Flash
+        +styleObjectBank: StyleObjectBank
+        +notStyleCompile: boolean
+        +notMidiBuild: boolean
+        +warnings: Warning[]
+        +extensionInfo: ExtensionInfo
+        +locationInfoList: LocationInfo[]
+        +braceLocationInfoList: BraceLocationInfo[]
+    }
+
+    class Mixes {
+        +dualId: number
+        +regionList: Region[]
+        +flatTOList: TabObj[]
+        +bendBank: BendBank
+        +marks: Marks
+        +view: ViewInfo
+    }
+
+    class Region {
+        +regionId: number
+        +startTick: number
+        +stopTick: number
+        +bpm: number
+        +timeSignature: TimeSignature
+        +key: string
+        +tabObjList: TabObj[]
+    }
+
+    class TabObj {
+        +note: string
+        +tab: NumberOrUfd[]
+        +velocity: NumberOrUfd[]
+        +expression: NumberOrUfd[]
+        +styles: Styles
+        +bar: Tick
+        +bpm: number
+        +chordType?: string
+        +chordKey?: string
+        +chordFingering?: number[]
+        +slideInfo?: SlideInfo[]
+        +bendInfo?: BendInfo[]
+        +slideLandingTab?: number[]
+        +activeBows?: Bow[]
+        +prevTabObj?: TabObj
+        +nextTabObj?: TabObj
+        +slideTrueType?: number
+        +strokeTrueType?: number
+    }
+}
+
+package "タイミング・BPM関連" {
+    
+    interface Tick {
+        +noteStartTick: number
+        +noteStopTick: number
+        +fretStartTicks: number[]
+        +fretStopTicks: number[]
+    }
+
+    class BPMPos {
+        +tick: number
+        +bpm: number
+        +timeSignature: TimeSignature
+    }
+
+    class ClickPoint {
+        +tick: number
+        +volume: number
+        +type: ClickType
+    }
+
+    interface TimeSignature {
+        +numerator: number
+        +denominator: number
+    }
+
+    enum ClickType {
+        ACCENT
+        NORMAL
+        WEAK
+    }
+}
+
+package "楽器・音響関連" {
+    
+    interface Bow {
+        +bowIndex: number
+        +fret: number
+        +velocity: number
+        +expression: number
+        +bar: Tick
+    }
+
+    class BendBank {
+        +bendChannelList: BendInfo[]
+        +bendNormalList: BendInfo[]
+        +getBendAtTick(tick: number, bowIndex: number): BendInfo | null
+        +addBendInfo(bendInfo: BendInfo): void
+    }
+
+    interface BendInfo {
+        +bowIndex: number
+        +startTick: number
+        +stopTick: number
+        +pitch: number
+        +bendType: BendType
+        +curve: BendPoint[]
+        +continueX?: boolean
+    }
+
+    interface BendPoint {
+        +tick: number
+        +pitch: number
+    }
+
+    interface ChordProp {
+        +key: string
+        +type: string
+        +fingering: number[]
+        +tension?: string[]
+    }
+}
+
+package "スタイル・エフェクト" {
+    
+    interface Styles {
+        +slide?: StyleSlide[]
+        +approach?: StyleApproach[]
+        +legato?: StyleLegato[]
+        +staccato?: StyleStaccato[]
+        +stroke?: StyleStroke[]
+        +strum?: StyleStrum[]
+        +bendX?: StyleBendX[]
+        +delay?: StyleDelay[]
+        +muteNoise?: MuteNoiseStyle[]
+    }
+
+    interface StyleSlide {
+        +type: 'to' | 'release'
+        +speed: 'fast' | 'mid' | 'slow'
+        +startUntil?: number
+        +continue?: boolean
+    }
+
+    interface StyleLegato {
+        +speed: number
+        +velocityDecay: number
+    }
+
+    interface StyleStroke {
+        +direction: 'up' | 'down' | 'auto'
+        +speed: number
+        +adjustment: 'auto' | 'manual'
+    }
+
+    interface StyleBendX {
+        +type: 'choking' | 'vibrate'
+        +pitch: number
+        +speed: number
+        +depth?: number
+        +continueX?: boolean
+    }
+}
+
+package "設定・アノテーション" {
+    
+    interface Settings {
+        +bpm: BPMSettings
+        +timeSignature: TimeSignature
+        +key: string
+        +staccato: StaccatoSettings
+        +slide: SlideSettings
+        +legato: LegatoSettings
+        +stroke: StrokeSettings
+        +bend: BendSettings
+        +delay: DelaySettings
+    }
+
+    interface Flash {
+        +click: Click[]
+        +offset: Offset
+        +other: OtherAnnotationData[]
+    }
+
+    interface AllowAnnotation {
+        +name: string
+        +dualIdRestrictions: number[]
+    }
+
+    class StyleObjectBank {
+        +slideCache: Map<string, SlideInfo[]>
+        +bendCache: Map<string, BendInfo[]>
+        +legatoCache: Map<string, ShiftAnalyzeResult>
+        +getCachedSlideInfo(key: string): SlideInfo[] | null
+        +setCachedSlideInfo(key: string, value: SlideInfo[]): void
+        +clearCache(): void
+    }
+
+    class Marks {
+        +styleMappedGroupList: number[]
+        +fullNoteIndexWithTick: number[]
+        +bendGroupNumberList: number[]
+        +usedBendRange: number[]
+    }
+}
+
+package "エラー・結果" {
+    
+    abstract class ErrorBase {
+        +code: number
+        +message: string
+        +details?: object
+    }
+
+    class Success<T> {
+        +res: T
+        +constructor(result: T)
+        +fail(): boolean
+    }
+
+    class IResult<T, E extends ErrorBase> {
+        +Success<T> | E
+    }
+
+    class SimpleResult {
+        +IResult<null, ErrorBase>
+    }
+
+    class E400 extends ErrorBase {
+        +code: 400
+    }
+
+    class E401 extends ErrorBase {
+        +code: 401
+    }
+
+    class E422 extends ErrorBase {
+        +code: 422
+    }
+}
+
+package "型定義" {
+    
+    note as NumberOrUfd
+        type NumberOrUfd = number | undefined
+        フレット番号または未定義値
+    end note
+
+    enum SymbolType {
+        CHORD
+        TAB
+        REST
+        STYLE
+        REGION
+        ANNOTATION
+        COMMENT
+    }
+
+    interface CompileSymbols {
+        +type: SymbolType
+        +value: string
+        +line: number
+        +linePos: number
+        +token: string
+        +dualId?: number
+    }
+}
+
+' 関係性の定義
+Conduct *-- Mixes : contains 3
+Conduct *-- Settings : contains
+Conduct *-- Region : contains many
+Conduct *-- BPMPos : contains many
+Conduct *-- ClickPoint : contains many
+Conduct *-- Flash : contains
+Conduct *-- StyleObjectBank : contains
+
+Mixes *-- Region : contains many
+Mixes *-- TabObj : contains many
+Mixes *-- BendBank : contains
+Mixes *-- Marks : contains
+
+Region *-- TabObj : contains many
+TabObj *-- Styles : contains
+TabObj *-- Tick : contains
+TabObj *-- Bow : contains many
+TabObj --> ChordProp : references
+
+BendBank *-- BendInfo : contains many
+BendInfo *-- BendPoint : contains many
+
+Styles --> StyleSlide : contains
+Styles --> StyleLegato : contains
+Styles --> StyleStroke : contains
+Styles --> StyleBendX : contains
+
+Settings --> BPMSettings : contains
+Settings --> TimeSignature : contains
+
+Flash *-- AllowAnnotation : contains many
+
+' 循環参照
+TabObj ..> TabObj : prevTabObj/nextTabObj\n(removed after compilation)
+
+note top of Conduct : 中央データストア\n全コンパイル結果を保持\n3つのdualチャンネル対応
+
+note top of TabObj : 個別音符情報\n楽器演奏の最小単位\n豊富なメタデータ
+
+note top of BendBank : ベンド情報管理\nティック単位でのピッチ変化\nリアルタイム制御
+
+note bottom of StyleObjectBank : パフォーマンス最適化\n計算結果のキャッシュ\nメモリ効率向上
+
+@enduml

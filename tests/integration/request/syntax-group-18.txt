@@ -1,0 +1,53 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { 6|5|4|3|2|1:step(123456) }:%(F# harmonic minor)
+
+@@ {
+  {
+    {
+      { C D E }:map(1)
+    }:map(2)
+  }:map(3)
+}
+
+@@ {
+  {
+    {
+      { C D E }:map(1):scale(C# pentatonic)
+    }:scale(D major)
+  }:scale(E minor)
+}
+
+
+@@ 140 1/4 {
+  // {
+  //   |2:map(2) C
+  // }:map(999, 998)
+  // 2/1-4m-5^^
+  //C:step(123f)
+
+  |||||2:to |||||7
+}
+
+
+
+
+
+
+
+
+
+
+
+@@ {
+  {
+    {
+      C:step(fff)
+    }:step(123456)
+  }
+}

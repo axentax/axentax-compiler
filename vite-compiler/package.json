@@ -1,0 +1,34 @@
+{
+  "name": "module-strum-g",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "main": "./dist/conductor.umd.cjs",
+  "module": "./dist/conductor.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "types": "./index.d.ts",
+    "import": "./dist/conductor.js",
+    "require": "./dist/conductor.umd.cjs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "rollup-plugin-terser": "^7.0.2",
+    "terser": "^5.31.6",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10",
+    "vite-plugin-dts": "4.0.0-beta.2"
+  },
+  "dependencies": {
+    "@tonaljs/chord": "^5.0.0",
+    "@tonejs/midi": "^2.0.28",
+    "decimal.js": "^10.4.3"
+  }
+}

@@ -1,0 +1,150 @@
+@startuml group-mapped-resolution
+title GroupId マップグループ解決シーケンス
+
+participant "UnfoldMapped" as UM
+participant "MappedGroup" as MG
+participant "CompileSymbols" as CS
+participant "Marks" as MK
+participant "StyleMapped" as SM
+participant "MapExpand" as ME
+
+note over UM: マップグループの解決処理
+
+UM -> UM: apply(conduct, dual, compileSymbols, usingSeed)
+activate UM
+
+note right of UM: styleMappedGroupListの順次処理
+
+UM -> MK: styleMappedGroupListの取得
+activate MK
+MK --> UM: [group1, group2, group3, ...]
+deactivate MK
+
+loop styleMappedGroupListの各グループ
+    UM -> MG: resolve(conduct, dual, compileSymbols, groupId, usingSeed)
+    activate MG
+    
+    note right of MG: 1. グループ範囲の検出
+    MG -> MG: findGroupRange(compileSymbols, groupId)
+    activate MG
+    
+    note right of MG: 同一groupIdのシンボルを検索
+    loop compileSymbolsの全シンボル
+        MG -> CS: sym.decidedProp.styles.mapped.group確認
+        activate CS
+        
+        alt group === targetGroupId
+            CS --> MG: グループ対象シンボル
+            MG -> MG: グループ範囲に追加
+        else group !== targetGroupId
+            CS --> MG: 対象外シンボル
+        end
+        
+        deactivate CS
+    end
+    
+    MG --> MG: グループ範囲特定完了
+    deactivate MG
+    
+    note right of MG: 2. 連続グループ分割
+    MG -> MG: splitConsecutiveGroups(groupSymbols)
+    activate MG
+    
+    note right of MG: インデックス連続性とスケール変化でグループ分割
+    loop グループ内シンボル
+        MG -> CS: シンボルインデックス確認
+        MG -> CS: スケール情報確認
+        
+        alt インデックス不連続 || スケール変化
+            MG -> MG: 新しいサブグループ作成
+            note right of MG: 連続性が途切れた箇所で分割
+        else 連続性維持
+            MG -> MG: 現在のサブグループに追加
+        end
+    end
+    
+    MG --> MG: サブグループ分割完了
+    deactivate MG
+    
+    note right of MG: 3. 各サブグループの処理
+    loop 分割されたサブグループ
+        MG -> MG: buildShiftAndApply(subGroup, usingSeed)
+        activate MG
+        
+        note right of MG: シフト構築と適用
+        MG -> SM: グループ内StyleMapped取得
+        activate SM
+        SM --> MG: MapExpand[]配列
+        deactivate SM
+        
+        loop MapExpand配列の各要素
+            MG -> ME: shift値とoptions取得
+            activate ME
+            ME --> MG: { shift: number, options: MapOpt[] }
+            deactivate ME
+            
+            note right of MG: スケール内シフト適用
+            MG -> MG: scaleAwareShift(shift, currentScale)
+            MG -> MG: applyMapOptions(options)
+        end
+        
+        note right of MG: 元シンボルの置換
+        MG -> CS: 元シンボルを拡張シンボルで置換
+        MG -> CS: 置換位置の調整
+        
+        MG --> MG: サブグループ処理完了
+        deactivate MG
+    end
+    
+    note right of MG: 4. グループ処理完了
+    MG -> SM: group = -2 (処理済みマーク)
+    MG -> CS: シンボル配列の再構築
+    
+    MG --> UM: グループ解決完了
+    deactivate MG
+end
+
+UM -> MK: styleMappedGroupList = [] (クリア)
+UM --> UM: 全マップグループ解決完了
+deactivate UM
+
+note over UM, MG: マップグループ解決の特徴
+
+note right of UM
+    **グループ範囲検出**
+    
+    - 同一groupIdを持つシンボルを収集
+    - インデックス順でソート
+    - スケール変化点で自動分割
+    - 非ノートシンボルで境界設定
+end note
+
+note left of MG
+    **連続性分割ルール**
+    
+    - インデックス連続性: i, i+1, i+2...
+    - スケール一致性: 同一スケール内のみ
+    - 楽器種別一致性: 同一楽器のみ
+    - 境界条件: 休符・コメント等で分断
+end note
+
+note right of SM
+    **シフト適用方式**
+    
+    - スケール内シフト: 12音階ではなく7音階
+    - 複数シフト値対応: 1つのグループに複数指示
+    - オプション適用: rev, ss, sos, nos
+    - フィンガリング最適化: 運指効率向上
+end note
+
+note left of CS
+    **シンボル置換処理**
+    
+    1. 元シンボルの削除
+    2. 拡張シンボル配列の生成
+    3. 挿入位置の計算
+    4. splice操作での置換実行
+    5. インデックス再計算
+end note
+
+@enduml

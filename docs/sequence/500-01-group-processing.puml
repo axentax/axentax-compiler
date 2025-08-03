@@ -1,0 +1,161 @@
+@startuml group-processing
+title GroupId グループ処理シーケンス
+
+participant "ModStyle" as MS
+participant "StyleMapped" as SM
+participant "StyleBPM" as SB
+participant "StyleTurn" as ST
+participant "LayerCompiler" as LC
+participant "GroupInfo" as GI
+participant "TabObj" as TO
+
+note over MS: グループスタイルの初期設定
+
+MS -> MS: distributeStyleWithinHierarchy(conduct)
+activate MS
+
+note right of MS: 階層内でのスタイル分散処理
+
+loop 各Region内のTabObj
+    MS -> TO: tabObjのスタイル確認
+    activate TO
+    
+    alt BPMスタイルが存在する場合
+        TO -> SB: bpm.group の確認
+        activate SB
+        
+        alt group === -1 (単体BPM)
+            SB --> MS: 単体処理
+            note right of SB: グループ化せず個別処理
+        else group >= 0 (グループBPM)
+            SB -> MS: グループ番号を記録
+            note right of SB: 同一グループのBPMを収集
+        end
+        
+        deactivate SB
+    end
+    
+    alt Mappedスタイルが存在する場合
+        TO -> SM: mapped.group の確認
+        activate SM
+        
+        alt group === -1 (単体マッピング)
+            SM --> MS: 単体処理
+            note right of SM: グループ化せず個別処理
+        else group >= 0 (グループマッピング)
+            SM -> MS: グループ番号を記録
+            note right of SM: 同一グループのマッピングを収集
+        end
+        
+        deactivate SM
+    end
+    
+    alt Turnスタイルが存在する場合
+        TO -> ST: turn.group の確認
+        activate ST
+        
+        alt group === -1 (単体ターン)
+            ST --> MS: 単体処理
+            note right of ST: グループ化せず個別処理
+        else group >= 0 (グループターン)
+            ST -> MS: グループ番号を記録
+            ST -> ST: groupFinalフラグの確認
+            alt groupFinal === true
+                ST -> MS: グループ終了マーク
+                note right of ST: このTabObjでグループ終了
+            end
+        end
+        
+        deactivate ST
+    end
+    
+    deactivate TO
+end
+
+MS -> MS: グループ情報の整理と検証
+deactivate MS
+
+note over LC: グループ解決処理
+
+LC -> LC: resolveStyleGroup(conduct)
+activate LC
+
+note right of LC: 収集されたグループの解決処理
+
+loop 各グループ番号
+    LC -> GI: グループ情報の取得
+    activate GI
+    
+    note right of GI: グループ内TabObjリストの構築
+    GI -> GI: グループ開始位置の特定
+    GI -> GI: グループ終了位置の特定
+    GI -> GI: グループ範囲の計算
+    
+    alt BPMグループの場合
+        note right of GI: BPM変化の時間計算
+        GI -> GI: 開始tick〜終了tickの算出
+        GI -> GI: groupEndTickの設定
+        
+        loop グループ内の各BPMスタイル
+            GI -> SB: bpm.groupEndTick = 計算値
+        end
+    end
+    
+    alt Mappedグループの場合
+        note right of GI: マッピング範囲の計算
+        GI -> GI: シフト範囲の決定
+        GI -> GI: オプション適用範囲の決定
+        
+        loop グループ内の各Mappedスタイル
+            GI -> SM: グループ範囲情報の設定
+        end
+    end
+    
+    alt Turnグループの場合
+        note right of GI: 装飾音範囲の計算
+        GI -> GI: 装飾音の開始〜終了範囲
+        GI -> GI: groupFinal位置の確認
+        
+        loop グループ内の各Turnスタイル
+            GI -> ST: グループ範囲情報の設定
+        end
+    end
+    
+    GI --> LC: グループ解決完了
+    deactivate GI
+end
+
+LC -> LC: 全グループ解決完了
+deactivate LC
+
+note over MS, LC: グループ処理の特徴
+
+note right of MS
+    **グループ番号の意味**
+    
+    - group: -1 → 単体処理（グループ化なし）
+    - group: 0以上 → グループ処理対象
+    - 同一番号のスタイルが1つのグループを形成
+    - groupFinalフラグでグループ終了を明示
+end note
+
+note left of LC
+    **グループ解決の流れ**
+    
+    1. グループ開始位置の特定
+    2. グループ終了位置の特定（groupFinal基準）
+    3. グループ範囲のtick計算
+    4. 各スタイルへのgroupEndTick設定
+    5. グループ内での一貫した処理適用
+end note
+
+note over GI
+    **グループ情報管理**
+    
+    - グループ番号をキーとした管理
+    - 開始〜終了範囲の追跡
+    - 複数スタイル種別の統合管理
+    - tick単位での精密な範囲制御
+end note
+
+@enduml

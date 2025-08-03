@@ -1,0 +1,10 @@
+{
+  "hasError": true,
+  "error": {
+    "message": "@offset exceeds previous limit. Create a region with only rests at the start.",
+    "line": 17,
+    "linePos": 3,
+    "token": "@offset"
+  },
+  "expectation": null
+}

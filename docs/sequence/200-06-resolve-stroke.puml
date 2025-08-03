@@ -1,0 +1,133 @@
+@startuml resolve-stroke
+title ストローク処理シーケンス (resolve-stroke.ts)
+
+participant "ResolveStroke" as RS
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "RegionList" as RL
+participant "BeforeTabObj" as BT
+
+RS -> RS: resolve(mixes)
+activate RS
+
+note right of RS: flatTOListの各TabObjを処理
+
+RS -> RS: 初期化\n- tuningLen = 0\n- down = true\n- justBeforeTick = 0\n- beforeTabObj = undefined
+
+loop flatTOListの各TabObj
+    RS -> TO: ストロークスタイルの確認
+    activate TO
+    
+    RS -> TO: インストゥルメントの確認
+    RS -> TO: アクティブ弦数の確認
+    
+    alt アクティブ弦数 > 1 かつ ストロークオフでない かつ レガートでない場合
+        note right of RS: 1. チューニング長の取得
+        alt regionNoteIndex === 0（リージョン開始）
+            RS -> RL: チューニング長の取得\n- tuningLen = regionList[to.regionIndex].tuning.length
+        end
+        
+        note right of RS: 2. スライド継続対象弦の確認
+        RS -> TO: 前のTabObjの確認
+        alt 前のTabObjが存在し、slide.continueが有効
+            RS -> BT: 開始弦と着地弦の比較
+            RS -> RS: slideTargetStrings = 継続対象弦の特定
+        end
+        
+        note right of RS: 3. 現在位置と前回位置の差分計算
+        RS -> TO: 現在ティックの取得
+        RS -> RS: diffFromPrev = currentTick - justBeforeTick
+        
+        note right of RS: 4. ストローク値の決定
+        alt アプローチの場合
+            RS -> RS: down = true
+            RS -> RS: strokeVal = [1, 98]
+        else 速いケース（diffFromPrev / bpm < 2.4）
+            RS -> RS: 自動調整値の計算\n- x = 36 + Math.round(64 - (diffFromPrev / 5))
+            RS -> RS: strokeVal = [1, x < 16 ? 16 : x]
+            RS -> RS: down = !down（方向反転）
+        else 通常ケース
+            RS -> RS: down = true
+            RS -> RS: strokeVal = [1, 48]
+        end
+        
+        note right of RS: 5. インストゥルメントによる方向調整
+        alt inst === ESInst.brushing_u または ESInst.brushing_U
+            RS -> RS: down = false（アップストローク）
+        else その他のインストゥルメント
+            RS -> RS: down = true（ダウンストローク）
+        end
+        
+        note right of RS: 6. ユーザー指定による方向調整
+        alt stroke.up === true
+            RS -> RS: down = false（アップストローク）
+        else stroke.up === false
+            RS -> RS: down = true（ダウンストローク）
+        end
+        
+        note right of RS: 7. ストローク間隔の計算
+        RS -> RS: shiftRangeTick = untilNextToTick(strokeVal)
+        RS -> RS: strokeOneSpan = (shiftRangeTick - slideTargetStrings.length) / activeBowLength
+        RS -> RS: positionFullStopTick = currentTick - (strokeOneSpan * (activeBowLength - 1))
+        
+        note right of RS: 8. 前のフィンガリングとの差分確認
+        alt ti !== 0（最初のノートでない）
+            RS -> BT: 前のTabObjとのフレット差分計算
+            RS -> RS: numOfDiffString = フレットが異なる弦数
+        end
+        
+        note right of RS: 9. 弦ごとのストローク処理
+        loop 各弦（tuningLen）
+            RS -> RS: ストローク方向による弦順序決定\n- bow = down ? stringIndex : tuningLen - stringIndex - 1
+            
+            alt フレット指定がある場合
+                alt slideTargetStringsに含まれない弦のみ
+                    note right of RS: 10. 現在ノートのティック調整
+                    RS -> TO: fretStartTicks[bow] -= strokeOneSpan * applyCnt
+                    
+                    alt ティックが負になる場合
+                        RS -> TO: fretStartTicks[bow] = 0（制限）
+                    end
+                    
+                    RS -> RS: applyCnt++
+                    RS -> RS: shiftAllPriorPlans.push(fretStartTicks[bow])
+                end
+            else フレット指定がない場合
+                RS -> RS: shiftAllPriorPlans.push(positionFullStopTick)
+            end
+        end
+        
+        RS -> RS: justBeforeTick = currentTick
+        
+        note right of RS: 11. 前のノートの処理
+        alt ti !== 0（最初のノートでない）
+            alt numOfDiffString > 2 または regionNoteIndex === 0 かつ slideTargetStrings.length === 0
+                note right of RS: 12a. 全弦一律停止位置での処理
+                loop beforeTabObj.refActiveBows
+                    alt continueXでない または 現在ノートに弦が存在
+                        RS -> RS: shiftOrRemoveAllPriorTargetIncludedInTick(\n  flatTOList, ti, positionFullStopTick, bni)
+                    end
+                end
+            else 個別停止位置での処理
+                note right of RS: 12b. 個別停止位置での処理
+                loop beforeTabObj.refActiveBows
+                    RS -> RS: bow = down ? bni : tuningLen - bni - 1
+                    alt continueXでない または 現在ノートに弦が存在
+                        RS -> RS: shiftOrRemoveAllPriorTargetIncludedInTick(\n  flatTOList, ti, shiftAllPriorPlans[bni], bow)
+                    end
+                end
+            end
+        end
+    end
+    
+    RS -> BT: beforeTabObj = to（次のループ用に保存）
+    TO --> RS: TabObj処理完了
+    deactivate TO
+end
+
+RS --> M: 全ストローク処理完了
+deactivate RS
+
+note over M: ストローク処理の特徴\n- ピッキング方向による音の順序制御\n- 自動調整による自然なストローク間隔\n- スライド継続との連携\n- 前のノートとの適切なタイミング調整\n- 複数弦の同時演奏における音の分離
+
+@enduml 

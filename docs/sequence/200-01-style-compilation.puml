@@ -1,0 +1,126 @@
+@startuml style-compilation
+title スタイル処理シーケンス
+
+participant "CompileStyle" as CS
+participant "Conduct" as C
+participant "ResolveBPM" as RB
+participant "ResolveClicks" as RC
+participant "ResolveLegato" as RL
+participant "ResolveStaccato" as RS
+participant "ResolveDelay" as RD
+participant "ResolveStrum" as RSt
+participant "ResolveStroke" as RStr
+participant "ResolveSlide" as RSl
+participant "ResolveApproach" as RA
+participant "ResolveMuteNoise" as RM
+participant "ResolveBendX" as RBX
+
+CS -> CS: compile(conduct)
+activate CS
+
+note right of CS: 1. BPM情報の作成・解析
+CS -> RB: resolve(conduct)
+activate RB
+RB -> RB: BPM情報の解析と適用
+RB --> CS: BPM解決結果
+deactivate RB
+
+alt バリデーションのみの場合
+    CS --> C: バリデーション完了
+else スタイルコンパイル有効の場合
+    note right of CS: 2. BPM基準の時間計算
+    CS -> RB: mathBPMTime(conduct)
+    activate RB
+    RB -> RB: テンポに基づく時間計算
+    RB --> CS: 時間計算結果
+    deactivate RB
+    
+    note right of CS: 3. クリック音の処理
+    CS -> RC: resolve(conduct)
+    activate RC
+    RC -> RC: メトロノーム音の生成
+    RC --> CS: クリック処理完了
+    deactivate RC
+    
+    note right of CS: 4. 各dual毎のスタイル処理
+    loop dualチャンネル (0, 1, 2)
+        note right of CS: dualId: {dualId} の処理
+        
+        CS -> RL: resolve(mixes)
+        activate RL
+        RL -> RL: レガート処理：音の連結を実現
+        alt エラーが発生した場合
+            RL --> CS: エラー結果
+        else 正常処理
+            RL --> CS: レガート処理結果
+        end
+        deactivate RL
+        
+        CS -> RS: resolve(mixes)
+        activate RS
+        RS -> RS: スタッカート処理：音の分離を実現
+        alt エラーが発生した場合
+            RS --> CS: エラー結果
+        else 正常処理
+            RS --> CS: スタッカート処理結果
+        end
+        deactivate RS
+        
+        CS -> RD: resolve(mixes)
+        activate RD
+        RD -> RD: ディレイ処理：音の遅延効果を実現
+        alt エラーが発生した場合
+            RD --> CS: エラー結果
+        else 正常処理
+            RD --> CS: ディレイ処理結果
+        end
+        deactivate RD
+        
+        CS -> RSt: resolve(conduct, mixes)
+        activate RSt
+        RSt -> RSt: ストラム処理：コード奏法を実現
+        alt エラーが発生した場合
+            RSt --> CS: エラー結果
+        else 正常処理
+            RSt --> CS: ストラム処理結果
+        end
+        deactivate RSt
+        
+        CS -> RStr: resolve(mixes)
+        activate RStr
+        RStr -> RStr: ストローク処理：ピッキングパターンを実現
+        RStr --> CS: ストローク処理結果
+        deactivate RStr
+        
+        CS -> RSl: resolve(conduct, mixes)
+        activate RSl
+        RSl -> RSl: スライド処理：音程の滑らかな変化を実現
+        RSl --> CS: スライド処理結果
+        deactivate RSl
+        
+        CS -> RA: resolve(conduct, mixes)
+        activate RA
+        RA -> RA: アプローチ処理：音程への接近を実現
+        RA --> CS: アプローチ処理結果
+        deactivate RA
+        
+        CS -> RM: resolve(mixes)
+        activate RM
+        RM -> RM: ミュートノイズ処理：ミュート音を実現
+        RM --> CS: ミュートノイズ処理結果
+        deactivate RM
+        
+        CS -> RBX: resolve(mixes)
+        activate RBX
+        RBX -> RBX: ベンド処理：音程の変化を実現
+        RBX --> CS: ベンド処理結果
+        deactivate RBX
+    end
+end
+
+CS --> C: スタイル処理完了
+deactivate CS
+
+note over C: 次の段階：MIDI生成（オプション）
+
+@enduml 

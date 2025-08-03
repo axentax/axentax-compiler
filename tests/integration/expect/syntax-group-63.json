@@ -1,0 +1,10 @@
+{
+  "hasError": true,
+  "error": {
+    "message": "Invalid syntax '`;'. Style must start with ':'.",
+    "line": 18,
+    "linePos": 1,
+    "token": "`;"
+  },
+  "expectation": null
+}

@@ -1,0 +1,125 @@
+@startuml resolve-bendX
+title ベンド処理シーケンス (resolve-bendX.ts)
+
+participant "ResolveBendX" as RB
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "BendBank" as BB
+participant "CurrentInfo" as CI
+participant "BendView" as BV
+participant "StyleBendX" as SB
+
+RB -> RB: resolve(mixes)
+activate RB
+
+note right of RB: flatTOListの各TabObjを処理
+
+loop flatTOListの各TabObj
+    RB -> TO: ベンドXスタイルの確認
+    activate TO
+    
+    alt ベンドXスタイルが存在する場合
+        RB -> TO: 対象フレットの確認
+        alt 対象フレットが存在するか、continueXが有効な場合
+            RB -> BB: ベンドバンクの取得
+            RB -> RB: core(bendBank, to, styleBendXList)
+            activate RB
+            
+            note right of RB: 1. 初期化
+            RB -> CI: 現在のベンド情報の初期化\n- specifiedPitch: 0\n- untilStep: 0
+            RB -> BV: ベンドビューの初期化\n- view: []\n- bend: []
+            RB -> RB: hasNormalIntoBend = false
+            
+            note right of RB: 2. ミュート有無の確認
+            RB -> TO: インストゥルメントの確認
+            alt inst === ESInst.normal または undefined
+                RB -> RB: hasMute = false
+            else その他のインストゥルメント
+                RB -> RB: hasMute = true
+            end
+            
+            note right of RB: 3. 各ベンドスタイルの処理
+            loop ベンドXスタイルリスト
+                RB -> SB: ベンドスタイルの取得
+                RB -> RB: makeBend(currentInfo, to, styleBend, bendView)
+                activate RB
+                
+                note right of RB: ベンド作成処理
+                alt method === undefined（チョーキング）
+                    RB -> RB: choking(currentInfo, to, bend, bendView)
+                    activate RB
+                    
+                    note right of RB: チョーキング処理
+                    RB -> RB: ベンド範囲の取得\n- getBendRangeWithStaticRangeForChoking()
+                    RB -> RB: ベンドカーブの生成\n- Curves.generateBendCurve()
+                    RB -> RB: ベンドポイントの作成
+                    
+                    RB --> RB: ベンド配列
+                    deactivate RB
+                else method !== undefined（ビブラート）
+                    RB -> RB: vibrate(currentInfo, to, bend, bendView)
+                    activate RB
+                    
+                    note right of RB: ビブラート処理
+                    RB -> RB: デフォルトピッチの設定\n- 現在ピッチが0: +0.3\n- 現在ピッチ > 0: -0.3\n- 現在ピッチ < 0: +0.3
+                    RB -> RB: ベンド範囲の取得\n- getBendRangeWithStaticRangeForVibrate()
+                    RB -> RB: ビブラートカーブの生成\n- Curves.generateVibrateCurve()
+                    RB -> RB: ビブラートポイントの作成
+                    
+                    RB --> RB: ベンド配列
+                    deactivate RB
+                end
+                
+                RB --> RB: ベンド作成結果
+                deactivate RB
+                
+                note right of RB: 4. ベンド情報の更新
+                RB -> CI: untilStep = styleBend.untilRange[0]
+                
+                alt ベンド配列が存在する場合
+                    note right of RB: 5. MIDI用ベンドチャンネルの追加
+                    RB -> BB: bendBank.bendChannelList.push({\n  bend: resChoking.res,\n  hasMute,\n  tabObjId: to.tabObjId\n})
+                    
+                    note right of RB: 6. ビュー用ベンドの追加
+                    RB -> BV: bendView.bend.push(resChoking.res)
+                    
+                    note right of RB: 7. continueX対応の処理
+                    alt continueXが有効な場合
+                        RB -> RB: ピッチ0以下のベンドの検出
+                        loop ベンド配列
+                            alt pitch <= 0 の場合
+                                alt 次のベンドでpitch > 0 になる場合
+                                    RB -> BB: normal側にpitch: 0のベンドを追加
+                                else 通常音推移の場合
+                                    alt レガートでない場合
+                                        RB -> RB: hasNormalIntoBend = true
+                                        RB -> BB: normal側にベンドを追加
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            
+            note right of RB: 8. 最終処理
+            alt hasNormalIntoBendがtrueの場合
+                RB -> TO: 最終ティックの取得
+                RB -> BB: bendBank.bendNormalList.push({\n  bend: [{ tick: lastTick, pitch: 0 }],\n  hasMute,\n  tabObjId: to.tabObjId\n})
+            end
+            
+            RB --> RB: ベンド処理完了
+            deactivate RB
+        end
+    end
+    
+    TO --> RB: TabObj処理完了
+    deactivate TO
+end
+
+RB --> M: 全ベンド処理完了
+deactivate RB
+
+note over M: ベンド処理の特徴\n- チョーキングとビブラートの両方に対応\n- リアルタイムな音程変化を実現\n- continueX対応による音の連結\n- ミュート音との連携\n- ベンドカーブによる自然な音程変化
+
+@enduml 

@@ -1,0 +1,74 @@
+@startuml block-compilation
+title ブロック変換処理シーケンス
+
+participant "BlockCompiler" as BC
+participant "Conduct" as C
+participant "ModPrefix" as MP
+participant "ModStyle" as MS
+participant "ModNote" as MN
+participant "CompileSymbols" as CS
+
+BC -> BC: compile(conduct, symbolsDualLists)
+activate BC
+
+note right of BC: 1. ブロックオブジェクトの初期化
+BC -> BC: initBlockObj(conduct, symbolsDualLists)
+activate BC
+
+note right of BC: リージョン作成とブロック構造の構築
+BC -> BC: リージョン情報の解析\n- リージョン名、チューニング、BPM\n- 開始・終了位置の計算
+BC -> BC: ブロックオブジェクトの初期化\n- TabObjの作成\n- 位置情報の設定
+BC --> BC: ブロック初期化完了
+deactivate BC
+
+note right of BC: 2. プレフィックススタイルの解決
+BC -> MP: resolve(symbolsDualLists)
+activate MP
+
+note right of MP: プレフィックス処理
+MP -> MP: @sob（スタイルオブジェクトバンク）の処理
+MP -> MP: beforeStop（停止前処理）の解決
+MP -> MP: noteStr（ノート文字列）の解析
+MP -> MP: プレフィックススタイルの適用
+
+MP --> BC: プレフィックス解決結果
+deactivate MP
+
+note right of BC: 3. スタイルの初期化
+BC -> MS: resolve(conduct, symbolsDualLists)
+activate MS
+
+note right of MS: 演奏表現の設定
+MS -> MS: レガート（:leg）の処理
+MS -> MS: スタッカート（:staccato）の処理
+MS -> MS: スライド（:slide）の処理
+MS -> MS: ベンド（:bd）の処理
+MS -> MS: ストラム（:strum）の処理
+MS -> MS: ストローク（:stroke）の処理
+MS -> MS: アプローチ（:approach）の処理
+MS -> MS: ディレイ（:delay）の処理
+MS -> MS: ミュートノイズ（:mute）の処理
+
+MS --> BC: スタイル初期化結果
+deactivate MS
+
+note right of BC: 4. ノートの初期化
+BC -> MN: resolve(conduct, symbolsDualLists)
+activate MN
+
+note right of MN: 実際の音符データの作成
+MN -> MN: コード記号のタブ譜変換
+MN -> MN: タブ譜のフレット情報解析
+MN -> MN: 休符の処理
+MN -> MN: 音量（velocity）の設定
+MN -> MN: 演奏指示の適用
+
+MN --> BC: ノート初期化結果
+deactivate MN
+
+BC --> C: ブロック変換完了
+deactivate BC
+
+note over C: 次の段階：スタイル処理
+
+@enduml 

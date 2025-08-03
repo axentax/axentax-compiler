@@ -1,0 +1,20 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {C}
+@@ {C}
+
+
+@@ { C:d C:d }
+
+@@ { C~~~ }
+
+@@ {} >> {
+  |||||12 @offset /*ここから*/ |||||10 |||||11 |||||12 /*ここまで*/
+} >> {
+  |||||12 |||||11 |||||11 @offset |2|||| // 3スパン分を削ってしまって上記を待たない Bug 
+}

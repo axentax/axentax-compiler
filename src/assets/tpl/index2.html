@@ -1,0 +1,139 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="/assets/js/libfluidsynth-2.3.0.js?20240303_3"></script>
+  <script type="text/javascript" src="/assets/js/js-synthesizer.js?20240303_3"></script>
+  <link rel="preload" as="script" href="/assets/js/js-synthesizer.worklet.js?20240303_5" />
+</head>
+
+<style>
+  body { background: #000; color: #999; font-size: 140% }
+</style>
+
+<body>
+
+  <div style="position: fixed; top: 0; left: 0; width: 100%; background: #000; height: 120px;">
+    <div>
+      <input style="width:100%;" id="progress" type="range" step="1" value=0
+        ontouchstart="this.onmousedown=null;this.onmouseup=null;this.onmousemove=null; progress_onmousedown()"
+        ontouchend="progress_onmouseup()"
+        on="progress_onmouseup()"
+        ontouchmove=""
+        onmouseup="progress_onmouseup()"
+        onmousemove="progress_onmousemove()">
+    </div>
+    <div>
+      <div style="text-align: right">
+        <span>
+          <button type="button" onclick="playMusic()" id="myInput">Play</button>
+          <span id="PlayingStatus">Stopped</span>
+        </span>
+        <span id="progress2" style="display: inline-block;">
+          0:00 / 0:00
+        </span>
+      </div>
+      <div style="position: absolute; top: 30px; left: 20px;">
+        <div id="noteView1">
+          -
+        </div>
+        <div id="noteView2">
+          -
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="noteTableWrapper" style="margin-top: 120px; font-size:0.7em">
+    <div id="noteTable" style="white-space: pre;"></div>
+  </div>
+
+  <script>
+    const view = {view};
+    const syntaxRows = view.syntax.split('\n');
+    var element = document.getElementById("noteTable");
+    console.log(element)
+    const regex = /^(?!.*\/\/.*__end__).*__end__.*/gm;
+    // syntaxRows.forEach((rowStr, li) => {
+    for (let li = 0; li < syntaxRows.length; li++) {
+      const rowStr = syntaxRows[li];
+      // console.log(rowStr)
+      element.insertAdjacentHTML('beforeend', `<div class="noteRow" id="line_${li}">${rowStr === '' ? '<br>' : rowStr}</div>`);
+      if (rowStr.match(regex)) break;
+    }
+
+    // document.getElementsByClassName("noteRow")[0].scrollIntoView({ behavior: 'smooth', block: 'header' });
+  </script>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      // キーコード32はスペースキーを示します
+      if (event.keyCode === 32 || event.keyCode === 69) {
+        // デフォルトのスペースキーの動作（ページスクロールなど）を防ぐ
+        event.preventDefault();
+        playMusic()
+      }
+    });
+  </script>
+
+  <script async="async" src="/assets/js/sample2.js?3" type="text/javascript"></script>
+
+  <!--
+{
+  t: 2485,
+  r: 130,
+  sym: '12|14:4/1:bd(vib 0.5)',
+  tab: '[,,,,14,12]',
+  st: 728440,
+  et: 736120
+}
+{ id: 99, s: { l: 644, p: 1 }, e: { l: 647, p: 2 } },
+  -->
+
+
+  <!--
+    Bend
+  -->
+  <!-- <div style="width: 800; height: 300">
+    <canvas id="myLineChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('myLineChart');
+  
+    new Chart(ctx, {
+      type: 'line',
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      },
+      data: {
+        labels: {label},
+        datasets: [{
+          // label: '# of Votes',
+          data: {bendArr},
+          borderWidth: 1,
+          pointRadius: 1,
+          // stepped: true, // カクカク
+        }]
+      },
+      options: {
+            interaction: {
+      intersect: false,
+      axis: 'x'
+    },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script> -->
+
+</body>
+
+</html>

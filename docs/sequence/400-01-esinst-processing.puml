@@ -1,0 +1,128 @@
+@startuml esinst-processing
+title ESInst楽器音色処理シーケンス
+
+participant "ModNotes" as MN
+participant "CompileSymbols" as CS
+participant "Styles" as ST
+participant "TabObj" as TO
+participant "ESInst" as ESI
+participant "ModGuitarTimGM6mb" as MGT
+
+note over MN: ノート初期化処理でのESInst決定
+
+MN -> CS: initializeNote(sym)
+activate MN
+
+note right of MN: 1. 休符ノートの楽器音色決定
+alt sym.token === 'r' (休符の場合)
+    MN -> CS: 休符記号の確認
+    activate CS
+    
+    alt styles.inst !== ESInst.restNoise
+        MN -> ST: styles.inst = ESInst.rest
+        note right of ST: 通常の休符音に設定
+    else styles.inst === ESInst.restNoise  
+        note right of ST: ユーザー指定の休符ノイズを維持
+    end
+    
+    CS --> MN: 休符楽器設定完了
+    deactivate CS
+else 通常ノートの場合
+    note right of MN: 2. Continue論理の決定
+    MN -> MN: determineContinueLogic(sym, hasNextContinueX)
+    activate MN
+    
+    note right of MN: ESInstごとのContinue論理マッピング
+    MN -> ESI: ESInstの値を確認
+    activate ESI
+    
+    alt inst === ESInst.normal
+        ESI --> MN: styles.continue ? true : false
+    else inst === ESInst.mute
+        ESI --> MN: false
+    else inst === ESInst.muteContinue
+        ESI --> MN: true
+    else inst === ESInst.rest || inst === ESInst.restNoise
+        ESI --> MN: false
+    else inst === ESInst.brushing_d || inst === ESInst.brushing_D
+        ESI --> MN: false
+    else inst === ESInst.brushing_u || inst === ESInst.brushing_U
+        ESI --> MN: false
+    else inst === ESInst.strum
+        ESI --> MN: false
+    else inst === ESInst.normalUnContinueForStep
+        ESI --> MN: false
+    else inst === undefined
+        ESI --> MN: styles.continue ? true : false
+    end
+    
+    deactivate ESI
+    
+    MN -> CS: continueX値の設定
+    MN --> MN: Continue論理決定完了
+    deactivate MN
+end
+
+note right of MN: 3. 休符フラグの設定
+alt inst === ESInst.rest || inst === ESInst.restNoise
+    MN -> TO: tabObj.isRest = true
+    note right of TO: 休符ノートとしてマーク
+end
+
+MN -> TO: TabObj作成完了
+deactivate MN
+
+note over MGT: MIDI生成でのESInst処理
+
+MGT -> MGT: build(bmrList, bpmList, clickList)
+activate MGT
+
+note right of MGT: 各TabObjのESInstをMIDI設定に変換
+
+loop bmrListの各BuildMidiRequest
+    MGT -> TO: tabObj.styles.instの取得
+    activate TO
+    TO --> MGT: ESInst値
+    deactivate TO
+    
+    MGT -> MGT: resolveInstToTrackId(inst, hasBend)
+    activate MGT
+    
+    note right of MGT: ESInst → MIDI設定マッピング
+    alt inst === ESInst.normal
+        MGT -> MGT: { midiInst: trackId, vel: 0 }
+    else inst === ESInst.mute
+        MGT -> MGT: { midiInst: trackId, vel: -0.3 }
+    else inst === ESInst.muteContinue
+        MGT -> MGT: { midiInst: trackId, vel: -0.3 }
+    else inst === ESInst.rest
+        MGT -> MGT: { midiInst: trackId, vel: 0 }
+    else inst === ESInst.restNoise
+        MGT -> MGT: { midiInst: trackId, vel: 0.28, duration: 1 }
+    else inst === ESInst.brushing_d
+        MGT -> MGT: { midiInst: trackId, vel: -0.40, duration: 1 }
+    else inst === ESInst.brushing_D
+        MGT -> MGT: { midiInst: trackId, vel: -0.25, duration: 1 }
+    else inst === ESInst.brushing_u
+        MGT -> MGT: { midiInst: trackId, vel: -0.40, duration: 1 }
+    else inst === ESInst.brushing_U
+        MGT -> MGT: { midiInst: trackId, vel: -0.25, duration: 1 }
+    else inst === ESInst.strum
+        MGT -> MGT: { midiInst: trackId, vel: -0.25, duration: 1 }
+    else inst === ESInst.normalUnContinueForStep
+        MGT -> MGT: { midiInst: trackId, vel: 0 }
+    end
+    
+    note right of MGT: MIDIトラック決定\nmidiInst = (normal系 ? 0 : 1) + (bend ? 2 : 0)
+    
+    MGT -> MGT: MIDIノートイベント作成
+    MGT --> MGT: TrackConfig適用完了
+    deactivate MGT
+end
+
+MGT -> MGT: MIDIファイル構築完了
+deactivate MGT
+
+note over MN, MGT: ESInst処理の特徴\n- 型安全なenum活用\n- オブジェクトリテラル式での効率的分岐\n- ESInst.normalがデフォルト値\n- muteContinueのみが継続音\n- MIDI生成時の音量・トラック制御
+
+@enduml

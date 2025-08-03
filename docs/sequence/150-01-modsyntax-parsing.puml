@@ -1,0 +1,212 @@
+@startuml modsyntax-parsing
+title ModSyntax 構文解析シーケンス
+
+participant "Conductor" as C
+participant "ModSyntax" as MS
+participant "Conduct" as CD
+participant "StructureValidation" as SV
+participant "CompileSymbols" as CS
+participant "CSymbolType" as ST
+participant "ErrorBase" as EB
+
+note over MS: ModSyntax.as() メイン処理
+
+C -> MS: as(conduct)
+activate MS
+
+note right of MS: 1. 初期化処理
+MS -> MS: 解析変数の初期化
+activate MS
+
+MS -> MS: line = 1, linePos = 1, pos = 0
+MS -> MS: token = "", symbolList = []
+MS -> MS: braceCurlyLevel = 0, braceParenLevel = 0
+MS -> MS: dualId = 0, isErrorFound = false
+
+MS --> MS: 初期化完了
+deactivate MS
+
+note right of MS: 2. 構文文字列の事前検証
+MS -> SV: StructureValidationForCompile.validate(conduct.syntax)
+activate SV
+
+alt 構文エラーが検出された場合
+    SV -> EB: E400エラーの生成
+    activate EB
+    EB --> SV: ErrorBaseオブジェクト
+    deactivate EB
+    SV --> MS: 検証失敗
+    MS --> C: IResult.fail(error)
+    deactivate MS
+else 構文が正常な場合
+    SV --> MS: 検証成功
+    deactivate SV
+end
+
+note right of MS: 3. 文字単位解析ループ
+MS -> MS: 文字単位処理開始
+activate MS
+
+loop conduct.syntaxの各文字
+    MS -> MS: char = syntax[pos]
+    
+    alt char === '\n' (改行)
+        MS -> MS: line++, linePos = 1
+        note right of MS: 行番号とポジション更新
+    else char === ' ' || char === '\t' (空白・タブ)
+        MS -> MS: linePos++ (位置のみ更新)
+    else char === '{' (波括弧開始)
+        MS -> MS: commit(symbolList, token, ...)
+        activate MS
+        note right of MS: 蓄積トークンをコミット
+        MS --> MS: token = ""
+        deactivate MS
+        MS -> MS: braceCurlyLevel++
+        MS -> CD: braceLocationInfoListに追加
+        note right of MS: スタイルスコープ開始記録
+    else char === '}' (波括弧終了)
+        MS -> MS: commit(symbolList, token, ...)
+        MS -> MS: braceCurlyLevel--
+        MS -> CD: braceLocationInfoListに終了記録
+        note right of MS: スタイルスコープ終了記録
+    else char === '(' (丸括弧開始)
+        MS -> MS: braceParenLevel++
+        MS -> MS: token += char
+        note right of MS: グループ表現開始
+    else char === ')' (丸括弧終了)
+        MS -> MS: braceParenLevel--
+        MS -> MS: token += char
+        note right of MS: グループ表現終了
+    else char === '>' && nextChar === '>' (デュアル結合子)
+        MS -> MS: commit(symbolList, token, ...)
+        MS -> MS: pos++ (>>をスキップ)
+        MS -> MS: dualId = (dualId + 1) % 3
+        note right of MS: デュアルチャンネル切り替え
+    else その他の文字
+        MS -> MS: token += char
+        note right of MS: トークン蓄積
+    end
+    
+    MS -> MS: pos++, linePos++
+end
+
+MS --> MS: 文字解析完了
+deactivate MS
+
+note right of MS: 4. 最終トークンのコミット
+MS -> MS: commit(symbolList, token, ...)
+activate MS
+
+note right of MS: commit()処理の詳細
+alt token.isEmpty()
+    MS --> MS: 空トークンはスキップ
+else token.startsWith('>>')
+    MS -> MS: dualJoiner処理
+    MS -> ST: CSymbolType.dualJoiner
+    MS -> CS: CompileSymbolsオブジェクト作成
+else token.startsWith(':')
+    MS -> MS: スタイル記号処理
+    MS -> ST: CSymbolType.style
+    MS -> CS: styleトークンとして記録
+else token.startsWith('@@')
+    MS -> MS: リージョン記号処理
+    MS -> ST: CSymbolType.region
+    MS -> CS: regionトークンとして記録
+else token.startsWith('@')
+    MS -> MS: フラッシュアノテーション処理
+    MS -> ST: CSymbolType.flash
+    MS -> CS: flashトークンとして記録
+else token.startsWith('%')
+    MS -> MS: ディグリー記号処理
+    MS -> ST: CSymbolType.degree
+    MS -> CS: degreeトークンとして記録
+else token.match(/^\/\d+\//)
+    MS -> MS: ブレット記号処理
+    MS -> ST: CSymbolType.bullet
+    MS -> CS: bulletトークンとして記録
+else デフォルト
+    MS -> MS: ノート記号処理
+    MS -> ST: CSymbolType.note
+    MS -> CS: noteトークンとして記録
+end
+
+note right of MS: CompileSymbolsオブジェクトの設定
+MS -> CS: symbol.type = 決定されたタイプ
+MS -> CS: symbol.line = 現在行番号
+MS -> CS: symbol.linePos = 行内位置
+MS -> CS: symbol.token = トークン内容
+MS -> CS: symbol.dualId = 現在のデュアルID
+MS -> CS: symbol.braceCurlyLevel = 波括弧レベル
+MS -> CS: symbol.braceParenLevel = 丸括弧レベル
+
+MS -> CS: symbolList.push(symbol)
+MS --> MS: コミット完了
+deactivate MS
+
+note right of MS: 5. 括弧マッチング検証
+alt braceCurlyLevel !== 0
+    MS -> EB: E400("波括弧が閉じられていません")
+    MS --> C: IResult.fail(error)
+    deactivate MS
+else braceParenLevel !== 0
+    MS -> EB: E400("丸括弧が閉じられていません")
+    MS --> C: IResult.fail(error)
+    deactivate MS
+end
+
+note right of MS: 6. デュアルブロック配列の構築
+MS -> MS: buildDualBlockArrays(symbolList)
+activate MS
+
+note right of MS: 3つのデュアルチャンネル用配列作成
+MS -> MS: dualBlockArrays = [[], [], []]
+
+loop symbolListの各symbol
+    MS -> CS: symbol.dualIdを確認
+    MS -> MS: dualBlockArrays[symbol.dualId].push(symbol)
+end
+
+MS --> MS: デュアルブロック配列完了
+deactivate MS
+
+note right of MS: 7. 位置情報の記録
+MS -> CD: locationInfoList = 位置情報配列
+MS -> CD: braceLocationInfoList = 括弧位置情報配列
+
+MS --> C: IResult.ok(dualBlockArrays)
+deactivate MS
+
+note over MS: ModSyntax解析の特徴
+
+note right of MS
+    **解析アルゴリズムの特徴**
+    
+    - 文字単位の線形解析
+    - 状態管理による文脈解析
+    - 括弧階層の追跡
+    - デュアルチャンネル対応
+    - エディタ連携用位置情報記録
+end note
+
+note left of MS
+    **トークン分類優先順位**
+    
+    1. デュアル結合子 (>>)
+    2. スタイル記号 (:)
+    3. リージョン記号 (@@)
+    4. フラッシュ記号 (@)
+    5. ディグリー記号 (%)
+    6. ブレット記号 (/\d+/)
+    7. ノート記号 (デフォルト)
+end note
+
+note over CD
+    **位置情報管理**
+    
+    - エディタカーソル位置追跡
+    - 構文エラー位置特定
+    - スタイルスコープ管理
+    - デバッグ情報提供
+end note
+
+@enduml

@@ -1,0 +1,212 @@
+@startuml modsyntax-commit-process
+title ModSyntax Commit処理詳細シーケンス
+
+participant "ModSyntax" as MS
+participant "CommitContext" as CC
+participant "CSymbolType" as ST
+participant "CompileSymbols" as CS
+participant "TokenValidator" as TV
+participant "PositionTracker" as PT
+
+note over MS: commit()メソッドの詳細処理
+
+MS -> MS: commit(symbolList, token, line, linePos, ...)
+activate MS
+
+note right of MS: 1. コミット条件の確認
+alt token.isEmpty()
+    MS --> MS: 空トークンはスキップ
+    deactivate MS
+else token.trim().isEmpty()
+    MS --> MS: 空白のみトークンはスキップ  
+    deactivate MS
+end
+
+note right of MS: 2. コミットコンテキストの作成
+MS -> CC: CommitContextの初期化
+activate CC
+
+MS -> CC: context.token = token
+MS -> CC: context.line = line
+MS -> CC: context.linePos = linePos
+MS -> CC: context.dualId = currentDualId
+MS -> CC: context.braceCurlyLevel = braceCurlyLevel
+MS -> CC: context.braceParenLevel = braceParenLevel
+
+CC --> MS: コンテキスト準備完了
+deactivate CC
+
+note right of MS: 3. トークンタイプの判定
+MS -> MS: determineTokenType(token)
+activate MS
+
+note right of MS: トークンパターンマッチング
+alt token.startsWith('>>')
+    MS -> ST: CSymbolType.dualJoiner
+    note right of ST: デュアルチャンネル結合子
+else token.startsWith(':')
+    MS -> ST: CSymbolType.style
+    note right of ST: スタイル記号
+    MS -> TV: validateStyleToken(token)
+    activate TV
+    
+    alt スタイル記号が有効
+        TV --> MS: 有効なスタイル
+    else スタイル記号が無効
+        TV --> MS: エラー情報
+        MS -> MS: エラーフラグ設定
+    end
+    deactivate TV
+else token.startsWith('@@')
+    MS -> ST: CSymbolType.region
+    note right of ST: リージョン境界
+    MS -> TV: validateRegionToken(token)
+    activate TV
+    TV --> MS: リージョン検証結果
+    deactivate TV
+else token.startsWith('@')
+    MS -> ST: CSymbolType.flash
+    note right of ST: フラッシュアノテーション
+    MS -> TV: validateFlashToken(token)
+    activate TV
+    TV --> MS: フラッシュ検証結果
+    deactivate TV
+else token.startsWith('%')
+    MS -> ST: CSymbolType.degree
+    note right of ST: スケールディグリー
+else token.match(/^\/\d+\//)
+    MS -> ST: CSymbolType.bullet
+    note right of ST: ブレット記号（タブ譜分数）
+    MS -> TV: validateBulletToken(token)
+    activate TV
+    TV --> MS: ブレット検証結果
+    deactivate TV
+else token.startsWith('r') && token.length === 1
+    MS -> ST: CSymbolType.note
+    note right of ST: 休符ノート
+else デフォルトケース
+    MS -> ST: CSymbolType.note
+    note right of ST: 通常ノート
+    MS -> TV: validateNoteToken(token)
+    activate TV
+    TV --> MS: ノート検証結果
+    deactivate TV
+end
+
+MS --> MS: トークンタイプ決定完了
+deactivate MS
+
+note right of MS: 4. CompileSymbolsオブジェクトの生成
+MS -> CS: CompileSymbolsの作成
+activate CS
+
+MS -> CS: symbol.type = 決定されたシンボルタイプ
+MS -> CS: symbol.token = 元のトークン文字列
+MS -> CS: symbol.line = 行番号
+MS -> CS: symbol.linePos = 行内位置
+MS -> CS: symbol.dualId = デュアルチャンネルID
+MS -> CS: symbol.braceCurlyLevel = 波括弧ネストレベル
+MS -> CS: symbol.braceParenLevel = 丸括弧ネストレベル
+
+note right of CS: 位置情報の詳細設定
+MS -> PT: calculatePositionInfo(context)
+activate PT
+
+PT -> PT: startPos = 開始位置計算
+PT -> PT: endPos = 終了位置計算
+PT -> PT: tokenLength = token.length
+
+PT --> CS: symbol.startPos = startPos
+PT --> CS: symbol.endPos = endPos
+PT --> CS: symbol.tokenLength = tokenLength
+
+deactivate PT
+
+note right of CS: スタイル関連情報の初期化
+alt symbol.type === CSymbolType.style
+    MS -> CS: symbol.styleInfo = parseStyleInfo(token)
+    note right of CS: スタイル詳細の解析・保存
+else symbol.type === CSymbolType.note
+    MS -> CS: symbol.noteInfo = parseNoteInfo(token)
+    note right of CS: ノート詳細の解析・保存
+else symbol.type === CSymbolType.bullet
+    MS -> CS: symbol.bulletInfo = parseBulletInfo(token)
+    note right of CS: ブレット詳細の解析・保存
+end
+
+CS --> MS: CompileSymbolsオブジェクト完成
+deactivate CS
+
+note right of MS: 5. シンボルリストへの追加
+MS -> MS: symbolList.push(symbol)
+
+note right of MS: 6. 位置情報の更新
+MS -> PT: updateGlobalPosition(symbol)
+activate PT
+
+PT -> PT: グローバル位置カウンターの更新
+PT -> PT: 次のトークン用位置情報準備
+
+PT --> MS: 位置情報更新完了
+deactivate PT
+
+note right of MS: 7. デバッグ情報の記録
+alt デバッグモードが有効
+    MS -> MS: recordDebugInfo(symbol)
+    activate MS
+    
+    MS -> MS: debugInfo.tokenCount++
+    MS -> MS: debugInfo.typeCounters[symbol.type]++
+    MS -> MS: debugInfo.positionHistory.push(position)
+    
+    MS --> MS: デバッグ情報記録完了
+    deactivate MS
+end
+
+MS --> MS: commit処理完了
+deactivate MS
+
+note over MS: Commit処理の特徴
+
+note right of MS
+    **コミット処理の責任**
+    
+    - トークン文字列の型判定
+    - CompileSymbolsオブジェクト生成
+    - 位置情報の正確な記録
+    - 検証とエラーハンドリング
+    - デバッグ情報の管理
+end note
+
+note left of CS
+    **CompileSymbolsの構造**
+    
+    - type: シンボルタイプ
+    - token: 元の文字列
+    - line/linePos: エディタ位置
+    - dualId: チャンネル番号
+    - brace levels: 括弧階層
+    - position info: 詳細位置情報
+end note
+
+note right of TV
+    **検証の種類**
+    
+    - スタイル記号の妥当性
+    - ノート記号の音楽理論的正当性
+    - ブレット記号の数値範囲
+    - リージョン記号の構文
+    - フラッシュ記号の形式
+end note
+
+note left of PT
+    **位置追跡の精度**
+    
+    - 文字単位の正確な位置
+    - エディタカーソル連携
+    - エラー位置の特定
+    - リファクタリング支援
+    - シンタックスハイライト
+end note
+
+@enduml

@@ -1,0 +1,137 @@
+@startuml resolve-legato
+title レガート処理シーケンス (resolve-legato.ts)
+
+participant "ResolveLegato" as RL
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "LegTOLine" as LT
+participant "Validation" as V
+
+RL -> RL: resolve(mixes)
+activate RL
+
+note right of RL: flatTOListの各TabObjを処理
+
+RL -> RL: 初期化\n- activeLegato = false\n- startTOIndex = -1\n- legTOLine = []
+
+loop flatTOListの各TabObj
+    RL -> TO: レガートスタイルの確認
+    activate TO
+    
+    alt レガートスタイルが存在し、regionNoteIndex !== 0の場合
+        alt activeLegato === false（レガート開始）
+            RL -> LT: 開始音の追加（prevTabObj）
+            RL -> RL: startTOIndex = ti - 1
+            RL -> RL: activeLegato = true
+        end
+        
+        RL -> LT: レガート音の追加（現在のTabObj）
+    else レガートスタイルが存在しない場合
+        alt activeLegato === true（レガート終了）
+            RL -> RL: apply(mixes, legTOLine, startTOIndex)
+            activate RL
+            
+            note right of RL: 1. 初期バリデーション
+            RL -> V: valid(legTOLine)
+            activate V
+            V -> V: レガート対象の妥当性チェック
+            V --> RL: バリデーション結果
+            deactivate V
+            
+            alt バリデーション成功
+                note right of RL: 2. 開始音とレガート弦の分離
+                RL -> RL: separateStartNote(mixes, legTOLine, startTOIndex)
+                activate RL
+                
+                note right of RL: 開始音の分離処理
+                RL -> RL: 開始音とレガート音の弦分離
+                RL -> RL: 新しい開始インデックスの計算
+                
+                RL --> RL: 新しい開始インデックス
+                deactivate RL
+                
+                alt 新しい開始インデックス === -1（分離不要）
+                    note right of RL: 3a. ベロシティ調整のみ
+                    RL -> RL: velocityAdjust(mixes, legTOLine, startTOIndex)
+                    activate RL
+                    
+                    note right of RL: ベロシティ調整処理
+                    RL -> RL: 減衰係数の計算\n- DAMPING_COEFFICIENT = 700
+                    RL -> RL: 時間に基づく減衰量の計算
+                    loop レガート音（1番目以降）
+                        RL -> TO: 音量の調整\n- Math.max(MIN_LEGATO_VELOCITY, v - attenuationVelocity)
+                    end
+                    
+                    RL --> RL: ベロシティ調整完了
+                    deactivate RL
+                else 新しい開始インデックス !== -1（分離必要）
+                    note right of RL: 3b. 音程変化量の解析
+                    RL -> RL: analyzeShiftWidth(legTOLine)
+                    activate RL
+                    
+                    note right of RL: シフト幅解析処理
+                    RL -> RL: 指定弦の変化チェック
+                    RL -> RL: シフト量の違いチェック
+                    RL -> RL: シフト幅の判定（4フレット以上はベロシティ対応）
+                    
+                    RL --> RL: 解析結果
+                    deactivate RL
+                    
+                    alt 解析結果 === undefined（ベロシティ対応）
+                        RL -> RL: velocityAdjust(mixes, legTOLine, newStartTOIndex)
+                        activate RL
+                        
+                        note right of RL: ベロシティ調整処理
+                        RL -> RL: 減衰係数の計算
+                        RL -> RL: 時間に基づく減衰量の計算
+                        loop レガート音
+                            RL -> TO: 音量の調整
+                        end
+                        
+                        RL --> RL: ベロシティ調整完了
+                        deactivate RL
+                    else 解析結果 !== undefined（音程変化対応）
+                        note right of RL: 音程変化処理
+                        RL -> RL: シフトプランの決定
+                        RL -> RL: 開始音のtabShift設定
+                        RL -> RL: レガート音の音程調整
+                    end
+                end
+            end
+            
+            RL -> LT: legTOLine = []（リセット）
+            RL -> RL: activeLegato = false
+            RL --> RL: レガート適用完了
+            deactivate RL
+        end
+    end
+    
+    TO --> RL: TabObj処理完了
+    deactivate TO
+end
+
+note right of RL: 最終適用（ループ終了後の処理）
+alt activeLegato === true
+    RL -> RL: apply(mixes, legTOLine, startTOIndex)
+    activate RL
+    
+    note right of RL: 最終レガート適用処理
+    RL -> V: valid(legTOLine)
+    RL -> RL: separateStartNote(mixes, legTOLine, startTOIndex)
+    RL -> RL: analyzeShiftWidth(legTOLine)
+    alt ベロシティ対応の場合
+        RL -> RL: velocityAdjust(mixes, legTOLine, startTOIndex)
+    else 音程変化対応の場合
+        RL -> RL: 音程変化処理
+    end
+    
+    RL --> RL: 最終レガート適用完了
+    deactivate RL
+end
+
+RL --> M: 全レガート処理完了
+deactivate RL
+
+note over M: レガート処理の特徴\n- 音の連結による滑らかな演奏表現\n- 音程変化とベロシティ調整の両方に対応\n- 開始音とレガート音の適切な分離\n- 時間に基づく自然な減衰効果\n- 4フレット以上の移動はベロシティ調整に自動変換
+
+@enduml 

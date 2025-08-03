@@ -1,0 +1,140 @@
+@startuml midi-generation
+title MIDI生成処理シーケンス
+
+participant "MidiBuilder" as MB
+participant "Midi" as M
+participant "ModGuitarTimGM6mb" as MG
+participant "Track" as T
+participant "Conduct" as C
+
+MB -> MB: build(bmrList, bpmList, clickList)
+activate MB
+
+note right of MB: MIDIオブジェクトの初期化
+MB -> M: new Midi()
+activate M
+
+note right of MB: 1. クリックトラックの構築
+alt クリックリストが存在する場合
+    MB -> MB: buildClick(clickList, midi)
+    activate MB
+    
+    MB -> M: addTrack()
+    activate M
+    M -> T: クリックトラック作成
+    activate T
+    
+    T -> T: channel = 9 (ドラムチャンネル)
+    T -> T: instrument = { number: 115 }
+    
+    loop クリックポイント配列
+        T -> T: addNote({\n  durationTicks: 2,\n  midi: cp.inst,\n  velocity: cp.velocity,\n  ticks: cp.startTick\n})
+    end
+    
+    T --> M: クリックトラック完成
+    deactivate T
+    M --> MB: トラック追加完了
+    deactivate M
+    
+    deactivate MB
+end
+
+note right of MB: 2. ギタートラックの構築
+loop dualチャンネル (0, 1, 2)
+    note right of MB: dualId: {dualId} の処理
+    
+    MB -> MG: create(trackStartIndex, midi, bmr)
+    activate MG
+    
+    note right of MG: ギタートラック作成（4トラック）
+    MG -> MG: createTracks(trackStartIndex, midi, bmr)
+    activate MG
+    
+    loop 4トラック作成
+        MG -> M: addTrack()
+        activate M
+        M -> T: ギタートラック作成
+        activate T
+        
+        alt トラック0: 通常音
+            T -> T: instrument = { number: 24 } (ナイロンギター)
+        else トラック1: ミュート音
+            T -> T: instrument = { number: 28 } (ミュートギター)
+        else トラック2: 通常音ベンド
+            T -> T: instrument = { number: 24 } (ナイロンギター)
+        else トラック3: ミュート音ベンド
+            T -> T: instrument = { number: 28 } (ミュートギター)
+        end
+        
+        T -> T: channel = trackStartIndex + i
+        T -> T: addCC({ number: 10, value: pan, ticks: 0 })
+        
+        T --> M: トラック設定完了
+        deactivate T
+        M --> MG: トラック追加完了
+        deactivate M
+    end
+    
+    MG --> MG: トラック配列完成
+    deactivate MG
+    
+    note right of MG: タブオブジェクトのMIDI変換
+    loop flatTOListの各タブオブジェクト
+        MG -> MG: フレット情報の処理
+        activate MG
+        
+        MG -> MG: チューニングピッチ計算
+        MG -> MG: 弦別ループ処理
+        
+        loop 各弦
+            alt フレット指定がある場合
+                MG -> MG: 必須プロパティ取得\n- startTick, stopTick\n- duration, velocity\n- styleInst, styleBend
+                
+                MG -> MG: エラーチェック\n- tick値の妥当性確認
+                
+                alt 有効な音の場合
+                    MG -> MG: resolveInstToTrackId(styleInst, styleBend)
+                    MG -> MG: MIDIノート計算\n- note = tuningPitch[bow] + fret
+                    
+                    MG -> T: addNote({\n  midi: note + tabShift,\n  velocity: midiVelocity,\n  ticks: startTick,\n  durationTicks: duration\n})
+                end
+            end
+        end
+        
+        deactivate MG
+    end
+    
+    note right of MG: ベンド処理
+    MG -> MG: bend.bendNormalList処理
+    loop ベンドリスト
+        MG -> T: addPitchBend({\n  ticks: bb.tick,\n  value: bb.pitch\n})
+    end
+    
+    MG -> MG: bend.bendChannelList処理
+    loop チャンネルベンドリスト
+        MG -> T: addPitchBend({\n  ticks: bb.tick,\n  value: bb.pitch\n})
+    end
+    
+    MG --> MB: ギタートラック完成
+    deactivate MG
+end
+
+note right of MB: 3. BPM設定
+loop BPM位置情報配列
+    MB -> M: header.tempos.push({\n  bpm: b.bpm,\n  ticks: b.tick\n})
+end
+
+note right of MB: 4. 不要トラック削除
+MB -> M: トラックフィルタリング
+activate M
+M -> M: notes.length > 0 のトラックのみ保持
+M --> MB: フィルタリング完了
+deactivate M
+
+MB --> C: MIDIオブジェクト
+deactivate M
+deactivate MB
+
+note over C: MIDIファイル生成完了
+
+@enduml 

@@ -1,0 +1,39 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { Am~~~~~ } >> { 0|:map(1..5) }
+
+@@ { Em~~~~~ } 
+
+
+@@ 1/4 200 {
+  @click
+  { |||||12^ }:map(*8)
+}
+@@ 1/4 200 {
+  // 改行で1小節見たいのでもいいか @
+  Dm^ @offset ..|~~ ..|^
+  Fm~~~
+  Fm~~~ ..|^
+  C~~ ..|^
+
+  Dm~~~
+  Fm~~~
+  Fm7~~~ ..|^
+  C~~~
+
+  @/click
+}
+
+
+@@ {
+  Em r Ebm r Dm 2||2|||:map(-3 step 2 * 4):1/16
+} >> {
+  Em:step(52345)
+} >> {
+  Am:step(54321)
+}

@@ -1,0 +1,36 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  ..0|3|||3:to ..|12|10|||~~
+}:map(0..2 sos, 3)
+
+@@ {
+  ..2|5|||0:to ..|12|10|||~~
+}:map(0 step -2 * 4 sos)
+
+@@ {
+  ..|~~~~~~~
+} >> {
+  r r '''''0||2||0|~~~~~:v(60)
+} >> {
+  r r '''''|2||0||0~~~~~:v(60)
+}
+
+
+@@ {
+  {
+    E:map(2 step -2 * 2 ss):step((15)2345...)
+  }:map(0 step 7 * 2)
+}:map(0 step 7 * 2):to:1/12
+
+
+@@ 120 {
+  { ..0| ..|2 ..||2 ..|||0 ..||||0 ..|||||0 }:map(0, 3 sos):1/8
+  { ..0| ..|2 ..||2 ..|||0 ..||||0 ..|||||0  }:map(0 step 5 * 3, -2):1/24
+  { ..0| ..|2 ..||2 ..|||0 ..||||0 ..|||||0 }:map(0 step 5 * 1 sos rev):1/8
+}:scale(F# melodicMinor)

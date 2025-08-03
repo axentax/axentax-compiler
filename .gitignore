@@ -1,2 +1,7 @@
 local*
 node_modules/
+.ai
+.claude
+.cursor
+.serena
+coverage

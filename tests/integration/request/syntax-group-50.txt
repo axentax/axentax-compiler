@@ -1,0 +1,65 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  {
+    { C
+      D
+      E:bd(0..8/8 cho 2)
+      /||||15|12~
+    }:bd(
+      0..2/8 cho 1.25
+      // 2..7/8 vib 1/4
+      // 7..8/8 end
+    )
+    F F F
+  }
+}
+
+/*
+  --- BEND考査 ---
+  bd(
+    0..1/8.hi.2,
+    7..8/8:low.0
+  )
+
+  // --- 複数ギター考査 ---
+  // @dual指定直後のblock2つは、演奏開始タイミングが同期される。
+  // 双方とも終了するまで次のblockは始まらない
+  // システムとしては @dual フラッシュが出現した次の blockのblockIndexを記録するだけ
+  // @dual後の2番めのブロックは、ツイン用に事前作成したもう一つの CompileSymbols に初期段階で移す。
+  // 現状、evolveFlatTabObjListで flash処理しているが、flash処理自体を早期に解決する構造に変更して
+  // @dualの対応もそこで実施する。
+  // ==>> [OK:対応ずみ]現状、flashをブロック外に設定できないので対策必要
+
+  // ...
+  // replicationStepNote(map展開)が完了しないと、blockのtickがわからない
+  // 
+  // TODO:
+  // - blockListの仕様が変わるかもしれないので、blockListを
+  // - initBlockObj での処理で、@dualの場合、conduct.blockList"Dual".push(block) とする
+  // - 上記の段階で、compileSymbolsList を2つに分ける
+  // - 
+
+*/
+
+
+
+
+@@ 1/4 {
+  C C C^ C^ C^ C^
+  2||2:to(hi) rn 2| %1 ..2|||~~~ rn
+}
+
+@@ { 5|5|5:to(continue) |8|8 }
+
+@@ 100 4/4 {
+ { C 2|||||2 r |2|2| r |5|5| r |7|7~~ |2|2| }:1/4
+ { C Dm Em 0|2|2 ||2||7 ..5| C }
+}
+
+@@ 1/4 { { Em Cm A B Dm }:to }

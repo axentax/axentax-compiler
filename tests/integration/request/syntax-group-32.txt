@@ -1,0 +1,50 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ 160 {
+  @click
+  Dm7:2/1
+  @/click
+} >> {
+  { 5/10-12-14 }:1/8
+  @offset
+  |||||15~~~~~:bd(0..2/12 2, 4.. 1 vib):to(hi) ..|:1/2
+}
+
+@@ 200 {
+  @click
+  Em:2/1
+  @/click
+} >> {
+  { 5/12-14-15 }:1/8
+  @offset
+  |||||12~~~~~:bd(0..2/12 2, 4.. 1 vib):to(low) ..|:1/8
+}
+
+@@ {
+  |||||2:1/16:v70:to&
+  |||||4:1/16:v70:to&
+  |||||2~~~:bd(
+    ..2/8 2, vib,
+    reset
+  )
+} >> {
+  |||||12:1/16:v70:to&
+  |||||14:1/16:v70:to&
+  |||||12~~~:bd(
+    ..2/8 2, vib,
+    reset
+  )
+}
+
+@@ {
+   C E
+} >> {
+  |||||24
+}
+
+@@ {}

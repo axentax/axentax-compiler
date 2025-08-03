@@ -1,0 +1,167 @@
+@startuml error-handling
+title エラーハンドリング処理シーケンス
+
+actor User as U
+participant "Conductor" as C
+participant "Validation" as V
+participant "ErrorBase" as E
+participant "SettingResolver" as SR
+participant "ModSyntax" as MS
+participant "BlockCompiler" as BC
+participant "CompileStyle" as CS
+participant "MidiBuilder" as MB
+
+U -> C: convertToObj(syntax, settings...)
+activate C
+
+C -> C: convert(syntax, allowAnnotations, chordDic, mapSeed, isValidOnly)
+activate C
+
+C -> C: core(conduct)
+activate C
+
+note right of C: 1. コメント除去と前処理
+C -> C: removeUnnecessaryInitials(conduct)
+
+note right of C: 2. ユーザー設定の解析・適用
+C -> SR: resolve(conduct)
+activate SR
+
+alt 設定解析エラー
+    SR -> E: new E400(line, linePos, token, message)
+    activate E
+    E -> E: エラー情報の構築\n- line: エラー行番号\n- linePos: エラー位置\n- token: 問題のトークン\n- message: エラーメッセージ
+    E --> SR: ErrorBase
+    deactivate E
+    SR --> C: エラー結果
+    deactivate SR
+    
+    C --> C: エラー処理
+    deactivate C
+    deactivate C
+    
+    C -> U: エラー結果（id: 0/1, error: ErrorBase）
+    deactivate C
+    return
+end
+
+SR --> C: 設定解決結果
+deactivate SR
+
+C -> C: removeBeforeStart(conduct)
+
+note right of C: 3. 構文解析（文字単位でのパース）
+C -> MS: as(conduct)
+activate MS
+
+alt 構文解析エラー
+    MS -> E: new E400(line, linePos, token, message)
+    activate E
+    E -> E: 構文エラー情報の構築
+    E --> MS: ErrorBase
+    deactivate E
+    MS --> C: エラー結果
+    deactivate MS
+    
+    C --> C: エラー処理
+    deactivate C
+    deactivate C
+    
+    C -> U: エラー結果（id: 0/1, error: ErrorBase）
+    deactivate C
+    return
+end
+
+MS --> C: シンボルリスト
+deactivate MS
+
+note right of C: 4. ブロック構造への変換
+C -> BC: compile(conduct, symbolsDualLists)
+activate BC
+
+alt ブロック変換エラー
+    BC -> E: new E400(line, linePos, token, message)
+    activate E
+    E -> E: ブロック変換エラー情報の構築
+    E --> BC: ErrorBase
+    deactivate E
+    BC --> C: エラー結果
+    deactivate BC
+    
+    C --> C: エラー処理
+    deactivate C
+    deactivate C
+    
+    C -> U: エラー結果（id: 0/1, error: ErrorBase）
+    deactivate C
+    return
+end
+
+BC --> C: ブロック変換結果
+deactivate BC
+
+note right of C: 5. スタイル処理（エフェクト、タイミング調整）
+C -> CS: compile(conduct)
+activate CS
+
+alt スタイル処理エラー
+    CS -> E: new E400(line, linePos, token, message)
+    activate E
+    E -> E: スタイル処理エラー情報の構築
+    E --> CS: ErrorBase
+    deactivate E
+    CS --> C: エラー結果
+    deactivate CS
+    
+    C --> C: エラー処理
+    deactivate C
+    deactivate C
+    
+    C -> U: エラー結果（id: 0/1, error: ErrorBase）
+    deactivate C
+    return
+end
+
+CS --> C: スタイル処理結果
+deactivate CS
+
+C --> C: コンパイル完了
+deactivate C
+
+alt バリデーションのみの場合
+    C --> U: バリデーション結果（id: 0）
+else スタイルコンパイル有効の場合
+    note right of C: MIDI生成（オプション）
+    C -> MB: build(bmrList, bpmList, clickList)
+    activate MB
+    
+    alt MIDI生成エラー
+        MB -> E: new E400(line, linePos, token, message)
+        activate E
+        E -> E: MIDI生成エラー情報の構築
+        E --> MB: ErrorBase
+        deactivate E
+        MB --> C: エラー結果
+        deactivate MB
+        
+        C --> C: エラー処理
+        deactivate C
+        deactivate C
+        
+        C -> U: エラー結果（id: 1, error: ErrorBase, midiRequest: true）
+        deactivate C
+        return
+    end
+    
+    MB --> C: MIDIオブジェクト
+    deactivate MB
+    
+    C --> U: 完全なコンパイル結果（id: 1, midi含む）
+end
+
+deactivate C
+deactivate C
+
+note over U: エラーハンドリングの特徴\n- 各段階で即座にエラーを返す\n- 詳細な位置情報（行番号、位置）\n- 問題のトークンとエラーメッセージ\n- 統一されたエラー形式
+
+@enduml 

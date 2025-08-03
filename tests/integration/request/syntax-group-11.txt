@@ -1,0 +1,38 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ {
+  Em r Ebm r Dm 2||2|||:map(-3 step 2 * 4):1/16
+} >> {
+  Em:step(52345)
+} >> {
+  Am:step(54321)
+}
+
+@@ {
+  Dm r Dbm r Fm 2||2|||:map(-3 step 2 * 4):1/16
+} >> {
+  Dm:step(52345)
+} >> {
+  Bm:step(54321)
+}
+
+@@ {
+  ..0|3|||3:to ..|12|10|||~~
+}:map(0..2 sos, 3)
+
+@@ {
+  ..2|5|||0:to ..|12|10|||~~
+}:map(0 step -2 * 4 sos)
+
+@@ {
+  ..|~~~~~~~
+} >> {
+  r r '''''0||2||0|~~~~~:v(60)
+} >> {
+  r r '''''|2||0||0~~~~~:v(60)
+}

@@ -1,0 +1,76 @@
+@startuml resolve-staccato
+title スタッカート処理シーケンス (resolve-staccato.ts)
+
+participant "ResolveStaccato" as RS
+participant "Conduct" as C
+participant "Mixes" as M
+participant "TabObj" as TO
+participant "XTickUtils" as XTU
+
+RS -> RS: resolve(mixes)
+activate RS
+
+note right of RS: flatTOListの各TabObjを処理
+
+loop flatTOListの各TabObj
+    RS -> TO: スタッカートスタイルの確認
+    activate TO
+    
+    alt スタッカートスタイルが存在する場合
+        RS -> RS: core(mixes, to, ti, staccato)
+        activate RS
+        
+        note right of RS: 1. 音の長さの短縮処理
+        RS -> TO: 元のノート長さを取得
+        RS -> TO: originalStopTick = to.stopTick
+        
+        note right of RS: 2. スタッカート比率の適用
+        RS -> RS: 短縮比率の計算
+        alt staccato.ratio が設定されている場合
+            RS -> RS: userRatio = staccato.ratio
+        else デフォルト設定の場合
+            RS -> RS: userRatio = conduct.settings.staccato.defaultRatio
+        end
+        
+        note right of RS: 3. 新しい停止ティックの計算
+        RS -> XTU: calcStaccatoStopTick(startTick, originalStopTick, userRatio)
+        activate XTU
+        
+        note right of XTU: スタッカート計算ロジック
+        XTU -> XTU: noteDuration = originalStopTick - startTick
+        XTU -> XTU: staccatoDuration = noteDuration * userRatio
+        XTU -> XTU: newStopTick = startTick + staccatoDuration
+        
+        XTU --> RS: newStopTick
+        deactivate XTU
+        
+        note right of RS: 4. フレット停止ティックの更新
+        loop activeBowsの各弦
+            RS -> TO: to.activeBows[bowIndex].bar.fretStopTicks[bowIndex] = newStopTick
+        end
+        
+        note right of RS: 5. グローバル停止ティックの更新
+        RS -> TO: to.stopTick = newStopTick
+        
+        alt 次のノートとのギャップチェック
+            RS -> TO: 次のノートの確認
+            alt 次のノートが存在し、ギャップが発生する場合
+                note right of RS: ギャップタイムの記録\n（将来的な無音処理用）
+                RS -> TO: to.gapToNext = nextStartTick - newStopTick
+            end
+        end
+        
+        RS --> RS: スタッカート処理完了
+        deactivate RS
+    end
+    
+    TO --> RS: TabObj処理完了
+    deactivate TO
+end
+
+RS --> C: 全スタッカート処理完了
+deactivate RS
+
+note over C: スタッカート処理の特徴\n- 音の長さを比率で短縮\n- 自然な音の分離を実現\n- 次のノートとのギャップ管理\n- フレット単位での精密な制御
+
+@enduml

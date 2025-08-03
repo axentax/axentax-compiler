@@ -1,0 +1,12 @@
+set.click.inst: 42
+set.style.until: 1/4
+set.dual.pan: true
+set.dual.panning: [0.5, 0, 1]
+set.style.scale: E minor
+set.song.key: E
+
+@@ { @click }
+@@ { '''Em~~~~~~~:v80 } >> E|A|D|G|B|E|E|E { 0|~ 5|^ 7| 0|~~ 0|^ 0|^ 0|^ }:to
+@@ { '''Am7~~~~~~~:v80 } >> E|A|D|G|B|E|E|E { 0|~ 5|^ 7| 0|~~ 0|^ 0|^ 0|^ }:to
+@@ { !'''G7~~~~~~~:v80 } >> E|A|D|G|B|E|E|E { 3|~ 5|^ 7| 3|~~ 3|^ 2|^ 1|^ }:to
+@@ { '''Em~~~~~~~:v80 } >> E|A|D|G|B|E|E|E { 0|~ 5|^ 7| 0|~~ 0|^ 0|^ 0|^ }:to
