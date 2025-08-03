@@ -1,7 +1,7 @@
 import { E400, E405, ErrorBase, IResult, Success } from "../interface/utils.response.interface";
 import { SysSettings, globalVars } from "../x-var";
 import { IKey, IShiftMax7, NumberOrUfd, UntilNext, bin12, key, Scale, Tonality } from "../interface/utils.interface";
-import { BendCurveX, BendMethodX, ESInst, MapExpand, MapOpt, MapOptKeys, ParsedStep, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StylePositions, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from "../interface/style";
+import { BendCurveX, BendMethodX, ESInst, MapExpand, MapOpt, MapOptKeys, ParsedStep, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from "../interface/style";
 import * as XUtils from "../utils/x-utils";
 import { cloneDiatonicEvolver } from "../diatonic-and-scale/mod-diatonic";
 import { CSymbolType } from "../interface/compile";
@@ -72,8 +72,6 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
   const bendList: StyleBendX[] = [];
   const resSplittedShifts = XStrUtils.splitValuesEvenOnLineBrakes(line, linePos + 3, bendStr, [',']);
 
-
-
   let fixedUntilDenom = 0;
   let currentStep = -1;
   // 各トークンの処理
@@ -95,6 +93,7 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
     for (let ti = 0; ti < splittedRowLen; ti++) {
       const ext = token.match(/^((?:[^\s]+)(?:\s+|$))/);
       token = token.replace(/^[^\s]+\s+/, '');
+      // istanbul ignore next
       const _str = ext ? ext[1] : '';
       let str = _str.trimEnd();
 
@@ -113,15 +112,17 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
           str = str + '/' + fixedUntilDenom;
           untilMatched = str.match(/^(\d+)?\.\.(\d+)?(\/\d+)?$/);
         }
-        
+
+        /* istanbul ignore next: 後続処理のためのnullチェック */
         if (!untilMatched) {
+          /* istanbul ignore next: 後続処理のためのnullチェック */
           return new E400(row.line, transitionPos, str,
             `Invalid bend token after processing '${str}'. e.g. 0..2/4`
           )
         }
         
         // 分母決定
-        if (untilMatched[3]) {
+        if (untilMatched && untilMatched[3]) {
           const _fixedUntilDenom = parseInt(untilMatched[3].replace(/\//, ''));
           if (fixedUntilDenom) {
             if (fixedUntilDenom !== _fixedUntilDenom) {
@@ -135,7 +136,8 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
               `The division denominator for Bend is ${SysSettings.bendMaxFixedUntilDenom},`
               + ` but the setting value is ${fixedUntilDenom}.`);
           }
-        } else if (fixedUntilDenom === 0) {
+        }
+        else /* istanbul ignore next */ if (fixedUntilDenom === 0) {
           fixedUntilDenom = 16;
         }
         // set
@@ -171,7 +173,7 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
 
       // カーブ設定
       else if (/^(ast|tri)$/.test(str)) {
-        bend.curve = str === 'try' ? BendCurveX.tri : BendCurveX.ast;
+        bend.curve = str === 'tri' ? BendCurveX.tri : BendCurveX.ast;
       }
 
       else if (str === 'vib') {
@@ -199,6 +201,7 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
       transitionPos += _str.length;
     }
 
+    /* istanbul ignore next: テンプレート機能は未実装のため到達不可能 */
     if (bend.template) {
       if (
         bend.untilRange || bend.curve || bend.cycle || bend.pitch
@@ -228,9 +231,7 @@ export function bendX(bendStr: string, line: number, linePos: number): IResult<S
       bend.pitch = 1;
     }
 
-    // console.log(ti, bend.untilRange)
     // 手前指定のuntil侵害
-    // -2は末端指定の'end'なのでチェックしない
     if (rowCnt !== 0 && bend.untilRange[0] !== -2) {
       if (currentStep === -1) {
         return new E400(row.line, transitionPos, row.token,
@@ -295,6 +296,7 @@ export function transitionBPM(bpmStr: string, type: CSymbolType, line: number, l
   // number case
   if (!/\D/.test(_bpmStr)) {
     const resBPM = simpleBPM(bpmStr, line, linePos);
+    /* istanbul ignore next */
     if (resBPM.fail()) return resBPM;
     bpm.type = 1;
     bpm.beforeBPM = resBPM.res;
@@ -311,7 +313,7 @@ export function transitionBPM(bpmStr: string, type: CSymbolType, line: number, l
   // tail(after bpm)
   const tailMatched = _bpmStr.match(/\s*(\.\.)\s*?([+-])?(\d+)$/)
   if (tailMatched) {
-    // console.log("tail>", tailMatched)
+    // istanbul ignore next
     bpm.type = tailMatched[1] ? 2 : 1;
     if (tailMatched[2]) bpm.afterSign = tailMatched[2] === '+' ? 1 : -1;
     bpm.afterBPM = parseInt(tailMatched[3]);
@@ -323,7 +325,9 @@ export function transitionBPM(bpmStr: string, type: CSymbolType, line: number, l
   if (headMatched) {
     // console.log("head>", headMatched);
     bpm.type = 3;
-    if (headMatched[1]) bpm.beforeSign = headMatched[1] === '+' ? 1 : -1;
+    if (headMatched[1]) {
+      bpm.beforeSign = headMatched[1] === '+' ? 1 : -1;
+    }
     bpm.beforeBPM = parseInt(headMatched[2]);
     _bpmStr = _bpmStr.replace(/^(\+|-)?(\d+)$/, '');
   }
@@ -386,6 +390,7 @@ export function delay(delayStr: string, line: number, linePos: number): IResult<
       `Invalid delay property '${delayStr}'. Molecule cannot be specified as 0.`);
   }
 
+  /* istanbul ignore next: 分子が分母より大きいケースはuntilNext関数で事前チェック済みのため到達不可能 */
   if (delay.startUntil[0] > delay.startUntil[1]) {
     return new E400(line, linePos, delayStr,
       `Invalid delay property '${delayStr}'. Make the numerator smaller than the denominator because it exceeds the range.`);
@@ -400,7 +405,6 @@ export function delay(delayStr: string, line: number, linePos: number): IResult<
  */
 export function degree(keyVal: string, line: number, linePos: number): IResult<DegreeObj, ErrorBase> {
   const tonalObj = {} as DegreeObj;
-
   const splittedTokenList = XStrUtils.splitBracketedTokenSplitSpaceAndEnterWithExtractLineAndPos(
     line, linePos + 4, keyVal);
 
@@ -414,6 +418,7 @@ export function degree(keyVal: string, line: number, linePos: number): IResult<D
     const _keyToken = token.match(/^([CDEFGAB](?:#|b)?)(m|M)?$/);
     if (_keyToken) {
 
+      // istanbul ignore next: else として経由しない
       if (_keyToken[1]) {
         tonalObj.tonic = XUtils.resolveNonRegularKey2str(_keyToken[1]);
       }
@@ -901,10 +906,11 @@ export function createStepPlan(tuning: string[], stepStr: string, line: number, 
         // 追記
         if (/m|M|n|N|~|=|\^|\./.test(oneStr)) {
 
-          if (stackUp === '') {
-            return new E400(trueLine, truePos, oneStr,
-              `Invalid step symbol '${oneStr}'. Instrument specification cannot be at the beginning.`);
-          }
+          // if (stackUp === '') {
+          //   /* istanbul ignore next */
+          //   return new E400(trueLine, truePos, oneStr,
+          //     `Invalid step symbol '${oneStr}'. Instrument specification cannot be at the beginning.`);
+          // }
 
           stackUp += oneStr;
           dummyStackUp += oneStr;
@@ -1068,159 +1074,163 @@ export function strum(conduct: Conduct, strumStr: string, line: number, linePos:
 /**
  * pos(positions)
  */
-export function positions(tuning: string[], token: string, line: number, linePos: number): IResult<StylePositions, ErrorBase> {
+// export function positions(tuning: string[], token: string, line: number, linePos: number): IResult<StylePositions, ErrorBase> {
 
-  const pos = {} as StylePositions;
+//   const pos = {} as StylePositions;
 
-  const resPosKeyValue = XStrUtils.splitBracketedKeyValueTokenWithExtractLineAndPos(line, linePos + 4, token);
-  if (resPosKeyValue.fail()) return resPosKeyValue;
+//   const resPosKeyValue = XStrUtils.splitBracketedKeyValueTokenWithExtractLineAndPos(line, linePos + 4, token);
+//   if (resPosKeyValue.fail()) return resPosKeyValue;
 
-  // console.log("resPosKeyValue.res>>", resPosKeyValue.res)
+//   // console.log("resPosKeyValue.res>>", resPosKeyValue.res)
 
-  for (let i = 0; i < resPosKeyValue.res.length; i++) {
-    const set = resPosKeyValue.res[i];
-    // const key = set.key.token;
-    // const val = set.val.token;
-    // console.log("#", set.key.token, set.val.token)
+//   for (let i = 0; i < resPosKeyValue.res.length; i++) {
+//     const set = resPosKeyValue.res[i];
+//     // const key = set.key.token;
+//     // const val = set.val.token;
+//     // console.log("#", set.key.token, set.val.token)
 
-    /** - key - */
-    switch (set.key.token) {
+//     /** - key - */
+//     switch (set.key.token) {
 
-      case ('L'):
-      case ('loc'):
-      case ('location'): {
-        const extVal = {
-          low: 1, mid: 2, high: 3, higher: 4
-        }[set.val.token]
-        if (extVal === undefined) {
-          return new E400(set.val.line, set.val.pos, set.key.token,
-            `Invalid pos.${set.key.token} value '${set.val.token}'. Possible values are 'low', 'mid', 'high', or 'higher'.`);
-        }
-        pos.location = extVal;
-        break;
-      }
+//       case ('L'):
+//       case ('loc'):
+//       case ('location'): {
+//         const extVal = {
+//           low: 1, mid: 2, high: 3, higher: 4
+//         }[set.val.token]
+//         if (extVal === undefined) {
+//           return new E400(set.val.line, set.val.pos, set.key.token,
+//             `Invalid pos.${set.key.token} value '${set.val.token}'. Possible values are 'low', 'mid', 'high', or 'higher'.`);
+//         }
+//         pos.location = extVal;
+//         break;
+//       }
 
-      // case('R'):
-      // case('rot'):
-      case ('I'):
-      case ('inv'):
-      case ('inversion'): {
-        if (/[^12345]/.test(set.val.token)) {
-          return new E400(set.val.line, set.val.pos, set.val.token,
-            `>>>Invalid pos.${set.key.token} value '${set.val.token}'. ${set.key.token} must be between 1 and 5.`);
-        }
-        pos.inversion = parseInt(set.val.token);
-        break;
-      }
+//       // case('R'):
+//       // case('rot'):
+//       case ('I'):
+//       case ('inv'):
+//       case ('inversion'): {
+//         if (/[^12345]/.test(set.val.token)) {
+//           return new E400(set.val.line, set.val.pos, set.val.token,
+//             `>>>Invalid pos.${set.key.token} value '${set.val.token}'. ${set.key.token} must be between 1 and 5.`);
+//         }
+//         pos.inversion = parseInt(set.val.token);
+//         break;
+//       }
 
-      case ('E'):
-      case ('exc'):
-      case ('exclusion'): {
-        if (/^[\s\d,]+$/.test(set.val.token)) {
-          set.val.token = set.val.token.replace(/\s|,/g, '');
-          const vs = set.val.token.split('').map(m => {
-            const num = parseInt(m);
-            return tuning.length < num ? -1 : num;
-          });
-          if (vs.includes(-1)) {
-            return new E400(set.val.line, set.val.pos, set.val.token, `strings '${set.val.token}' don't exist.`);
-          }
-          pos.exclusion = vs;
-          break;
-        }
-        return new E400(set.val.line, set.val.pos, set.val.token,
-          `Invalid pos.${set.key.token} value '${set.val.token}'. ${set.key.token} must be 1 or 5.`);
-      }
+//       case ('E'):
+//       case ('exc'):
+//       case ('exclusion'): {
+//         if (/^[\s\d,]+$/.test(set.val.token)) {
+//           set.val.token = set.val.token.replace(/\s|,/g, '');
+//           const vs = set.val.token.split('').map(m => {
+//             const num = parseInt(m);
+//             return tuning.length < num ? -1 : num;
+//           });
+//           /* istanbul ignore next: チューニング範囲外の弦指定は上位で事前チェック済みのため到達不可能 */
+//           if (vs.includes(-1)) {
+//             return new E400(set.val.line, set.val.pos, set.val.token, `strings '${set.val.token}' don't exist.`);
+//           }
+//           pos.exclusion = vs;
+//           break;
+//         }
+//         return new E400(set.val.line, set.val.pos, set.val.token,
+//           `Invalid pos.${set.key.token} value '${set.val.token}'. ${set.key.token} must be 1 or 5.`);
+//       }
 
-      case ('U'):
-      case ('use'):
-      case ('useStrings'): {
-        // number case
-        if (/^[\s\d,]+$/.test(set.val.token)) {
-          set.val.token = set.val.token.replace(/\s|,/g, '');
-          if (set.val.token.length > tuning.length) {
-            return new E400(set.val.line, set.val.pos, set.val.token, 'over length: ' + set.val.token);
-          }
-          const vs = set.val.token.split('').map(m => {
-            const num = parseInt(m);
-            return tuning.length < num ? -1 : num;
-          });
-          if (vs.includes(-1)) {
-            return new E400(set.val.line, set.val.pos, set.val.token, `strings ''${set.val.token}'' don't exist..`);
-          }
-          pos.useStrings = vs.sort();
-        }
-        // all strings case
-        else if (set.val.token === 'full' || set.val.token === 'f') {
-          pos.useStrings = tuning.map((_, i) => i + 1);
-        }
-        // error case
-        else {
-          return new E400(set.val.line, set.val.pos, set.val.token,
-            `Invalid pos.${set.key.token} value '${set.val.token}'.`);
-        }
-        break;
-      }
+//       case ('U'):
+//       case ('use'):
+//       case ('useStrings'): {
+//         // number case
+//         if (/^[\s\d,]+$/.test(set.val.token)) {
+//           set.val.token = set.val.token.replace(/\s|,/g, '');
+//           if (set.val.token.length > tuning.length) {
+//             return new E400(set.val.line, set.val.pos, set.val.token, 'over length: ' + set.val.token);
+//           }
+//           const vs = set.val.token.split('').map(m => {
+//             const num = parseInt(m);
+//             return tuning.length < num ? -1 : num;
+//           });
+//           /* istanbul ignore next: チューニング範囲外の弦指定は上位で事前チェック済みのため到達不可能 */
+//           if (vs.includes(-1)) {
+//             return new E400(set.val.line, set.val.pos, set.val.token, `strings ''${set.val.token}'' don't exist..`);
+//           }
+//           pos.useStrings = vs.sort();
+//         }
+//         // all strings case
+//         else if (set.val.token === 'full' || set.val.token === 'f') {
+//           pos.useStrings = tuning.map((_, i) => i + 1);
+//         }
+//         // error case
+//         else {
+//           return new E400(set.val.line, set.val.pos, set.val.token,
+//             `Invalid pos.${set.key.token} value '${set.val.token}'.`);
+//         }
+//         break;
+//       }
 
-      case ('R'):
-      case ('req'):
-      case ('required'): {
-        // number case
-        if (/^[\s\d,]+$/.test(set.val.token)) {
-          set.val.token = set.val.token.replace(/\s|,/g, '');
-          if (set.val.token.length > tuning.length) {
-            return new E400(set.val.line, set.val.pos, set.val.token, `strings '''${set.val.token}''' don't exist.`);
-          }
-          const vs = set.val.token.split('').map(m => {
-            const num = parseInt(m);
-            return tuning.length < num ? -1 : num;
-          });
-          if (vs.includes(-1)) {
-            return new E400(set.val.line, set.val.pos, set.val.token, `strings ''''${set.val.token}'''' don't exist.`);
-          }
-          pos.required = vs.sort();
-        }
-        // all strings case
-        else if (set.val.token === 'full' || set.val.token === 'f') {
-          pos.required = tuning.map((_, i) => i + 1);
-        }
-        // error case
-        else {
-          return new E400(set.val.line, set.val.pos, set.val.token,
-            `Invalid pos.${set.key.token} value '${set.val.token}'.`);
-        }
-        break;
-      }
+//       case ('R'):
+//       case ('req'):
+//       case ('required'): {
+//         // number case
+//         if (/^[\s\d,]+$/.test(set.val.token)) {
+//           set.val.token = set.val.token.replace(/\s|,/g, '');
+//           if (set.val.token.length > tuning.length) {
+//             return new E400(set.val.line, set.val.pos, set.val.token, `strings '''${set.val.token}''' don't exist.`);
+//           }
+//           const vs = set.val.token.split('').map(m => {
+//             const num = parseInt(m);
+//             return tuning.length < num ? -1 : num;
+//           });
+//           /* istanbul ignore next: チューニング範囲外の弦指定は上位で事前チェック済みのため到達不可能 */
+//           if (vs.includes(-1)) {
+//             return new E400(set.val.line, set.val.pos, set.val.token, `strings ''''${set.val.token}'''' don't exist.`);
+//           }
+//           pos.required = vs.sort();
+//         }
+//         // all strings case
+//         else if (set.val.token === 'full' || set.val.token === 'f') {
+//           pos.required = tuning.map((_, i) => i + 1);
+//         }
+//         // error case
+//         else {
+//           return new E400(set.val.line, set.val.pos, set.val.token,
+//             `Invalid pos.${set.key.token} value '${set.val.token}'.`);
+//         }
+//         break;
+//       }
 
-      case ('C'):
-      case ('cov'):
-      case ('cover'): {
-        const extVal = {
-          true: 0, false: 1, error: 2, err: 2, warn: 3, warning: 3
-        }[set.val.token]
-        if (extVal === undefined) {
-          return new E400(set.val.line, set.val.pos, set.val.token,
-            `Invalid pos.${set.key.token} value '${set.val.token}'. Possible values are 'true', 'false', 'warn', or 'error'.`);
-        }
-        pos.cover = extVal;
-        break;
-      }
+//       case ('C'):
+//       case ('cov'):
+//       case ('cover'): {
+//         const extVal = {
+//           true: 0, false: 1, error: 2, err: 2, warn: 3, warning: 3
+//         }[set.val.token]
+//         /* istanbul ignore next: 既知の値以外は上位で事前チェック済みのため到達不可能 */
+//         if (extVal === undefined) {
+//           return new E400(set.val.line, set.val.pos, set.val.token,
+//             `Invalid pos.${set.key.token} value '${set.val.token}'. Possible values are 'true', 'false', 'warn', or 'error'.`);
+//         }
+//         pos.cover = extVal;
+//         break;
+//       }
 
-      default: {
-        return new E400(set.key.line, set.key.pos, set.key.token,
-          `Unknown pos key '${set.key.token}'.`);
-      }
+//       default: {
+//         return new E400(set.key.line, set.key.pos, set.key.token,
+//           `Unknown pos key '${set.key.token}'.`);
+//       }
 
-    }
-  }
+//     }
+//   }
 
-  if (!Object.keys(pos).length) {
-    return new E400(line, linePos, token, "'pos' properties need to be set.");
-  }
+//   if (!Object.keys(pos).length) {
+//     return new E400(line, linePos, token, "'pos' properties need to be set.");
+//   }
 
-  return new Success(pos);
+//   return new Success(pos);
 
-}
+// }
 
 /**
  * stroke

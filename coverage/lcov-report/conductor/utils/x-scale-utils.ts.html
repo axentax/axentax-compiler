@@ -1,0 +1,889 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for conductor/utils/x-scale-utils.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">conductor/utils</a> x-scale-utils.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">88.88% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>48/54</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">66.66% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>12/18</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">75% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>12/16</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">91.48% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>43/47</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-yes">3540x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">590x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">6517x</span>
+<span class="cline-any cline-yes">6517x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">948x</span>
+<span class="cline-any cline-yes">94x</span>
+<span class="cline-any cline-yes">94x</span>
+<span class="cline-any cline-yes">387x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">408x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">136x</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { StyleScaleX } from "../interface/style";
+import { bin12, IKey, NumberOrUfd } from "../interface/utils.interface";
+import { tuningPitch100 } from "../utils.vers";
+import { globalVars, SysSettings } from "../x-var";
+import * as XArrayUtils from "./x-array-utils";
+&nbsp;
+/**
+ * スケール操作ユーティリティ
+ * 
+ * 音楽スケールの操作に関するユーティリティ関数を提供する
+ * スケールの変換、フィンガリング解析、ボード作成などの機能を含む
+ * 
+ * このモジュールは、音楽記譜法のコンパイル処理において、
+ * スケール判定、フィンガリング最適化、フレットボード解析などに使用される
+ */
+&nbsp;
+/**
+ * [未使用]スケールの0|1をsymに変換した配列を作成
+ * 
+ * 2進数表現のスケール（bin12）を音名の配列に変換する
+ * 1の位置に対応する音名を設定し、0の位置はundefinedとする
+ * 
+ * 用途：
+ * - スケールの2進数表現から音名配列への変換
+ * - スケール判定のための音名比較
+ * - フレットボードでのスケール音の可視化
+ * 
+ * @param key スケールの開始音
+ * @param bin 2進数表現のスケール（12音階の使用可能音を表す）
+ * @returns 音名の配列（使用可能音のみ音名、使用不可音はundefined）
+ * 
+ * @example
+ * bitScaleToSymScale('C', [1,0,1,0,1,1,0,1,0,1,0,1]) 
+ * // ['C', undefined, 'D', undefined, 'E', 'F', undefined, 'G', undefined, 'A', undefined, 'B']
+ */
+export function <span class="fstat-no" title="function not covered" >bitScaleToSymScale(</span>key: IKey, bin: bin12): (IKey | undefined)[] {
+  // keyを開始としたsym列
+  const iKeys = <span class="cstat-no" title="statement not covered" >XArrayUtils.shiftArray(globalVars.iKey, key);</span>
+<span class="cstat-no" title="statement not covered" >  return bin.map(<span class="fstat-no" title="function not covered" >(b</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >b === 1 ? iKeys[i] : undefined)</span>;</span>
+}
+&nbsp;
+/**
+ * スケールの0|1をsymに変換した配列を作成（臨時音を追加）
+ * 
+ * 2進数表現のスケールに臨時音を追加して音名の配列を作成する
+ * スケールに含まれない音でも、addKeysに指定された音は有効とする
+ * 
+ * 用途：
+ * - スケールに臨時音を追加した拡張スケールの作成
+ * - ブルーノートやクロマチックアプローチの処理
+ * - より豊かな音色表現のためのスケール拡張
+ * 
+ * @param key スケールの開始音
+ * @param bin 2進数表現のスケール
+ * @param addKeys 追加する臨時音の配列
+ * @returns 音名の配列（スケール音+臨時音）
+ * 
+ * @example
+ * createExtensionBin('C', [1,0,1,0,1,1,0,1,0,1,0,1], ['C#', 'F#'])
+ * // ['C', 'C#', 'D', undefined, 'E', 'F', 'F#', 'G', undefined, 'A', undefined, 'B']
+ */
+export function <span class="fstat-no" title="function not covered" >createExtensionBin(</span>key: IKey, bin: bin12, addKeys: IKey[]): (IKey | undefined)[] {
+  // keyを開始としたsym列
+  const iKeys = <span class="cstat-no" title="statement not covered" >XArrayUtils.shiftArray(globalVars.iKey, key);</span>
+<span class="cstat-no" title="statement not covered" >  return bin.map(<span class="fstat-no" title="function not covered" >(b</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >b === 1 || addKeys.includes(iKeys[i]) ? iKeys[i] : undefined)</span>;</span>
+}
+&nbsp;
+/**
+ * フィンガリングからキーsymと、ノートナンバー(0開始)を取得
+ * 
+ * ギターのフィンガリング（押さえ方）から音名、ノート番号、フレット、弦番号を解析する
+ * チューニング設定を考慮して、実際の音程を計算する
+ * 
+ * 処理内容：
+ * - 各弦のフレット番号からMIDIノート番号を計算
+ * - チューニング設定を考慮した音程の算出
+ * - ミュート弦（-1）や無音弦（undefined）の除外
+ * - 音名、ノート番号、フレット、弦番号の抽出
+ * 
+ * @param fingering フィンガリング配列（各弦のフレット番号、-1はミュート、undefinedは無音）
+ * @param tuningPitches チューニング設定のMIDIノート番号配列
+ * @returns 解析結果オブジェクト
+ * 
+ * @example
+ * getMidiNoteFromFingering([12, 13, undefined, undefined, undefined, undefined], [40, 45, 50, 55, 59, 64])
+ * // {
+ * //   originKeyArr: ['A#', 'E'],      // 音名
+ * //   originNoteNumArr: [18, 12],     // ノート番号（0開始）
+ * //   originFretArr: [12, 13],        // フレット番号
+ * //   originStringArr: [0, 1]         // 弦番号
+ * // }
+ */
+export function getMidiNoteFromFingering(fingering: NumberOrUfd[], tuningPitches: number[]): {
+  /** fingeringの各音のキー名 e.g. ['A#', 'E'] ※12|13||||の場合 */
+  originKeyArr: IKey[];
+  /** [現状未使用]fingeringの各音のノートナンバー（但し、チューニング最低音を0とした場合の数値） [18, 12] ※12|13||||の場合 */
+  originNoteNumArr: number[];
+  /** フレット [12, 13] */
+  originFretArr: number[];
+  /** 弦index */
+  originStringArr: number[];
+} {
+  // 元ネタ音解析
+  const originKeyArr: IKey[] = []; // 元ネタのキーsym（複数音）
+  const originNoteNumArr: number[] = []; // 元ネタのnoteナンバー（0開始）
+  const originFretArr: number[] = []; // 元ネタのフレット配列（複数音）
+  const originStringArr: number[] = []; // 元ネタの弦index配列（複数音）
+  fingering.forEach((fret, i) =&gt; {
+    if (fret !== undefined &amp;&amp; fret &gt;= 0) {
+      const noteNumber = tuningPitches[i] + fret;
+      originKeyArr.push(tuningPitch100[noteNumber].keySym);
+      originNoteNumArr.push(noteNumber - tuningPitches[tuningPitches.length - 1]); // 0開始にするため引く
+      originFretArr.push(fret);
+      originStringArr.push(i);
+    }
+  });
+  return {
+    originKeyArr, // IKey[]
+    originNoteNumArr, // number[]
+    originFretArr, // number[]
+    originStringArr
+  };
+}
+&nbsp;
+/**
+ * 有効音のみのindexを値に持った配列
+ * 
+ * スケールの一列ボードから有効音（undefined以外）のみを抽出する
+ * 有効音のインデックスと音名の両方を取得できる
+ * 
+ * 用途：
+ * - スケール内の有効音のみを抽出
+ * - フィンガリング解析での有効音の特定
+ * - フレットボードでの有効音の可視化
+ * 
+ * @param boardFullArr スケールの一列ボード e.g. ['E',undefined,'F#','G', ..]
+ * @returns 有効音のインデックスと音名の配列
+ * 
+ * @example
+ * createActiveNoteOnlyList(['E', undefined, 'F#', 'G', undefined, 'A'])
+ * // {
+ * //   activeInIndexes: [0, 2, 3, 5],  // 有効音のインデックス
+ * //   activeInKeys: ['E', 'F#', 'G', 'A']  // 有効音の音名
+ * // }
+ */
+export function createActiveNoteOnlyList(boardFullArr: (IKey | undefined)[]) {
+  // 有効音のみのindexを値に持った配列
+  return {
+    activeInIndexes: boardFullArr.map((m, i) =&gt; m !== undefined ? i : undefined).filter(f =&gt; f !== undefined),
+    activeInKeys: boardFullArr.map((m) =&gt; m !== undefined ? m : undefined).filter(f =&gt; f !== undefined)
+  }
+}
+&nbsp;
+/**
+ * 臨時音をスケールに追加した新しいスケールを作成
+ * 
+ * 既存のスケールに臨時音を追加して、拡張されたスケールを作成する
+ * 元のスケールに含まれない音を追加することで、より豊かな音色を表現できる
+ * 
+ * 用途：
+ * - ブルーノートの追加
+ * - クロマチックアプローチの処理
+ * - スケールの拡張による表現力の向上
+ * 
+ * @param boardFullArr 元スケールの一列ボード e.g. ['E',undefined,'F#','G', ..]
+ * @param iKeysWithKeyStart 元スケールの12配列 e.g. ['E',  'F',  'F#', 'G', 'G#', 'A',  'A#', 'B', 'C',  'C#', 'D',  'D#']
+ * @param originKeyArr 新規IKeyの配列 e.g. ['E', 'A#']
+ * @returns 拡張されたスケールの一列ボード
+ * 
+ * @example
+ * addExtendKeyIntoScale(
+ *   ['E', undefined, 'F#', 'G', undefined, 'A'],
+ *   ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'],
+ *   ['A#', 'C#']
+ * )
+ * // ['E', undefined, 'F#', 'G', undefined, 'A', 'A#', undefined, 'C#', undefined, undefined, undefined]
+ */
+export function addExtendKeyIntoScale(
+  boardFullArr: (IKey | undefined)[],
+  iKeysWithTuningStart: IKey[],
+  originKeyArr: IKey[],
+) {
+  const extendScaleFullArr = structuredClone(boardFullArr);
+  originKeyArr.forEach(k =&gt; {
+    if (!boardFullArr.includes(k)) {
+      const startIndex = iKeysWithTuningStart.indexOf(k);
+      for (let i = startIndex; i &lt; extendScaleFullArr.length; i = i + 12) {
+        extendScaleFullArr[i] = k;
+      }
+    }
+  });
+  return extendScaleFullArr;
+}
+&nbsp;
+/**
+ * チューニングとスケールで、ボードフルライン作成
+ * 
+ * ギターのチューニング設定とスケール情報から、フレットボード全体の音名配列を作成する
+ * 最低音から最高音まで、スケールに基づいて音名を配置する
+ * 
+ * 処理の流れ：
+ * 1. スケールの2進数表現から音名配列を作成
+ * 2. チューニングの最低音と最高音の範囲を計算
+ * 3. スケールを12音階単位で繰り返してフレットボード全体を埋める
+ * 4. チューニングの最低音から開始するように調整
+ * 
+ * 用途：
+ * - フレットボード全体のスケール音の可視化
+ * - フィンガリング最適化のための音程情報提供
+ * - スケール判定のための基準データ作成
+ * 
+ * @param tuningPitches チューニング設定のMIDIノート番号配列
+ * @param scale スケール設定
+ * @param tuningMinKey チューニングの最低音
+ * @returns ボード情報オブジェクト
+ * 
+ * @example
+ * createBoardFullLine([40, 45, 50, 55, 59, 64], {key: 'C', scale: 'major', bin: [1,0,1,0,1,1,0,1,0,1,0,1]}, 'E')
+ * // {
+ * //   boardFullArr: ['E', undefined, 'F#', 'G', undefined, 'A', undefined, 'B', 'C', undefined, 'D', undefined, ...],
+ * //   iKeysWithKeyStart: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+ * //   iKeysWithTuningStart: ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#']
+ * // }
+ */
+export function createBoardFullLine(tuningPitches: number[], scale: StyleScaleX, tuningMinKey: IKey): {
+  /** スケールの一列ボード e.g. ['E',undefined,'F#','G', ..] */
+  boardFullArr: (IKey | undefined)[];
+  /** IKey 12 (スケールキーから開始) e.g. ['E',  'F',  'F#', 'G', 'G#', 'A',  'A#', 'B', 'C',  'C#', 'D',  'D#'] */
+  iKeysWithKeyStart: IKey[];
+  /** IKey 12 (チューニング最低音から開始) e.g. ['E',  'F',  'F#', 'G', 'G#', 'A',  'A#', 'B', 'C',  'C#', 'D',  'D#'] */
+  iKeysWithTuningStart: IKey[];
+} {
+&nbsp;
+  // スケール本体
+  const scaleBaseBin = scale.bin;// ScaleList[scale.scale].bin;
+&nbsp;
+  // スケールのkeyを開始としたsym列
+  const iKeysWithKeyStart = XArrayUtils.shiftArray(globalVars.iKey, scale.key);
+&nbsp;
+  // チューニング最低音を開始とした12sym列
+  const iKeysWithTuningStart = XArrayUtils.shiftArray(globalVars.iKey, tuningMinKey);
+&nbsp;
+  // bin12を作成（指定キーから開始）
+  const extendSymBin = scaleBaseBin.map((b, i) =&gt; b === 1 ? iKeysWithKeyStart[i] : undefined);
+&nbsp;
+  // チューニング最低最大音ノートナンバー
+  const tuningMaxNote = tuningPitches[0] + SysSettings.maxTopFret + 1;
+  const tuningMinNote = tuningPitches[tuningPitches.length - 1];
+&nbsp;
+  // 最低解放弦のキーとスケールのキーの差分をとり、最低弦の開放から始める配列にシフト
+  const lowerStartIKeys = XArrayUtils.shiftArray(globalVars.iKey, tuningPitch100[tuningMinNote].keySym);
+  const diffKeyIndex = 12 - lowerStartIKeys.indexOf(scale.key);
+  const lowestStartScale = XArrayUtils.shiftArrayAsIndex(extendSymBin, diffKeyIndex);
+&nbsp;
+  // スケールを一列boardに当てはめる（最低限の解放から始まる配列）
+  const repeatedArray = Array.from({ length: Math.floor((tuningMaxNote - tuningMinNote) / 12) }, () =&gt; lowestStartScale).flat();
+  const boardFullArr = repeatedArray.concat(lowestStartScale.slice(0, (tuningMaxNote - tuningMinNote) % 12));
+  // console.log('boardFullArr', boardFullArr)
+&nbsp;
+  return {
+    // スケールの一列ボード
+    boardFullArr, // (IKey | undefined)[]
+    // スケール列（12）
+    iKeysWithKeyStart, // IKey[]
+    // チューニング最低音から開始する12音階配列
+    iKeysWithTuningStart // IKey[]
+  };
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-08-06T04:42:54.514Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

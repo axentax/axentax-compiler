@@ -19,7 +19,7 @@ export type Fingerings = {
     difficulty: number;
 };
 /**
- * Chord in the raw state without rotation
+ * 回転なしの未加工状態のコード
  */
 export interface ChordProp {
     symbol: string;
@@ -32,6 +32,6 @@ export interface ChordProp {
     updatedAt: Date;
 }
 /**
- * map of Dictionary
+ * 辞書のマップ
  */
 export type ChordDicMap = Map<string, ChordProp>;

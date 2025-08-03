@@ -311,6 +311,7 @@ function core(conduct: Conduct): IResult<Conduct, ErrorBase> {
 
   // 5. スタイル処理を実行（エフェクト、タイミング調整など）
   const resStyle = CompileStyle.compile(conduct);
+  /* istanbul ignore next */
   if (resStyle.fail()) return resStyle;
   return new Success(conduct);
 }

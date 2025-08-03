@@ -332,7 +332,7 @@ describe('Parallel Processing Tests', () => {
 
       expect(sequentialSuccess).toBe(taskCount);
       expect(parallelSuccess).toBe(taskCount);
-      expect(speedup).toBeGreaterThan(0.5); // 小規模タスクでは並列化オーバーヘッドを考慮して50%以上とする
+      expect(speedup).toBeGreaterThan(0.6); // 小規模タスクでは並列化オーバーヘッドを考慮して50%以上とする
     });
 
     test('スケーラビリティテスト', async () => {

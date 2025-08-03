@@ -455,14 +455,14 @@ function compileStyleSyntax(conduct: Conduct, mixes: Mixes, symbolsLists: Compil
             continue;
           }
 
-          // positions
-          if (styleStr.startsWith('pos')) {
-            const resPositions = ModValidationForStyles.positions(
-              tuning, styleStr.replace(/^pos\(?|\)$/g, ''), sym.linesOfStyle[si], sym.linePosOfStyle[si]);
-            if (resPositions.fail()) return resPositions;
-            if (Object.keys(resPositions.res).length) sob[cacheKey] = { pos: resPositions.res }
-            continue;
-          }
+          // // positions
+          // if (styleStr.startsWith('pos')) {
+          //   const resPositions = ModValidationForStyles.positions(
+          //     tuning, styleStr.replace(/^pos\(?|\)$/g, ''), sym.linesOfStyle[si], sym.linePosOfStyle[si]);
+          //   if (resPositions.fail()) return resPositions;
+          //   if (Object.keys(resPositions.res).length) sob[cacheKey] = { pos: resPositions.res }
+          //   continue;
+          // }
 
           // scale
           if (/^scale\(.*?\)$/.test(styleStr)) {

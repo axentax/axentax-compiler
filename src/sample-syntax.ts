@@ -1,14 +1,29 @@
+/* istanbul ignore file */
 export const sampleSyntax = `set.click.inst: 42 // 36 37 42
 set.style.until: 1/4
 set.dual.pan: true
-set.dual.panning: [0.5, 0, 1]
+
 set.style.scale: E minor
 // set.dual.forceDeleteOverNote: false
 // set.hash.compose: a000
 set.song.key: E
 
 @@ {
-  Cm7
+  // C:bd(2.., ..2)
+  // {C}:bpm(-50..100)
+  // C:delay(1/0)
+  // {%1}:degree(E#m)
+  // { C }:degree(E harmonic minor 7th mode 3th)
+  // { C }:degree(minor)
+  // { C }:staccato(0/0)
+  // { C }:stroke(0/0)
+  // C:bd(0..2/4 2 tri)
+  // C:strum(0/0)
+  // { C }:degree(C)
+  // C:bd(..)
+  // { C }:degree(C#m)
+  // C:map((3,
+  // ))
 }
 __end__
 

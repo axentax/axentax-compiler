@@ -1,14 +1,23 @@
 import { ErrorBase, IResult } from "../interface/utils.response.interface";
 import { IKey, NumberOrUfd, UntilNext } from "../interface/utils.interface";
-import { MapExpand, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StylePositions, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from "../interface/style";
+import { MapExpand, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from "../interface/style";
 import { CSymbolType } from "../interface/compile";
 import { Conduct } from "../interface/conduct";
 /**
- * approach
+ * アプローチ奏法の検証と解析
+ * @param token - 処理対象トークン
+ * @param line - 行番号
+ * @param linePos - 行内位置
+ * @param tuning - チューニング設定
+ * @returns 解析結果
  */
 export declare function approach(token: string, line: number, linePos: number, tuning: string[]): IResult<StyleApproach, ErrorBase>;
 /**
- * bendX
+ * ベンドエフェクトの検証と解析
+ * @param bendStr - ベンド設定文字列
+ * @param line - 行番号
+ * @param linePos - 行内位置
+ * @returns 解析結果
  */
 export declare function bendX(bendStr: string, line: number, linePos: number): IResult<StyleBendX[], ErrorBase>;
 /**
@@ -71,7 +80,6 @@ export declare function strum(conduct: Conduct, strumStr: string, line: number, 
 /**
  * pos(positions)
  */
-export declare function positions(tuning: string[], token: string, line: number, linePos: number): IResult<StylePositions, ErrorBase>;
 /**
  * stroke
  */

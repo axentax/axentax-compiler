@@ -15,4 +15,14 @@ set.song.key: E
   %4 %3 %2 %1
 }:stroke(1/6):step(f.42.1..):degree(E harmonic minor) 
 
-`;
+@@ { C:to&(hi) }
+
+@@ { C:v0 }
+
+@@ { C:bd(..) }
+
+@@ {
+  C:map(
+    3
+  )
+}

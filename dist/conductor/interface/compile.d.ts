@@ -3,7 +3,7 @@ import { MapOpt, Styles } from "./style";
 import { Bar, ExtensionViewProp } from "./tab";
 import { NumberOrUfd } from "./utils.interface";
 /**
- * Type in CompileSymbols.
+ * コンパイルシンボルのタイプ
  */
 export declare enum CSymbolType {
     /** unused */
@@ -32,7 +32,7 @@ export declare enum CSymbolType {
     closingCurlyBrace = "closingCurlyBrace"
 }
 /**
- * Compile Symbols
+ * コンパイルシンボル
  */
 export type CompileSymbols = {
     /** {} Hierarchy depth */
@@ -61,28 +61,39 @@ export type CompileSymbols = {
     endOfMeasure?: true;
     /** decided property for notes */
     decidedProp: DecidedProp;
-    /** "RegionIndex" that "Dual" should synchronize with. */
+    /** "Dual"が同期すべき"RegionIndex" */
     regionRegionForDualConnection: number;
-    /** LocationInfoの参照 ※添番の0が本体で、以降styleやregionProp, blockStyleなど設定 */
+    /** LocationInfoの参照 */
     locationInfoRefStackUpList?: number[];
     prefixLength?: number;
 };
+/**
+ * 決定済みプロパティ
+ */
 export interface DecidedProp {
+    /** ノート文字列 */
     noteStr: string;
-    /** view用のつもりだったが、多分未使用 */
+    /** 拡張ビュープロパティ */
     extensionViewProp?: ExtensionViewProp;
+    /** リスト */
     list: string;
+    /** ティック */
     tick: Bar;
+    /** スタイル */
     styles: Styles;
+    /** フィンガリング */
     fingering: NumberOrUfd[];
+    /** 真のタブ */
     trueTab?: NumberOrUfd[];
-    /** mappedのshift結果。viewで使用する */
+    /** mappedのshift結果 */
     shifted?: {
         shift: number;
         options: MapOpt[];
     }[];
-    /** 辞書。使用しているか不明 */
+    /** コード辞書参照 */
     chordDicRef: ChordProp;
+    /** アルペジオフラグ */
     isArpeggio?: true;
+    /** バレットグループ番号 */
     isBullet?: number;
 }

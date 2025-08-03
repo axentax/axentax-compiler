@@ -73,7 +73,7 @@ export interface Styles {
   /** マッピング（フィンガリング最適化） */
   mapped?: StyleMapped[];
   /** ポジション（押さえ方の指定） */
-  pos?: StylePositions;
+  // pos?: StylePositions;
   /** 休符ノイズ（instに統合予定） */
   restNoise?: true, // want to integrate it into inst..
   /** スケール拡張 */
@@ -331,22 +331,22 @@ export interface StyleMapped extends SyntaxLocation {
  * - C#m7:pos(loc:low, rot:1, exc:5, use:full, cover:false)
  * - C#m7:pos(L:low,I:2,E:5,U:654321,C:false)
  */
-export interface StylePositions extends SyntaxLocation {
-  /** 転回：inversion, inv, rot, I, R => 1, 2, 3（undefinedはfull） */
-  inversion?: number,
-  /** 位置：location, loc, L => 0:low(default), 1:mid, 2:high, 3:higher（undefinedはlow） */
-  location?: number;
-  /** 除外弦：exclusion pull out, exc, E => 1, 5（undefinedはnone） */
-  exclusion?: number[],
+// export interface StylePositions extends SyntaxLocation {
+//   /** 転回：inversion, inv, rot, I, R => 1, 2, 3（undefinedはfull） */
+//   inversion?: number,
+//   /** 位置：location, loc, L => 0:low(default), 1:mid, 2:high, 3:higher（undefinedはlow） */
+//   location?: number;
+//   /** 除外弦：exclusion pull out, exc, E => 1, 5（undefinedはnone） */
+//   exclusion?: number[],
 
-  /** 使用弦：use string => full or f(default), 123, 654, 654321（undefinedはfull） */
-  useStrings?: number[],
-  /** 必須弦 */
-  required?: number[]
+//   /** 使用弦：use string => full or f(default), 123, 654, 654321（undefinedはfull） */
+//   useStrings?: number[],
+//   /** 必須弦 */
+//   required?: number[]
 
-  /** useStringsに含まれない弦の対応：0:true, 1:false, 2:warning, 3:error */
-  cover: number,
-}
+//   /** useStringsに含まれない弦の対応：0:true, 1:false, 2:warning, 3:error */
+//   cover: number,
+// }
 
 /**
  * レガートスタイル型

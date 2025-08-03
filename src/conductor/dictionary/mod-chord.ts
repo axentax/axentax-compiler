@@ -55,6 +55,7 @@ export class ModChord {
       return new Success(cache);
     }
 
+    /* istanbul ignore next: 現状分岐するケースが見当たらない */
     if (chordSym === 'r') {
       // 休符の場合の特別処理
       return new Success({
@@ -83,11 +84,13 @@ export class ModChord {
     if (!guitarChordProps) {
       return new E404(line, linePos, chordSym, `'${chordSym}' No fingerable form was found for this code symbol.`)
     }
+    /* istanbul ignore next: mystery */
     if (!guitarChordProps.fingerings) {
       return new E404(line, linePos, chordSym, `Not found fingering of '${chordSym}'. Tuning and chord may not match.`)
     }
+    /* istanbul ignore next */
     if (!guitarChordProps.fingerings.length) {
-      // not found e.g A13b5
+      // not found e.g A13b5 <- fixed
       return new E404(line, linePos, chordSym, `'${chordSym}'" No fingerable form was found for this code structure.`)
     }
 

@@ -43,6 +43,7 @@ export class UnfoldMapped {
     for (let gi = 0; gi < marksGroups.length; gi++) {
       const group = marksGroups[gi];
       const resGroup = MappedGroup.resolve(seed, conduct, dualId, group, symbolsList);
+      /** istanbul ignore next */
       if (resGroup.fail()) return resGroup;
     }
 

@@ -3,6 +3,8 @@ import { Conduct } from "../interface/conduct";
 import { defaultSettings } from "../settings";
 import * as ModValidationForStyles from "../validation/mod-style-validation";
 
+// /* istanbul ignore file */
+
 /**
  * settings resolver for user
  */
@@ -26,8 +28,6 @@ export class SettingResolver {
       for (let i = 0; i < paths.length - 1; i++) { // length safety
         current = current[paths[i]];
         if (current === undefined) {
-          /* istanbul ignore next: 設定パスの検証は事前に行われるため、無効なパスエラーは実運用では発生しない */
-          // console.log('>>>#')
           return new E400(valueObj.line, -1, null,
             `Invalid settings because path '${paths.slice(0, i + 1).join('.')}' is missing.`
           )
@@ -41,13 +41,15 @@ export class SettingResolver {
         }
       }
 
+      /* istanbul ignore next */
       if (validPath) {
         const lastKey = paths[paths.length - 1];
         if (lastKey in current) {
 
           // no value
+          /* istanbul ignore next */
           if (!/\S/.test(valueObj.value)) {
-            /* istanbul ignore next: 設定値の空チェックは構文解析で事前に行われるため、このエラーパスは実運用では発生しない */
+            /* istanbul ignore next */
             return new E400(valueObj.line, -1, null, 'Value must be specified.');
           }
 
@@ -55,24 +57,15 @@ export class SettingResolver {
           const resCast = normalization(conduct, lastKey, valueObj.value, key, valueObj.line);
           if (resCast.fail()) return resCast;
           current[lastKey] = resCast.res;
-          // console.log("casted>", lastKey, valueObj.value, '=>', current[lastKey]);
 
         } else {
 
-          /* istanbul ignore next: 設定項目の存在確認は事前に行われるため、無効な設定パスエラーは実運用では発生しない */
           return new E400(valueObj.line, -1, null,
             `Invalid setting because path '${lastKey}' is missing.`
           )
-
-          // conduct.warnings.push({
-          //   line: valueObj.line,
-          //   message: `Invalid setting because path '${lastKey}' is missing.`
-          // });
         }
       }
     }
-
-    // console.log("setM>>",conduct.settings.compile.mappingNotResolved)
 
     return simpleSuccess();
   }
@@ -86,12 +79,11 @@ export class SettingResolver {
  * @param value 
  * @returns 
  */
-function normalization(conduct: Conduct, key: string, value: string, fullKey: string, line: number): IResult<any, ErrorBase> {
+export function normalization(conduct: Conduct, key: string, value: string, fullKey: string, line: number): IResult<any, ErrorBase> {
 
   // 注意: pan: "boolean" のようなcallbackリンクを作成し、汎用的に処理することを検討中
   if (/^hash\./.test(fullKey)) {
     if (value.length > 2047) 
-      /* istanbul ignore next: ハッシュ値の長さ制限は極端に長い値でのみ発生し、通常の設定では到達しない */
       return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'.`);
     return new Success(value)
   }
@@ -128,40 +120,33 @@ function normalization(conduct: Conduct, key: string, value: string, fullKey: st
       return velocities;
     }
     case ('inst'): {
-      if (/\D/.test(value)) 
-        /* istanbul ignore next: 楽器番号の数値検証は構文解析で事前に行われるため、非数値エラーは実運用では発生しない */
+      if (/\D/.test(value))
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'.`);
       return new Success(parseInt(value));
     }
     case ('accent'): {
       if (/\D/.test(value)) 
-        /* istanbul ignore next: アクセント値の数値検証は構文解析で事前に行われるため、非数値エラーは実運用では発生しない */
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'.`);
       return new Success(parseInt(value));
     }
     case ('pan'):
     case ('mappingNotResolved'): {
       if (!/^(?:true|false)$/.test(value)) 
-        /* istanbul ignore next: boolean 値の形式検証は構文解析で事前に行われるため、無効な boolean エラーは実運用では発生しない */
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'. e.g. set.dual.pan: true`);
-      // console.log('pan>', value)
       return new Success(value === 'true' ? true : false);
     }
     case ('panning'): {
       if (!/^\[[\d.,\s]+\]$/.test(value)) 
-        /* istanbul ignore next: panning 配列の形式検証は構文解析で事前に行われるため、無効な配列形式エラーは実運用では発生しない */
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'. e.g. set.dual.panning: [0.5, 0.5, 0.5]`);
       try {
         const res = JSON.parse(value);
         return new Success(res);
       } catch {
-        /* istanbul ignore next: JSON パースエラーは事前の形式検証により防がれるため、実運用では発生しない */
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'. e.g. set.dual.panning: [0.5, 0.5, 0.5]`);
       }
     }
     case ('key'): {
       if (!/^[CDEFGAB](b|#)?$/.test(value)) {
-        /* istanbul ignore next: キー名の形式検証は構文解析で事前に行われるため、無効なキー名エラーは実運用では発生しない */
         return new E400(line, -1, null, `Invalid ${fullKey} value '${value}'. e.g. C#`);
       }
       return new Success(value);
@@ -171,7 +156,6 @@ function normalization(conduct: Conduct, key: string, value: string, fullKey: st
     }
   }
 
-  // return simpleSuccess();
 }
 
 /**

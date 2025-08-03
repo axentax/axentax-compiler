@@ -33,7 +33,7 @@
     "NoUse_cp-js": "cp vite-compiler/dist/conductor.umd.cjs dist/",
     "cp-js": "cp vite-compiler/dist/conductor.js dist/",
     "comments-delete": "chmod +x comments-delete.sh && ./comments-delete.sh",
-    "build": "npm run rm && npm run cp && npm run vite-build && npm run cp-js && npm run comments-delete"
+    "build": "npm run rm && npm run cp && npm run vite-build && npm run cp-js && npm run comments-delete && rm -rf ./vite-compiler/lib/conductor/*"
   },
   "author": "",
   "license": "Apache-2.0",

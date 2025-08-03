@@ -1,6 +1,6 @@
 import { bin12 } from "./utils.interface";
 /**
- * diatonic structure
+ * ダイアトニック構造
  */
 export interface DiatonicEvolverValue {
     evolvedCodePrefix: string[];

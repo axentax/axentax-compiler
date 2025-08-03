@@ -1,4 +1,7 @@
 import { IKey, UntilNext } from "./utils.interface";
+/**
+ * リージョン情報
+ */
 export interface Region {
     /** id */
     id: number;
@@ -19,24 +22,31 @@ export interface Region {
     trueStartLayerTick: number;
     /** layerの終了位置: offsetでバックシフトする前のtick */
     trueEndLayerTick: number;
+    /** 開始位置 */
     start: {
         line: number;
         linePos: number;
     };
+    /** 終了位置 */
     end: {
         line: number;
         linePos: number;
     };
+    /** デュアルID */
     dualId: number;
     /** 音自体のトータルtick */
     usedTotalTick: number;
     /** offset幅 */
     offsetTickWidth: number;
+    /** フラッシュオフセット位置 */
     flashOffsetLocation?: {
+        /** 行番号 */
         line: number;
+        /** 行内位置 */
         linePos: number;
+        /** トークン */
         token: string;
     };
+    /** 非アクティブフラグ */
     deactive?: boolean;
 }
-/** Blockの順番を保証したnameリスト */
