@@ -1,5 +1,6 @@
-import { Conduct } from "../interface/conduct";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Conduct } from '../interface/conduct';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * BPM解決処理を行うクラス
  */

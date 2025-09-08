@@ -1,6 +1,7 @@
-import { SimpleResult } from "../interface/utils.response.interface";
-import { CompileSymbols } from "../interface/compile";
-import { Conduct } from "../interface/conduct";
+import { SimpleResult } from '../interface/utils.response.interface';
+import { CompileSymbols } from '../interface/compile';
+import { Conduct } from '../interface/conduct';
+
 /**
  * ブロックコンパイラークラス
  *

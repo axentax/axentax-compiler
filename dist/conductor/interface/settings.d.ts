@@ -1,5 +1,6 @@
-import { StyleScaleX, DegreeObj } from "./style";
-import { IKey, UntilNext, UserIKey } from "./utils.interface";
+import { StyleScaleX, DegreeObj } from './style';
+import { IKey, UntilNext, UserIKey } from './utils.interface';
+
 /**
  * 設定インターフェース
  *

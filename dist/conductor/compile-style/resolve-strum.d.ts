@@ -1,5 +1,6 @@
-import { Conduct, Mixes } from "../interface/conduct";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Conduct, Mixes } from '../interface/conduct';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * ストラムエフェクトの解決クラス
  */

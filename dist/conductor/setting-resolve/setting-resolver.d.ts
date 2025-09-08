@@ -1,5 +1,6 @@
-import { ErrorBase, IResult, SimpleResult } from "../interface/utils.response.interface";
-import { Conduct } from "../interface/conduct";
+import { ErrorBase, IResult, SimpleResult } from '../interface/utils.response.interface';
+import { Conduct } from '../interface/conduct';
+
 /**
  * settings resolver for user
  */

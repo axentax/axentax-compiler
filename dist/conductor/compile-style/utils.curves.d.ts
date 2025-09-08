@@ -1,4 +1,5 @@
-import { Bend } from "../interface/bend";
+import { Bend } from '../interface/bend';
+
 /**
  * ベンド値をMIDI範囲に正規化する
  * @param bendValue - ベンド値

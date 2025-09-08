@@ -1,5 +1,6 @@
-import { ParsedStep } from "../interface/style";
-import { NumberOrUfd } from "../interface/utils.interface";
+import { ParsedStep } from '../interface/style';
+import { NumberOrUfd } from '../interface/utils.interface';
+
 /**
  * ステップ情報を表すインターフェース
  */

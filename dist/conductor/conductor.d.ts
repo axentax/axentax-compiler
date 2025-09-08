@@ -1,7 +1,8 @@
-import { ErrorBase, IResult } from "./interface/utils.response.interface";
-import { Conduct } from "./interface/conduct";
-import { ChordDicMap } from "./interface/dic-chord";
-import { MapSeed } from "./interface/dic-map-seed";
+import { ErrorBase, IResult } from './interface/utils.response.interface';
+import { Conduct } from './interface/conduct';
+import { ChordDicMap } from './interface/dic-chord';
+import { MapSeed } from './interface/dic-map-seed';
+
 /**
  * 許可されたアノテーション設定
  *

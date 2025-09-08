@@ -1,5 +1,6 @@
-import { CompileSymbols } from "../interface/compile";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { CompileSymbols } from '../interface/compile';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * ModPrefixクラス
  *

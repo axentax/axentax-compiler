@@ -1,4 +1,5 @@
-import { ScaleEvolverValue } from "../interface/scale";
+import { ScaleEvolverValue } from '../interface/scale';
+
 /**
  * スケール名列挙型
  *

@@ -1,17 +1,18 @@
-import { Warning } from "./utils.response.interface";
-import { Region } from "./region";
-import { Settings } from "./settings";
-import { ChordDicMap } from "./dic-chord";
-import { Flash } from "./flash";
-import { BPMPos } from "./bpm";
-import { StyleMapGroupList, StyleObjectBank } from "./style";
-import { ClickPoint } from "./click";
-import { TabObj } from "./tab";
-import { BendMidiSetter } from "./bend";
-import { MapSeed } from "./dic-map-seed";
-import { StepInfo } from "../compile-view/view-model-builder";
-import { CSymbolType } from "./compile";
-import { AllowAnnotation } from "../conductor";
+import { Warning } from './utils.response.interface';
+import { Region } from './region';
+import { Settings } from './settings';
+import { ChordDicMap } from './dic-chord';
+import { Flash } from './flash';
+import { BPMPos } from './bpm';
+import { StyleMapGroupList, StyleObjectBank } from './style';
+import { ClickPoint } from './click';
+import { TabObj } from './tab';
+import { BendMidiSetter } from './bend';
+import { MapSeed } from './dic-map-seed';
+import { StepInfo } from '../compile-view/view-model-builder';
+import { CSymbolType } from './compile';
+import { AllowAnnotation } from '../conductor';
+
 /**
  * マーク情報インターフェース
  *

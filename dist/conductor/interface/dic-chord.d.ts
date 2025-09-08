@@ -1,5 +1,6 @@
-import { FingeringCollection } from "../chord-to-fingering/chord-to-fingering";
-import { IKey } from "./utils.interface";
+import { FingeringCollection } from '../chord-to-fingering/chord-to-fingering';
+import { IKey } from './utils.interface';
+
 export type IdAndSymbolSet = {
     iKeyId: number;
     sym: IKey;

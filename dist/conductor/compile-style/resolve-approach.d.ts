@@ -1,7 +1,8 @@
-import { Conduct, Marks, Mixes } from "../interface/conduct";
-import { StyleApproach } from "../interface/style";
-import { TabObj } from "../interface/tab";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Conduct, Marks, Mixes } from '../interface/conduct';
+import { StyleApproach } from '../interface/style';
+import { TabObj } from '../interface/tab';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /** 弦毎のスライド情報 */
 type SlideInfo = {
     /** 開始点解放弦フラグ */

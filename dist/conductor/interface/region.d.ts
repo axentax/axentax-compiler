@@ -1,4 +1,5 @@
-import { IKey, UntilNext } from "./utils.interface";
+import { IKey, UntilNext } from './utils.interface';
+
 /**
  * リージョン情報
  */

@@ -3,6 +3,7 @@ import { ErrorBase, IResult } from '../interface/utils.response.interface';
 import { BuildMidiRequest } from '../interface/midi';
 import { BPMPos } from '../interface/bpm';
 import { ClickPoint } from '../interface/click';
+
 /**
  * ビルド結果オブジェクトインターフェース
  *

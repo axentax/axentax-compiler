@@ -1,4 +1,5 @@
-import { IKey } from "./utils.interface";
+import { IKey } from './utils.interface';
+
 /**
  * チューニングとスケールから作成する指板note情報
  */

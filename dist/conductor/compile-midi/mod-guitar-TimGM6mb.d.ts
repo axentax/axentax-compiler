@@ -1,5 +1,6 @@
-import { Midi } from "@tonejs/midi";
-import { BuildMidiRequest } from "../interface/midi";
+import { Midi } from '@tonejs/midi';
+import { BuildMidiRequest } from '../interface/midi';
+
 /**
  * ModGuitarTimGM6mbクラス
  *

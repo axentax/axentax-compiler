@@ -1,4 +1,5 @@
-import { SyntaxLocation, UntilNext } from "./utils.interface";
+import { SyntaxLocation, UntilNext } from './utils.interface';
+
 /**
  * その他のアノテーションデータ
  */

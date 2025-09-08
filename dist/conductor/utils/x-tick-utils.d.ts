@@ -1,4 +1,5 @@
-import { UntilNext } from "../interface/utils.interface";
+import { UntilNext } from '../interface/utils.interface';
+
 /**
  * タイミング計算ユーティリティ
  *

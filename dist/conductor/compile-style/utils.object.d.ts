@@ -1,4 +1,5 @@
-import { TabObj } from "../interface/tab";
+import { TabObj } from '../interface/tab';
+
 /**
  * 空のTabObjを作成する
  * @param regionIndex - リージョンインデックス

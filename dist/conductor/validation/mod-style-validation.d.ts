@@ -1,8 +1,9 @@
-import { ErrorBase, IResult } from "../interface/utils.response.interface";
-import { IKey, NumberOrUfd, UntilNext } from "../interface/utils.interface";
-import { MapExpand, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from "../interface/style";
-import { CSymbolType } from "../interface/compile";
-import { Conduct } from "../interface/conduct";
+import { ErrorBase, IResult } from '../interface/utils.response.interface';
+import { IKey, NumberOrUfd, UntilNext } from '../interface/utils.interface';
+import { MapExpand, StyleApproach, StyleBPM, StyleBendX, StyleDelay, StyleScaleX, StyleSlide, StyleStaccato, StyleStep, StyleStroke, StyleStrum, DegreeObj } from '../interface/style';
+import { CSymbolType } from '../interface/compile';
+import { Conduct } from '../interface/conduct';
+
 /**
  * アプローチ奏法の検証と解析
  * @param token - 処理対象トークン
