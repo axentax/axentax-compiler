@@ -1,6 +1,7 @@
-import { BendMidiSetter } from "./bend";
-import { Region } from "./region";
-import { TabObj } from "./tab";
+import { BendMidiSetter } from './bend';
+import { Region } from './region';
+import { TabObj } from './tab';
+
 export type BuildMidiRequest = {
     regionList: Region[];
     flatTOList: TabObj[];

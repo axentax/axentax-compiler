@@ -1,6 +1,7 @@
-import { ScaleName } from "./diatonic-and-scale/mod-scale";
-import { Settings } from "./interface/settings";
-import { IKey, bin12, Scale, Tonality } from "./interface/utils.interface";
+import { ScaleName } from './diatonic-and-scale/mod-scale';
+import { Settings } from './interface/settings';
+import { IKey, bin12, Scale, Tonality } from './interface/utils.interface';
+
 /**
  * システム基本設定
  *
@@ -16,8 +17,8 @@ export declare const sysBaseSettings: {
         tonic: IKey;
         scale: Scale;
         tonal: Tonality;
-        tonalShift: import("./interface/utils.interface").IShiftMax7;
-        modalShift: import("./interface/utils.interface").IShiftMax7;
+        tonalShift: import('./interface/utils.interface').IShiftMax7;
+        modalShift: import('./interface/utils.interface').IShiftMax7;
         name: string;
         /** ダイアトニック進化値：コード進行の理論的根拠 */
         diatonicEvolverValue: {

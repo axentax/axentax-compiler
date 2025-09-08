@@ -1,5 +1,6 @@
-import { CSymbolType } from "../interface/compile";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { CSymbolType } from '../interface/compile';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * スタイル開始の構造検証
  * @param accum - 累積文字列

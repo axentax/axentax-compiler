@@ -1,7 +1,8 @@
-import { Conduct, Marks, Mixes } from "../interface/conduct";
-import { StyleSlide } from "../interface/style";
-import { TabObj } from "../interface/tab";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Conduct, Marks, Mixes } from '../interface/conduct';
+import { StyleSlide } from '../interface/style';
+import { TabObj } from '../interface/tab';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * スライド解決処理を行うクラス
  */

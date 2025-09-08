@@ -1,7 +1,8 @@
-import { ChordProp } from "./dic-chord";
-import { MapOpt, Styles } from "./style";
-import { Bar, ExtensionViewProp } from "./tab";
-import { NumberOrUfd } from "./utils.interface";
+import { ChordProp } from './dic-chord';
+import { MapOpt, Styles } from './style';
+import { Bar, ExtensionViewProp } from './tab';
+import { NumberOrUfd } from './utils.interface';
+
 /**
  * コンパイルシンボルのタイプ
  */

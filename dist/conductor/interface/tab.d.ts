@@ -1,5 +1,6 @@
-import { MapOpt, Styles } from "./style";
-import { NumberOrUfd, SyntaxLocation, UntilNext } from "./utils.interface";
+import { MapOpt, Styles } from './style';
+import { NumberOrUfd, SyntaxLocation, UntilNext } from './utils.interface';
+
 /**
  * タブオブジェクトインターフェース
  *

@@ -1,6 +1,7 @@
-import { CompileSymbols } from "../interface/compile";
-import { Conduct } from "../interface/conduct";
-import { ErrorBase, IResult } from "../interface/utils.response.interface";
+import { CompileSymbols } from '../interface/compile';
+import { Conduct } from '../interface/conduct';
+import { ErrorBase, IResult } from '../interface/utils.response.interface';
+
 /**
  * ModSyntaxクラス
  *

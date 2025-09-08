@@ -1,5 +1,6 @@
-import { StyleScaleX } from "../interface/style";
-import { bin12, IKey, NumberOrUfd } from "../interface/utils.interface";
+import { StyleScaleX } from '../interface/style';
+import { bin12, IKey, NumberOrUfd } from '../interface/utils.interface';
+
 /**
  * スケール操作ユーティリティ
  *

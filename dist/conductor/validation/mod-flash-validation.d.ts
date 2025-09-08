@@ -1,5 +1,6 @@
-import { Conduct } from "../interface/conduct";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Conduct } from '../interface/conduct';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * アノテーションを許可してFlashオブジェクトに記録する
  * @param conduct - コンダクトオブジェクト

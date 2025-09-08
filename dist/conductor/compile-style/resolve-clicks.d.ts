@@ -1,4 +1,5 @@
-import { Conduct } from "../interface/conduct";
+import { Conduct } from '../interface/conduct';
+
 /**
  * クリック解決処理を行うクラス
  */

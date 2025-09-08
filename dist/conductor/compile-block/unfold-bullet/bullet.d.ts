@@ -1,6 +1,7 @@
-import { CompileSymbols } from "../../interface/compile";
-import { Mixes } from "../../interface/conduct";
-import { SimpleResult } from "../../interface/utils.response.interface";
+import { CompileSymbols } from '../../interface/compile';
+import { Mixes } from '../../interface/conduct';
+import { SimpleResult } from '../../interface/utils.response.interface';
+
 /**
  * ModBulletクラス
  *

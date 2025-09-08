@@ -1,7 +1,8 @@
-import { Mixes } from "../interface/conduct";
-import { StyleBendX } from "../interface/style";
-import { Tick } from "../interface/tab";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Mixes } from '../interface/conduct';
+import { StyleBendX } from '../interface/style';
+import { Tick } from '../interface/tab';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * ベンドX解決処理を行うクラス
  */
@@ -19,4 +20,4 @@ export declare class ResolveBendX {
  * @param styleBendXList ベンドXスタイルリスト
  * @returns ベンドチャンネルリスト
  */
-export declare function bdView(bar: Tick, styleBendXList: StyleBendX[]): import("../interface/bend").BendMidiSetter[];
+export declare function bdView(bar: Tick, styleBendXList: StyleBendX[]): import('../interface/bend').BendMidiSetter[];

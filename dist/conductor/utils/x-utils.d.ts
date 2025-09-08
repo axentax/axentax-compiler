@@ -1,4 +1,5 @@
-import { IKey } from "../interface/utils.interface";
+import { IKey } from '../interface/utils.interface';
+
 /**
  * 汎用ユーティリティ
  *

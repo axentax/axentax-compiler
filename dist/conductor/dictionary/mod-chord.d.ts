@@ -1,7 +1,8 @@
 import { ErrorBase, IResult } from '../interface/utils.response.interface';
-import { ChordDicMap, ChordProp } from "../interface/dic-chord";
-import { IKey } from "../interface/utils.interface";
+import { ChordDicMap, ChordProp } from '../interface/dic-chord';
+import { IKey } from '../interface/utils.interface';
 import { ExpandFingeringOptions } from '../chord-to-fingering/chord-to-fingering';
+
 /**
  * ModChordクラス
  *

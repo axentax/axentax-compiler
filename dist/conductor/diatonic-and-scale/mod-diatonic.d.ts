@@ -1,4 +1,5 @@
-import { DiatonicEvolverValue } from "../interface/diatonic";
+import { DiatonicEvolverValue } from '../interface/diatonic';
+
 /**
  * ダイアトニック進行テンプレートのクローン関数
  *

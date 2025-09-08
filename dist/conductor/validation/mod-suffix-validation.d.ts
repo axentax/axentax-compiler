@@ -1,5 +1,6 @@
-import { UntilNext } from "../interface/utils.interface";
-import { ErrorBase, IResult } from "../interface/utils.response.interface";
+import { UntilNext } from '../interface/utils.interface';
+import { ErrorBase, IResult } from '../interface/utils.response.interface';
+
 /**
  * サフィックス拡張の検証と適用
  */

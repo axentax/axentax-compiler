@@ -1,6 +1,7 @@
-import { ScaleName } from "../diatonic-and-scale/mod-scale";
-import { DiatonicEvolverValue } from "./diatonic";
-import { IShiftMax7, Scale, Tonality, NumberOrUfd, IKey, UntilNext, SyntaxLocation, UntilRange, bin12 } from "./utils.interface";
+import { ScaleName } from '../diatonic-and-scale/mod-scale';
+import { DiatonicEvolverValue } from './diatonic';
+import { IShiftMax7, Scale, Tonality, NumberOrUfd, IKey, UntilNext, SyntaxLocation, UntilRange, bin12 } from './utils.interface';
+
 /**
  * スタイルオブジェクトバンク型
  *

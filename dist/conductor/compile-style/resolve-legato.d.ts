@@ -1,5 +1,6 @@
-import { Mixes } from "../interface/conduct";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Mixes } from '../interface/conduct';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 /**
  * レガート解決処理を行うクラス
  */

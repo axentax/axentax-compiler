@@ -1,4 +1,5 @@
-import { bin12 } from "./utils.interface";
+import { bin12 } from './utils.interface';
+
 /**
  * ダイアトニック構造
  */

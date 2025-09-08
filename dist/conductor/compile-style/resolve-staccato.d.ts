@@ -1,5 +1,6 @@
-import { Mixes } from "../interface/conduct";
-import { SimpleResult } from "../interface/utils.response.interface";
+import { Mixes } from '../interface/conduct';
+import { SimpleResult } from '../interface/utils.response.interface';
+
 export declare class ResolveStaccato {
     /**
      * スタッカート処理を解決する

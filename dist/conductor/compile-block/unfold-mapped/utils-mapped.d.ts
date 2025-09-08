@@ -1,6 +1,7 @@
-import { BoardForShiftSeed, MapSeed } from "../../interface/dic-map-seed";
-import { StyleScaleX } from "../../interface/style";
-import { IKey } from "../../interface/utils.interface";
+import { BoardForShiftSeed, MapSeed } from '../../interface/dic-map-seed';
+import { StyleScaleX } from '../../interface/style';
+import { IKey } from '../../interface/utils.interface';
+
 /**
  * シード作成関数
  *

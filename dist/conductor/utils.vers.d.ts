@@ -1,4 +1,5 @@
-import { IKey } from "./interface/utils.interface";
+import { IKey } from './interface/utils.interface';
+
 export declare const colon_length = 1;
 export declare const percent_length = 1;
 /**

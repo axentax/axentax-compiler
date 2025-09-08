@@ -1,4 +1,5 @@
-import { IKey, NumberOrUfd } from "../interface/utils.interface";
+import { IKey, NumberOrUfd } from '../interface/utils.interface';
+
 /**
  * フィンガリング展開オプションインターフェース
  *

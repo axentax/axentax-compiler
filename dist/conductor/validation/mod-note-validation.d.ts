@@ -1,6 +1,7 @@
-import { DegreeObj } from "../interface/style";
-import { NumberOrUfd } from "../interface/utils.interface";
-import { ErrorBase, IResult } from "../interface/utils.response.interface";
+import { DegreeObj } from '../interface/style';
+import { NumberOrUfd } from '../interface/utils.interface';
+import { ErrorBase, IResult } from '../interface/utils.response.interface';
+
 /**
  * ノートの検証処理
  */
