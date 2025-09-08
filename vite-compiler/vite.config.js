@@ -12,10 +12,10 @@ export default defineConfig({
       entry: './lib/index.ts',
       name: 'Conductor',
       fileName: (format) => {
-        // if (format === 'umd') return `conductor.${format}.js`;
         if (format === 'es') return `conductor.js`;
+        if (format === 'cjs') return `conductor.cjs`;
       },
-      formats: ['es'] // ESで出力 ,'umd'
+      formats: ['es', 'cjs'] // ES と CJS を出力
     },
     minify: false, // Viteデフォルトの圧縮を無効化
     rollupOptions: {

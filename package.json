@@ -1,13 +1,17 @@
 {
   "name": "axentax-compiler",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Compile Axentax syntax in JavaScript and generate MIDI output for guitar phrasing.",
   "main": "dist/conductor.js",
   "module": "dist/conductor.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/conductor.mjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/conductor.mjs",
+      "require": "./dist/conductor.cjs",
+      "default": "./dist/conductor.js"
+    }
   },
   "files": [
     "README.md",
@@ -38,14 +42,14 @@
     "rm": "rimraf dist && rimraf ./vite-compiler/dist && rimraf ./vite-compiler/lib/conductor",
     "cp": "cp -r src/conductor vite-compiler/lib",
     "vite-build": "cd vite-compiler && npm i && npm run build && cd ../",
-    "NoUse_cp-js": "cp vite-compiler/dist/conductor.umd.cjs dist/",
     "cp-js": "cp vite-compiler/dist/conductor.js dist/",
+    "cp-cjs": "cp vite-compiler/dist/conductor.cjs dist/",
     "cp-jsm": "cp dist/conductor.js dist/conductor.mjs",
     "cp-dts": "cp vite-compiler/dist/index.d.ts dist/",
     "cp-dts-dir": "cp -r vite-compiler/dist/conductor dist/",
     "cp-index": "cp dist/conductor.js dist/index.js",
     "comments-delete": "chmod +x comments-delete.sh && ./comments-delete.sh",
-    "build": "npm run rm && npm run cp && npm run vite-build && npm run cp-js && npm run cp-jsm && npm run cp-dts && npm run cp-dts-dir && npm run cp-index && npm run comments-delete && rm -rf ./vite-compiler/lib/conductor/*",
+    "build": "npm run rm && npm run cp && npm run vite-build && npm run cp-js && npm run cp-cjs && npm run cp-jsm && npm run cp-dts && npm run cp-dts-dir && npm run cp-index && npm run comments-delete && rm -rf ./vite-compiler/lib/conductor/*",
     "prepublishOnly": "npm run build"
   },
   "author": "",
